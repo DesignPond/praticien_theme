@@ -1,4 +1,13 @@
-<?php get_template_part('templates/head'); ?>
+<?php
+
+/*
+Template Name: Homepage Template
+*/
+ 
+get_template_part('templates/head'); 
+
+?>
+
 <body <?php body_class(); ?>>
 
   <!--[if lt IE 8]>
@@ -8,39 +17,31 @@
   <![endif]-->
 
   <?php
-    do_action('get_header');
-    // Use Bootstrap's navbar if enabled in config.php
-    if (current_theme_supports('bootstrap-top-navbar')) {
-      get_template_part('templates/header-top-navbar');
-    } else {
-      get_template_part('templates/header');
-    }
-
   
-  	if ( is_front_page() ) {
+    if ( is_front_page() && is_home() ) {
 	  	// Homepage header with book
 	  	get_template_part('templates/home', 'header'); 
 	} 
 	else {
 	    // This is not a homepage
 	}
-	
+ 	
   ?>
 
-  <div id="mainContent" class="wrap container" role="document">
+  <div class="wrap container" role="document">
   
     <div class="content row">
-    	
-      <!-- MAIN CONTENT -->
+    
       <main class="main <?php echo roots_main_class(); ?>" role="main">
         <?php include roots_template_path(); ?>
       </main><!-- /.main -->
       
-      <!-- SIDEBAR -->
       <?php if (roots_display_sidebar()) : ?>
+      
         <aside class="sidebar <?php echo roots_sidebar_class(); ?>" role="complementary">
           <?php include roots_sidebar_path(); ?>
         </aside><!-- /.sidebar -->
+        
       <?php endif; ?>
       
     </div><!-- /.content -->

@@ -1,8 +1,74 @@
 /*!
  * Roots 6.5.2
  */
+ 
+ 
+
+@font-face {
+    font-family: 'Sofia-BoldBold';
+    src: url('../fonts/sofia-bold-webfont.eot');
+    src: url('../fonts/sofia-bold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/sofia-bold-webfont.woff') format('woff'),
+         url('../fonts/sofia-bold-webfont.ttf') format('truetype'),
+         url('../fonts/sofia-bold-webfont.svg#Sofia-BoldBold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+
+
+
+@font-face {
+    font-family: 'Sofia-LightLight';
+    src: url('../fonts/sofia-light-webfont.eot');
+    src: url('../fonts/sofia-light-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/sofia-light-webfont.woff') format('woff'),
+         url('../fonts/sofia-light-webfont.ttf') format('truetype'),
+         url('../fonts/sofia-light-webfont.svg#Sofia-LightLight') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+
+
+
+@font-face {
+    font-family: 'Sofia-RegularRegular';
+    src: url('../fonts/sofia-regular-webfont.eot');
+    src: url('../fonts/sofia-regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/sofia-regular-webfont.woff') format('woff'),
+         url('../fonts/sofia-regular-webfont.ttf') format('truetype'),
+         url('../fonts/sofia-regular-webfont.svg#Sofia-RegularRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'Sofia-MediumMedium';
+    src: url('../fonts/sofia-medium-webfont.eot');
+    src: url('../fonts/sofia-medium-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/sofia-medium-webfont.woff') format('woff'),
+         url('../fonts/sofia-medium-webfont.ttf') format('truetype'),
+         url('../fonts/sofia-medium-webfont.svg#Sofia-MediumMedium') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
 
 @import "bootstrap/bootstrap.less";
+
+/* ==========================================================================
+   Color variables
+   ========================================================================== */
+
+@light-blue:  #a1bdd1;
+@middle-blue: #7ba1b6;
+@dark-blue:   #0f4060;
+@darker-blue: #093450;
+@dark-red:    #912137;
 
 /* ==========================================================================
    Base
@@ -16,13 +82,134 @@ body { }
    Header
    ========================================================================== */
 
-.banner { }
+.banner {
+	background: @middle-blue;
+ }
+ 
+.navbar {
+	 margin-bottom: 0;
+ }
+ 
+.navbar-static-top {
+    border-width: 0;
+}
+
+	.navbar-default .navbar-brand{
+		font-size: 30px;
+		color: #FFFFFF;
+	    height: 60px;
+	    line-height: 30px;
+	    padding: 15px;
+	    font-family: 'Sofia-RegularRegular',Arial,sans serif;
+	    margin-right: 20px;
+	}
+
+	.navbar-default .navbar-brand:hover,.navbar-default .navbar-brand:focus{
+		color: #FFFFFF;
+	}
+	
+	.navbar-default .navbar-brand strong{
+		font-weight: bold;
+		color: @dark-blue;
+	}	
+		.navbar-default .navbar-nav > li > a {
+		    color: #ffffff;
+		    line-height: 30px;
+		    border-left: 1px solid @light-blue;
+		}
+		
+		.navbar-default .navbar-nav > li:last-child > a {
+		    border-right: 1px solid @light-blue;
+		}
+		
+		.navbar-default .navbar-nav > li > a:hover, 
+		.navbar-default .navbar-nav > li > a:focus,			
+		.navbar-default .navbar-nav > .active > a, 
+		.navbar-default .navbar-nav > .active > a:hover, 
+		.navbar-default .navbar-nav > .active > a:focus{
+			color: #ffffff;
+			background: @light-blue;
+		}
 
 
+/* ==========================================================================
+   Homepage header
+   ========================================================================== */
+   
+#home-header{
+	height: 330px;
+	border-bottom: 1px solid #c8d0d4;
+	background: @middle-blue; /* Old browsers */
+	/* IE9 SVG, needs conditional override of 'filter' to 'none' */
+	background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzllYmJjZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjkxJSIgc3RvcC1jb2xvcj0iI2RmZWNmNCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgPC9saW5lYXJHcmFkaWVudD4KICA8cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIiBmaWxsPSJ1cmwoI2dyYWQtdWNnZy1nZW5lcmF0ZWQpIiAvPgo8L3N2Zz4=);
+	background: -moz-linear-gradient(top,  #9ebbcf 0%, #dfecf4 91%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#9ebbcf), color-stop(91%,#dfecf4)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #9ebbcf 0%,#dfecf4 91%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #9ebbcf 0%,#dfecf4 91%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #9ebbcf 0%,#dfecf4 91%); /* IE10+ */
+	background: linear-gradient(to bottom,  #9ebbcf 0%,#dfecf4 91%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#9ebbcf', endColorstr='#dfecf4',GradientType=0 ); /* IE6-8 */
+
+}
+
+	#home-header div.buythebook{
+		padding-top: 80px;
+	}
+
+	#home-header div.buythebook p{
+		font-size:18px;
+		color: #002943;
+		line-height: 24px;
+		margin-bottom: 20px;
+	}
+	
+	.arrets-links{
+		text-align: right;
+		padding-top: 40px;
+	}
+	
+	.arrets-links-bloc{
+		background: @dark-blue;
+	    color: #FFFFFF;
+	    display: block;
+	    float: right;
+	    font-size: 18px;
+	    height: 68px;
+	    padding: 6px 0;
+	    line-height: 24px;
+	    margin: 35px 10px 10px;
+	    text-align: center;
+	    text-transform: uppercase;
+	    width: 70%;
+		-webkit-border-radius: 4px 4px 4px 4px;
+		border-radius: 4px 4px 4px 4px;
+	    word-spacing: 2px;
+	    border: 1px solid @darker-blue;
+	}
+	
+	.arrets-links-bloc span{
+		font-size: 13px;
+		color: @light-blue;
+	}
+	
+	.arrets-links-bloc:hover{
+	    background: @darker-blue;
+	    text-decoration: none;
+	    color: #fff;
+	}
 
 /* ==========================================================================
    Content
    ========================================================================== */
+
+.page-header {
+    margin: 20px 0 10px 0;
+    padding-bottom: 0;
+}
+
+#mainContent{
+	padding-top: 20px;
+}
 
 .content { }
 
@@ -63,7 +250,9 @@ body { }
    Footer
    ========================================================================== */
 
-.content-info { }
+.content-info { 
+	margin-top: 20px;
+}
 
 
 
@@ -88,3 +277,5 @@ figure.alignnone { margin-left: 0; margin-right: 0; }
 @media (min-width: @screen-md-min) { }
 
 @media (min-width: @screen-lg-min) { }
+
+
