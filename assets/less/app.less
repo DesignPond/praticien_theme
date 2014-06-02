@@ -2,8 +2,6 @@
  * Roots 6.5.2
  */
  
- 
-
 @font-face {
     font-family: 'Sofia-BoldBold';
     src: url('../fonts/sofia-bold-webfont.eot');
@@ -16,9 +14,6 @@
 
 }
 
-
-
-
 @font-face {
     font-family: 'Sofia-LightLight';
     src: url('../fonts/sofia-light-webfont.eot');
@@ -30,9 +25,6 @@
     font-style: normal;
 
 }
-
-
-
 
 @font-face {
     font-family: 'Sofia-RegularRegular';
@@ -76,7 +68,13 @@
 
 body { }
 
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+    color: @darker-blue;
+}
 
+p{
+	color: @dark-blue;
+}
 
 /* ==========================================================================
    Header
@@ -137,20 +135,9 @@ body { }
    ========================================================================== */
    
 #home-header{
-	height: 360px;
+	height: 280px;
 	position: relative;
-	border-bottom: 1px solid #c8d0d4;
-	background: @middle-blue; /* Old browsers */
-	/* IE9 SVG, needs conditional override of 'filter' to 'none' */
-	background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzllYmJjZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjkxJSIgc3RvcC1jb2xvcj0iI2RmZWNmNCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgPC9saW5lYXJHcmFkaWVudD4KICA8cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIiBmaWxsPSJ1cmwoI2dyYWQtdWNnZy1nZW5lcmF0ZWQpIiAvPgo8L3N2Zz4=);
-	background: -moz-linear-gradient(top,  #9ebbcf 0%, #dfecf4 91%); /* FF3.6+ */
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#9ebbcf), color-stop(91%,#dfecf4)); /* Chrome,Safari4+ */
-	background: -webkit-linear-gradient(top,  #9ebbcf 0%,#dfecf4 91%); /* Chrome10+,Safari5.1+ */
-	background: -o-linear-gradient(top,  #9ebbcf 0%,#dfecf4 91%); /* Opera 11.10+ */
-	background: -ms-linear-gradient(top,  #9ebbcf 0%,#dfecf4 91%); /* IE10+ */
-	background: linear-gradient(to bottom,  #9ebbcf 0%,#dfecf4 91%); /* W3C */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#9ebbcf', endColorstr='#dfecf4',GradientType=0 ); /* IE6-8 */
-
+	background: url("../img/BG.png") repeat-x;
 }
 
 	#home-header div.buythebook{
@@ -164,22 +151,26 @@ body { }
 		margin-bottom: 20px;
 	}	
 	
+#home-arrets-links{
+	background: @darker-blue;
+	height: 74px;
+	border-bottom: 1px solid #c8d0d4;	
+}
+	
 	.arrets-links-bloc{
-		background: @dark-blue;
+		background: @darker-blue;
 	    color: #FFFFFF;
 	    display: inline-block;
 	    font-size: 18px;
-	    height: 60px;
-	    padding: 3px 0;
-	    width: 80%;
-	    margin-top: 30px;
-	    line-height: 22px;
+	    height: 72px;
+	    padding: 8px 0 0 0;
+	    width: 100%;
+	    line-height: 25px;
 	    text-align: center;
 	    text-transform: uppercase;
 		-webkit-border-radius: 4px 4px 0 0;
 		border-radius: 4px 4px 0 0;
 	    word-spacing: 2px;
-	    border: 1px solid @darker-blue;
 	}
 	
 	.arrets-links-bloc span{
@@ -188,9 +179,9 @@ body { }
 	}
 	
 	.arrets-links-bloc:hover{
-	    background: @darker-blue;
 	    text-decoration: none;
 	    color: #fff;
+	    background: @dark-blue;
 	}
 
 
@@ -199,40 +190,36 @@ body { }
    ========================================================================== */
 
 #login{
-	background: #fff;
-	margin-top: 40px;
-	background-color: rgba(255,255,255,.5);
-	width: auto;
-	display: inline-block;
+    bottom: -245px;
+    display: inline-block;
+    position: absolute;
+    right: 0;
+    width: auto;
+    z-index: 100;
+	background-color: @darker-blue;
 }
 
 #login h2{
-	-moz-user-select: none;
-    background-image: none;
-    border: 1px solid rgba(0, 0, 0, 0);
+    color: #FFFFFF;
     cursor: pointer;
-    display: inline-block;
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 1.42857;
-    margin: 0;
     display: block;
-    padding: 3px 0;
+    font-size: 13px;
+    line-height: 17px;
+    margin: 0;
+    padding: 6px 5px;
     text-align: center;
-    vertical-align: middle;
-    white-space: nowrap;
-    background: @middle-blue;
-    text-decoration: none;
-    color: #fff;
+    text-transform: uppercase;
+    border-bottom: 1px solid @middle-blue;
 }
    	
 #loginform{
-	padding: 10px 15px;	
-	position: relative;
+    margin: 5px 15px 10px 15px;
+    padding: 15px 5px;
+    position: relative;
 }
 
 	#loginform p{
-		padding: 3px;
+		padding: 3px 0;
 		margin-bottom: 15px;
 	}
 
@@ -246,10 +233,11 @@ body { }
 			width: 180px;
 			float: left;
 			display: block;
+			color: #fff;
+			font-weight: normal;
 		}
 		
 		#loginform p label{
-			color: @dark-blue;
 			font-size: 13px;
 			width: 100px;
 		}
@@ -263,7 +251,7 @@ body { }
 		    color: #555555;
 		    display: block;
 		    font-size: 14px;
-		    height: 30px;
+		    height: 28px;
 		    line-height: 1.42857;
 		    padding: 6px 12px;
 		    transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
@@ -290,9 +278,6 @@ body { }
 		}
 		
 		#loginform p input[type="submit"]{
-			-moz-user-select: none;
-		    background-image: none;
-		    border: 1px solid rgba(0, 0, 0, 0);
 		    cursor: pointer;
 		    display: inline-block;
 		    font-size: 14px;
@@ -301,11 +286,13 @@ body { }
 		    margin-bottom: 0;
 		    padding: 6px 12px;
 		    text-align: center;
+		    border: none;
 		    vertical-align: middle;
 		    white-space: nowrap;
-		    background: @dark-blue;
+		    background: @dark-red;
 		    text-decoration: none;
-		    color: #fff;			
+		    color: #fff;	
+		    margin-top: 5px;		
 		}
 
 /* ==========================================================================
@@ -321,12 +308,23 @@ body { }
 	padding-top: 20px;
 }
 
+#homeContent{
+	margin-top: 40px;
+}
+
 .content { }
 
 .bloc{
 	display: block;
 	border: 1px solid #d1d1d1;
+	min-height: 150px;
+	padding: 15px;
 }
+
+	.bloc h3{
+		font-size: 15px;
+		margin: 0;
+	}
 
 /* ==========================================================================
    Primary Content
@@ -364,7 +362,7 @@ body { }
    ========================================================================== */
 
 .content-info { 
-	margin-top: 20px;
+	margin-top: 40px;
 }
 
 
