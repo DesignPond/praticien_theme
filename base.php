@@ -8,22 +8,29 @@
   <![endif]-->
 
   <?php
+  
     do_action('get_header');
+    
     // Use Bootstrap's navbar if enabled in config.php
-    if (current_theme_supports('bootstrap-top-navbar')) {
+    if (current_theme_supports('bootstrap-top-navbar')) 
+    {
       get_template_part('templates/header-top-navbar');
-    } else {
+    } 
+    else 
+    {
       get_template_part('templates/header');
     }
-
   
   	if ( is_front_page() ) {
 	  	// Homepage header with book
 	  	get_template_part('templates/home', 'header'); 
 	} 
-	else {
+	else 
+	{
 	    // This is not a homepage
 	}
+	
+	get_template_part('templates/page', 'arrets'); 
 	
   ?>
 
