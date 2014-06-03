@@ -214,8 +214,8 @@ p{
 }
    	
 #loginform{
-    margin: 5px 15px 10px 15px;
-    padding: 15px 5px;
+    margin: 5px 15px 0 15px;
+    padding: 15px 5px 0 5px;
     position: relative;
 }
 
@@ -224,6 +224,14 @@ p{
 		margin-bottom: 15px;
 	}
 
+	a#lostpassword{
+		color: #FFFFFF;
+		display: block;
+		font-size: 13px;
+		font-weight: normal;
+		margin: 0 0 15px 15px;
+	}
+	
 	#loginform p:after{
 		visibility: hidden;
 		clear: both;
@@ -296,6 +304,75 @@ p{
 		    margin-top: 5px;		
 		}
 
+/*===========================================
+	Home page content
+  ============================================*/
+
+
+#homeContent{
+	margin-top: 30px;
+}
+
+.bloc h3
+{
+	background:  @dark-blue;
+	color: #fff;
+	padding: 5px;
+	font-weight: normal;
+	text-transform: uppercase;
+	margin-bottom: 15px;
+	font-size: 12px;
+	margin-top: 0;
+}
+
+.newsletterHome
+{
+	background: #19425e;
+	color:  @light-blue;
+	line-height: 16px;
+}
+
+.bloc.newsletterHome h3
+{
+	background:  @light-blue;
+}
+
+.newsletterHome a{
+	margin-bottom: 8px;
+	font-size: 11px;
+	font-weight: bold;
+	padding: 2px 6px;
+}
+
+.newsletterLinks{
+	margin-top: 15px;
+}
+
+.bloc.tf_bloc {
+	position: relative;
+}
+
+.bloc.tf_bloc .calendar{
+	background: url("../img/calendar.png") no-repeat;
+	height: 24px;
+	padding: 2px 0;
+	text-indent: 25px;
+	position: absolute;
+	bottom: 0;
+	left: 15px;
+	font-size: 12px;
+}
+
+
+.bloc.tf_bloc a{
+	position: absolute;
+	bottom: 15px;
+	color: @dark-blue;
+	right: 15px;
+	font-size: 12px;
+	text-decoration: underline;
+}
+
 /* ==========================================================================
    Content
    ========================================================================== */
@@ -309,23 +386,16 @@ p{
 	padding-top: 20px;
 }
 
-#homeContent{
-	margin-top: 30px;
-}
 
 .content { }
 
 .bloc{
 	display: block;
 	border: 1px solid #d1d1d1;
-	min-height: 150px;
+	min-height: 200px;
 	padding: 15px;
 }
 
-	.bloc h3{
-		font-size: 15px;
-		margin: 0;
-	}
 
 /* ==========================================================================
    Primary Content

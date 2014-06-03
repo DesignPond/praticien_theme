@@ -44,6 +44,8 @@
 				     
 				     wp_login_form( $args ); 
 				?> 
+				
+					<a id="lostpassword" href="<?php echo wp_lostpassword_url(); ?>">Mot de passe perdu?</a>
 				</div>
 								
 			</div>
