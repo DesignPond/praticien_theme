@@ -66,6 +66,10 @@
    Base
    ========================================================================== */
 
+.row{
+	position: relative;
+}
+
 body { }
 
 h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
@@ -133,11 +137,24 @@ p{
 /* ==========================================================================
    Homepage header
    ========================================================================== */
+
+.partnerLogo{
+	position: absolute;
+	bottom:-5px;
+}
+
+#logoUnine{
+	right: 120px;
+}
+
+#logoCemaj{
+	right: 0;
+}
    
 #home-header{
-	height: 280px;
+	height: 300px;
 	position: relative;
-	background: url("../img/BG.png") repeat-x;
+	background:@darker-blue url("../img/BG.png") repeat-x;
 }
 
 	#home-header div.buythebook{
@@ -185,22 +202,31 @@ p{
 	    background: @dark-blue;
 	}
 
+#buyTheBook{
+	margin-top: 10px;
+}
+
+.homeText{
+	margin-top: 60px;
+	font-style: italic;
+	font-size: 15px;
+	line-height: 22px;
+}
 
 /* ==========================================================================
    Formulaires
    ========================================================================== */
 
-#login{
-    bottom: -245px;
+#access , #login{
     display: inline-block;
-    position: absolute;
-    right: 0;
-    width: auto;
+    width: 100%;
     z-index: 100;
+    padding-bottom: 10px;
+    margin-bottom: 25px;
 	background-color: @darker-blue;
 }
 
-#login h2{
+#login h2, #access h2{
     color: #FFFFFF;
     cursor: pointer;
     display: block;
@@ -213,45 +239,49 @@ p{
     border-bottom: 1px solid @middle-blue;
 }
    	
-#loginform{
-    margin: 5px 15px 0 15px;
-    padding: 15px 5px 0 5px;
+#accessform,#loginform{
+    margin: 5px 15px 15px 15px;
+    padding: 5px 5px 0 5px;
     position: relative;
+    text-align: left;
 }
 
-	#loginform p{
+	#loginform p,#accessform p{
 		padding: 3px 0;
-		margin-bottom: 15px;
+		margin:0 5px 5px 5px;
+		float: left;
 	}
 
-	a#lostpassword{
+	#loginform a,#accessform a{
 		color: #FFFFFF;
 		display: block;
 		font-size: 13px;
 		font-weight: normal;
-		margin: 0 0 15px 15px;
-	}
-	
-	#loginform p:after{
-		visibility: hidden;
-		clear: both;
-		content: ".";
+		margin: 5px 0 0 5px ;
 	}
 		
-		#loginform p label, #loginform p input[type="text"], #loginform p input[type="password"]{
-			width: 180px;
-			float: left;
+		#accessform p label, 
+		#accessform p input[type="text"], 
+		#accessform p input[type="password"],
+		#loginform p label, 
+		#loginform p input[type="text"], 
+		#loginform p input[type="password"]{
+			width: auto;			
 			display: block;
 			color: #fff;
 			font-weight: normal;
+			
 		}
 		
-		#loginform p label{
+		#accessform p label,#loginform p label{
 			font-size: 13px;
 			width: 100px;
 		}
 		
-		#loginform p input[type="text"], #loginform p input[type="password"]{
+		#accessform p input[type="text"], 
+		#accessform p input[type="password"],
+		#loginform p input[type="text"], 
+		#loginform p input[type="password"]{
 			background-color: #FFFFFF;
 		    background-image: none;
 		    border: 1px solid #CCCCCC;
@@ -266,27 +296,46 @@ p{
 		    transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
 		}
 
+		#accessform p.login-submit,
 		#loginform p.login-submit{
 			text-align: right;
 			margin-bottom: 5px;
 		}
 
-		#loginform p.login-remember{
+		#accessform p.login-submit{
+			margin: 23px 0 0 0;
+		}
+	
+		#loginform p.login-submit{
 			position: absolute;
-			bottom: 0;
+			right: -5px;
+			bottom: -10px;
+		}
+		
+		#accessform:after,
+		#loginform:after,
+		#loginform p.login-submit:after, 
+		#accessform p.login-submit:after{
+			margin: 0;
+			content: ".";
+			visibility: hidden;
+			clear: both;
+		}
+
+		#accessform p.login-remember,#loginform p.login-remember{
 		}
 				
-		#loginform p.login-remember label{
+		#accessform p.login-remember label,#loginform p.login-remember label{
 			font-size: 12px;
 			font-weight: normal;
 			width: 180px;
 		}
 		
-		#loginform p.login-remember input[type="checkbox"]{
+		#accessform p.login-remember input[type="checkbox"],#loginform p.login-remember input[type="checkbox"]{
 			margin-right: 5px;
 		}
 		
-		#loginform p input[type="submit"]{
+		#accessform p input[type="submit"],#loginform p input[type="submit"]{
 		    cursor: pointer;
 		    display: inline-block;
 		    font-size: 14px;
@@ -300,8 +349,7 @@ p{
 		    white-space: nowrap;
 		    background: @dark-red;
 		    text-decoration: none;
-		    color: #fff;	
-		    margin-top: 5px;		
+		    color: #fff;		
 		}
 
 /*===========================================

@@ -70,6 +70,16 @@ function roots_display_sidebar() {
 }
 
 /**
+ * Login form add forgot password link
+*/
+
+add_action( 'login_form_middle', 'add_lost_password_link' );
+
+function add_lost_password_link() {
+	return '<a href="/wp-login.php?action=lostpassword">Mot de passe perdu?</a>';
+}
+
+/**
  * $content_width is a global variable used by WordPress for max image upload sizes
  * and media embeds (in pixels).
  *
