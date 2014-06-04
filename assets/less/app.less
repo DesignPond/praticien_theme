@@ -97,10 +97,10 @@ p{
 }
 
 	.navbar-default .navbar-brand{
-		font-size: 30px;
+		font-size: 40px;
 		color: #FFFFFF;
 	    height: 60px;
-	    line-height: 30px;
+		line-height: 50px;
 	    padding: 15px;
 	    font-family: 'Sofia-RegularRegular',Arial,sans serif;
 	    margin-right: 20px;
@@ -112,11 +112,19 @@ p{
 	
 	.navbar-default .navbar-brand strong{
 		font-weight: bold;
+		font-family: 'Sofia-MediumMedium',Arial,sans serif;	
 		color: @dark-blue;
 	}	
+			
+	.navbar-default .navbar-brand b{
+		font-weight: bold;
+		color: #fff;
+		font-family: 'Sofia-MediumMedium',Arial,sans serif;	
+	}	
+	
 		.navbar-default .navbar-nav > li > a {
 		    color: #ffffff;
-		    line-height: 30px;
+		    line-height: 50px;
 		    border-left: 1px solid @light-blue;
 		}
 		
@@ -124,11 +132,27 @@ p{
 		    border-right: 1px solid @light-blue;
 		}
 		
-		.navbar-default .navbar-nav > li > a:hover, 
-		.navbar-default .navbar-nav > li > a:focus,			
-		.navbar-default .navbar-nav > .active > a, 
-		.navbar-default .navbar-nav > .active > a:hover, 
-		.navbar-default .navbar-nav > .active > a:focus{
+		.navbar-default .navbar-nav.logos > li > a {
+		    border:none;
+		}	
+
+		.navbar-nav.logos > li > a {
+		    padding: 10px 10px;
+		}
+		
+		.navbar-nav.navbar-right:last-child {
+		    margin-right: 0;
+		}
+		
+		.navbar-nav.main-nav:last-child{
+			margin-right: 20px;
+		}
+		
+		.navbar-default .navbar-nav.main-nav > li > a:hover, 
+		.navbar-default .navbar-nav.main-nav > li > a:focus,			
+		.navbar-default .navbar-nav.main-nav > .active > a, 
+		.navbar-default .navbar-nav.main-nav > .active > a:hover, 
+		.navbar-default .navbar-nav.main-nav > .active > a:focus{
 			color: #ffffff;
 			background: @light-blue;
 		}
@@ -139,22 +163,22 @@ p{
    ========================================================================== */
 
 .partnerLogo{
-	position: absolute;
-	bottom:-5px;
+
 }
 
 #logoUnine{
-	right: 120px;
+	
 }
 
 #logoCemaj{
-	right: 0;
+
 }
    
 #home-header{
 	height: 300px;
 	position: relative;
 	background:@darker-blue url("../img/BG.png") repeat-x;
+	border-bottom: 1px solid #bfd8ea;
 }
 
 	#home-header div.buythebook{
@@ -169,14 +193,13 @@ p{
 	}	
 	
 #home-arrets-links{
-	background: @darker-blue;
+	background: @dark-blue;;
 	height: 74px;
-	border-top: 1px solid #07304b;	
 	border-bottom: 1px solid #c8d0d4;	
 }
 	
 	.arrets-links-bloc{
-		background: @darker-blue;
+		background: @dark-blue;
 	    color: #FFFFFF;
 	    display: inline-block;
 	    font-size: 18px;
@@ -199,7 +222,7 @@ p{
 	.arrets-links-bloc:hover{
 	    text-decoration: none;
 	    color: #fff;
-	    background: @dark-blue;
+	    background: @darker-blue;
 	}
 
 #buyTheBook{
@@ -252,6 +275,7 @@ p{
 	background-color: @darker-blue;
 }
 
+
 #login h2, #access h2{
     color: #FFFFFF;
     cursor: pointer;
@@ -259,7 +283,7 @@ p{
     display: block;
     font-size: 13px;
     line-height: 25px;
-    text-align: center;
+    text-align: left;
     text-transform: uppercase;
     border-bottom: 1px solid @middle-blue;
 }
@@ -372,6 +396,30 @@ p{
 		    margin-top: 20px;	
 		}
 		
+
+#accessCode{
+	background: rgba(255,255,255,0.5);
+	padding: 20px;
+	border-radius: 4px;
+	margin-top: 50px;
+}
+
+#accessCode h2{
+	font-size: 15px;
+	text-transform: uppercase;
+	line-height: 25px;
+	margin: 0;
+	color: @darker-blue;
+}
+
+#accessCode #accessform label{
+	color: @dark-blue;
+}
+
+#accessCode #accessform input{
+	width: 100%;
+}
+		
 /*===========================================
 	Home page content
   ============================================*/
@@ -379,6 +427,22 @@ p{
 
 #homeContent{
 	margin-top: 30px;
+}
+
+#listOptionsHomepage{
+	float: right;
+	display: block;
+}
+
+#listOptionsHomepage li{
+	margin-bottom: 3px;
+	background: rgba(255,255,255,0.5);
+	padding: 5px 10px;
+	text-align: right;
+	width: auto;
+	display: inline-block;
+	color: @middle-blue;
+	list-style: none;	
 }
 
 .bloc h3
@@ -506,6 +570,7 @@ p{
 	margin-top: 40px;
 }
 
+.top-buffer { margin-top:40px; }
 
 
 /* ==========================================================================

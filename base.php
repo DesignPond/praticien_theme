@@ -20,6 +20,8 @@
     {
       get_template_part('templates/header');
     }
+  	
+	get_template_part('templates/page', 'arrets'); 
   
   	if ( is_front_page() ) {
 	  	// Homepage header with book
@@ -29,8 +31,7 @@
 	{
 	    // This is not a homepage
 	}
-	
-	get_template_part('templates/page', 'arrets'); 
+
 	
   ?>
 

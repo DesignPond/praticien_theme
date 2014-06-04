@@ -2,7 +2,7 @@
 
 	<!-- Homepage login, acces code and newsletter -->
 	
-	<div class="row"><!-- start row -->	
+	<div class="row top-buffer"><!-- start row -->	
 	
 		<div class="col-md-4"><!-- start col 4 -->
 		
@@ -101,7 +101,7 @@
 	
 	<!-- Bloc TF and last publications -->
 	
-	<div class="row">
+	<div class="row top-buffer">
 		
 		<div class="col-md-4"><!-- start col 4  -->
 			<div class="bloc blocBorder tf_bloc">
@@ -124,6 +124,13 @@
 		</div><!-- end col 4 -->
 		
 		<div class="col-md-4"><!-- start col 4  -->
+			<div class="bloc blocBorder tf_bloc">
+				<h3>Arrêts destinés à la publication</h3>
+				<h4>Tribunal fédéral - Jurisprudence</h4>
+				<p>Liste des décisions destinées à la publication</p>
+				<a href="">Voir la liste</a>
+				<p class="calendar">Publications du <?php echo lastDayUpdated(); ?></p>
+			</div>			
 		</div><!-- end col 4 -->
 		
 	</div>

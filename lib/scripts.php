@@ -11,7 +11,7 @@
  * 3. /theme/assets/js/main.min.js (in footer)
  */
 function roots_scripts() {
-  wp_enqueue_style('roots_main', get_template_directory_uri() . '/assets/css/main.min.css', false, '3d52d82103b4b0791de40d4b45a76438');
+  wp_enqueue_style('roots_main', get_template_directory_uri() . '/assets/css/main.min.css', false, '1b0922bb2e90b252ade1dedc4cfd76c8');
 
   // jQuery is loaded using the same method from HTML5 Boilerplate:
   // Grab Google CDN's latest jQuery with a protocol relative URL; fallback to local if offline

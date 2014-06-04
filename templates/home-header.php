@@ -20,15 +20,36 @@
 					
 			</div>
 						
-			<div class="col-sm-6">				
-				<p class="homeText">Complément indispensable de la collection <strong>Le droit pour le praticien</strong>, ce site reprend l’ensemble des résumés de jurisprudence 
-				publiés annuellement par la Faculté de droit de l’Université de Neuchâtel depuis 2007.</p>		
+			<div class="col-sm-4 col-sm-offset-1">	
+					
+<!--
+				<ul id="listOptionsHomepage">
+					<li><a href="#">Résumés de jurisprudence</a></li>
+					<li><a href="#">Derniers Arrêts du TF</a></li>
+					<li><a href="#">Décisions proposées à la publication</a></li>
+					<li><a href="#">Alertes email</a></li>
+					<li><a href="#">Newsletter NLRCAS</a></li>
+				</ul>	
+-->
+					<!-- Acces code bloc -->
+					<!--
+					<div id="accessCode">
+						<h2>Vous possédez un code d'accès?</h2>									
+				  		<form name="accessform" id="accessform" action="http://droitpourlepraticien.ch/wp-code.php" method="post">
+							<p class="login-password">
+								<label for="accescode">S'inscrire sur le site</label>
+								<input type="text" name="accescode" id="accescode" class="input" value="" size="20" tabindex="20" />
+							</p>
+							<p class="login-submit">
+								<input type="submit" name="wp-submit" id="wp-submit" class="button-primary" value="Envoyer &raquo;" tabindex="100" />
+								<input type="hidden" name="redirect_to" value="http://droitpourlepraticien.ch" />
+							</p>						
+						</form>									
+					</div>	
+					-->
+					<!-- end Acces code bloc -->		
+				
 			</div>
-
-			<a id="logoUnine" class="partnerLogo" target="_blank" href="http://www.unine.ch">
-				<img src="<?php echo get_bloginfo('template_directory');?>/assets/img/unine.png"  alt="unine logo"></a>
-			<a id="logoCemaj" class="partnerLogo" target="_blank" href="http://www.unine.ch/cemaj">
-				<img src="<?php echo get_bloginfo('template_directory');?>/assets/img/cemaj.png"  alt="unine cemaj"></a>	
 								
 		</div>
 					
