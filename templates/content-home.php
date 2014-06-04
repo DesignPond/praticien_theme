@@ -22,12 +22,12 @@
 
 			  <div class="row newsletterLinks">
 			  	 <div class="col-md-6">
-			  	 	<a class="btn btn-default btn-xs pull-right" href="">Inscription</a>
-			  	 	<a class="btn btn-praticien btn-xs pull-right" href="">Assurances sociales</a>
+			  	 	<a class="btn btn-default btn-sm" href="">Inscription</a>
+			  	 	<a class="btn btn-praticien btn-sm" href="">Assurances sociales</a>
 			  	 </div>
 			  	 <div class="col-md-6">
-			  	 	<a class="btn btn-default btn-xs" href="">Archives</a>
-			  	 	<a class="btn btn-praticien btn-xs" href="">Responsabilité civile</a>
+			  	 	<a class="btn btn-default btn-sm" href="">Archives</a>
+			  	 	<a class="btn btn-praticien btn-sm" href="">Responsabilité civile</a>
 			  	 </div>
 			  </div>
 			  
@@ -51,7 +51,7 @@
 												<input type="text" name="accescode" id="accescode" class="input" value="" size="20" tabindex="20" />
 											</p>
 											<p class="login-submit">
-												<input type="submit" name="wp-submit" id="wp-submit" class="button-primary" value="Envoyer &raquo;" tabindex="100" />
+												<input type="submit" name="wp-submit" id="wp-submit" class="btn btn-buy" value="Envoyer &raquo;" tabindex="100" />
 												<input type="hidden" name="redirect_to" value="http://droitpourlepraticien.ch" />
 											</p>						
 										</form>									
@@ -63,7 +63,7 @@
 					
 									<!-- Login bloc -->
 									<div id="login">
-										<h2>login</h2>
+										<h2>Login</h2>
 										<?php
 										
 											$args = array(
@@ -108,7 +108,7 @@
 				<h3>Derniers arrêts rendus</h3>
 				<h4>Tribunal fédéral - Jurisprudence</h4>
 				<p>Liste des dernières décisions du <?php echo lastDayUpdated(); ?></p>
-				<a target="_blank" href="http://www.bger.ch/fr/index/juridiction/jurisdiction-inherit-template/jurisdiction-recht/jurisdiction-recht-urteile2000neu.htm">Voir la liste</a>
+				<a class="btn btn-blue btn-sm" target="_blank" href="http://www.bger.ch/fr/index/juridiction/jurisdiction-inherit-template/jurisdiction-recht/jurisdiction-recht-urteile2000neu.htm">Voir la liste</a>
 				<p class="calendar">Publications du <?php echo lastDayUpdated(); ?></p>
 			</div>		
 		</div><!-- end col 4 -->
@@ -118,7 +118,7 @@
 				<h3>Arrêts destinés à la publication</h3>
 				<h4>Tribunal fédéral - Jurisprudence</h4>
 				<p>Liste des décisions destinées à la publication</p>
-				<a href="">Voir la liste</a>
+				<a class="btn btn-blue btn-sm" href="">Voir la liste</a>
 				<p class="calendar">Publications du <?php echo lastDayUpdated(); ?></p>
 			</div>		
 		</div><!-- end col 4 -->
@@ -128,7 +128,7 @@
 				<h3>Arrêts destinés à la publication</h3>
 				<h4>Tribunal fédéral - Jurisprudence</h4>
 				<p>Liste des décisions destinées à la publication</p>
-				<a href="">Voir la liste</a>
+				<a class="btn btn-blue btn-sm" href="">Voir la liste</a>
 				<p class="calendar">Publications du <?php echo lastDayUpdated(); ?></p>
 			</div>			
 		</div><!-- end col 4 -->

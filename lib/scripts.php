@@ -11,8 +11,9 @@
  * 3. /theme/assets/js/main.min.js (in footer)
  */
 function roots_scripts() {
-  wp_enqueue_style('roots_main', get_template_directory_uri() . '/assets/css/main.min.css', false, '1b0922bb2e90b252ade1dedc4cfd76c8');
 
+  wp_enqueue_style('roots_main', get_template_directory_uri() . '/assets/css/main.min.css', false, '50ff3c45f6748415a985019d4e83aba4');
+  wp_enqueue_style('datatable', '//cdn.datatables.net/1.10.0/css/jquery.dataTables.css', array(), null, false);
   // jQuery is loaded using the same method from HTML5 Boilerplate:
   // Grab Google CDN's latest jQuery with a protocol relative URL; fallback to local if offline
   // It's kept in the header instead of footer to avoid conflicts with plugins.
@@ -27,12 +28,20 @@ function roots_scripts() {
   }
 
   wp_register_script('modernizr', get_template_directory_uri() . '/assets/js/vendor/modernizr-2.7.0.min.js', array(), null, false);
-  wp_register_script('roots_scripts', get_template_directory_uri() . '/assets/js/scripts.min.js', array(), '0fc6af96786d8f267c8686338a34cd38', true);
+  wp_register_script('roots_scripts', get_template_directory_uri() . '/assets/js/scripts.min.js', array(), 'eb2c0775d680c5c0a9426611f94d52fe', true);
+  
+  // register datatable.js
+  wp_register_script('datatable', '//cdn.datatables.net/1.10.0/js/jquery.dataTables.js', array(), null, false);
+  
   wp_enqueue_script('modernizr');
+  wp_enqueue_script('datatable');
   wp_enqueue_script('jquery');
   wp_enqueue_script('roots_scripts');
+  
 }
+
 add_action('wp_enqueue_scripts', 'roots_scripts', 100);
+
 
 // http://wordpress.stackexchange.com/a/12450
 function roots_jquery_local_fallback($src, $handle = null) {
