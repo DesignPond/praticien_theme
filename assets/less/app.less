@@ -217,47 +217,85 @@ p{
    Formulaires
    ========================================================================== */
 
+#homepageAcces{
+	background-color: @darker-blue;
+	max-height: 200px;
+}
+
+
+#homepageAcces .bloc{
+	float: left;
+}
+
+#homepageAcces:after{
+	clear: both;
+	visibility: hidden;
+	content: ".";
+}
+
+#access{
+	border-right: 1px dashed @light-blue; 
+	margin: 10px 0 0 20px;
+    padding: 0 20px 0 0;
+}
+
+#login{
+	padding-left: 10px;
+	margin-top:10px;
+}
+
 #access , #login{
     display: inline-block;
-    width: 100%;
     z-index: 100;
-    padding-bottom: 10px;
-    margin-bottom: 25px;
+    padding-bottom: 5px;
+    width: 100%;
 	background-color: @darker-blue;
 }
 
 #login h2, #access h2{
     color: #FFFFFF;
     cursor: pointer;
+    margin: 0 0 15px 0;
     display: block;
     font-size: 13px;
-    line-height: 17px;
-	margin: 0 20px;
-    padding: 6px 5px;
+    line-height: 25px;
     text-align: center;
     text-transform: uppercase;
     border-bottom: 1px solid @middle-blue;
 }
    	
 #accessform,#loginform{
-    margin: 5px 15px 15px 15px;
-    padding: 5px 5px 0 5px;
+	margin: 0;
+	padding: 0;
     position: relative;
     text-align: left;
 }
 
 	#loginform p,#accessform p{
-		padding: 3px 0;
-		margin:0 5px 5px 5px;
-		float: left;
+		padding: 0;
+		margin:0;	
+		display: block;
 	}
 
+
+	#loginform p{
+		float: left;
+		width: 50%;	
+	}
+		
+	#loginform  p.login-username,
+	#loginform  p.login-password{
+		float: left;
+		width: 50%;
+	}
+	
 	#loginform a,#accessform a{
 		color: #FFFFFF;
-		display: block;
 		font-size: 13px;
 		font-weight: normal;
-		margin: 5px 0 0 5px ;
+		padding:5px 0;
+		display: block;
+		clear: both;
 	}
 		
 		#accessform p label, 
@@ -275,7 +313,6 @@ p{
 		
 		#accessform p label,#loginform p label{
 			font-size: 13px;
-			width: 100px;
 		}
 		
 		#accessform p input[type="text"], 
@@ -291,57 +328,28 @@ p{
 		    display: block;
 		    font-size: 14px;
 		    height: 28px;
+		    width: 90%;
 		    line-height: 1.42857;
 		    padding: 6px 12px;
 		    transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
-		}
-
-		#accessform p.login-submit,
-		#loginform p.login-submit{
-			text-align: right;
-			margin-bottom: 5px;
-		}
-
-		#accessform p.login-submit{
-			margin: 23px 0 0 0;
-		}
-	
-		#loginform p.login-submit{
-			position: absolute;
-			right: -5px;
-			bottom: -10px;
-		}
-		
-		#accessform:after,
-		#loginform:after,
-		#loginform p.login-submit:after, 
-		#accessform p.login-submit:after{
-			margin: 0;
-			content: ".";
-			visibility: hidden;
-			clear: both;
-		}
-
-		#accessform p.login-remember,#loginform p.login-remember{
 		}
 				
 		#accessform p.login-remember label,#loginform p.login-remember label{
 			font-size: 12px;
 			font-weight: normal;
-			width: 180px;
 		}
 		
 		#accessform p.login-remember input[type="checkbox"],#loginform p.login-remember input[type="checkbox"]{
-			margin-right: 5px;
+			margin: 0;
 		}
 		
 		#accessform p input[type="submit"],#loginform p input[type="submit"]{
 		    cursor: pointer;
-		    display: inline-block;
+		    display: block;
 		    font-size: 14px;
 		    font-weight: 400;
 		    line-height: 1.42857;
-		    margin-bottom: 0;
+		    margin: 0;
 		    padding: 6px 12px;
 		    text-align: center;
 		    border: none;
@@ -351,7 +359,19 @@ p{
 		    text-decoration: none;
 		    color: #fff;		
 		}
+		
+		
+		#loginform  p input[type="submit"]{
+			position: absolute;
+			right: 20px;
+			bottom: -20px;
+		}
 
+		#accessform p input[type="submit"]{
+		    display: inline-block;
+		    margin-top: 20px;	
+		}
+		
 /*===========================================
 	Home page content
   ============================================*/
@@ -439,11 +459,13 @@ p{
 
 .bloc{
 	display: block;
-	border: 1px solid #d1d1d1;
 	min-height: 200px;
 	padding: 15px;
 }
 
+.blocBorder{
+	border: 1px solid #d1d1d1;
+}
 
 /* ==========================================================================
    Primary Content
