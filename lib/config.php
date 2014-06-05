@@ -42,6 +42,7 @@ function roots_sidebar_class() {
  * See lib/sidebar.php for more details
  */
 function roots_display_sidebar() {
+
   $sidebar_config = new Roots_Sidebar(
     /**
      * Conditional tag checks (http://codex.wordpress.org/Conditional_Tags)
@@ -55,7 +56,8 @@ function roots_display_sidebar() {
      */
     array(
       'is_404',
-      'is_front_page'
+      'is_front_page',
+      'is_page'
     ),
     /**
      * Page template checks (via is_page_template())
@@ -70,6 +72,7 @@ function roots_display_sidebar() {
 
   return apply_filters('roots_display_sidebar', $sidebar_config->display);
 }
+
 
 /**
  * Login form add forgot password link

@@ -298,8 +298,8 @@ function getAllArretsCategories(){
 	$args = array(
 		'orderby'    => 'name',
 	    'order'      => 'ASC',
-		'hide_empty' => 0,
-		'exclude'    => '1,156,166,168,220,336'
+		'hide_empty' => 1,
+		'exclude'    => '3'
 	); 
 	
 	$categories  = get_categories($args);

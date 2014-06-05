@@ -2,7 +2,12 @@
 /*
 Template Name: Catgories Template
 */
-?>
 
-<?php get_template_part('templates/page', 'header'); ?>
-<?php get_template_part('templates/content', 'catgories'); ?>
+get_template_part('templates/page', 'header'); 
+get_template_part('templates/content', 'categories'); 
+
+// if cat var in url
+$cat = get_query_var('cat');
+
+if($cat){  get_template_part('templates/content', 'articles');  }
+
