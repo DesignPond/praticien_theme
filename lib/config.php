@@ -63,7 +63,8 @@ function roots_display_sidebar() {
      */
     array(
       'template-custom.php',
-      'template-arrets.php'
+      'template-arrets.php',
+      'template-resumes.php'
     )
   );
 

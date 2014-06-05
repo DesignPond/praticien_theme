@@ -16,7 +16,26 @@
 
 (function($) {
 
-$('#arrets').dataTable();
+		$('#arrets').dataTable({
+			"aaSorting": [[ 0, "desc" ]],
+			"iDisplayLength": 25,
+			"oLanguage": {
+			"sLengthMenu": "Montrer _MENU_ lignes par page",
+			"sZeroRecords": "Rien trouv&eacute;",
+			"sInfo": "_START_ &agrave; _END_ sur _TOTAL_ lignes",
+			"sInfoEmpty": "0 &agrave; 0 sur 0 lignes",
+			"sInfoFiltered": "(filtre de _MAX_ total lignes)",
+			"oPaginate": {
+				"sFirst":"Premier",
+				"sPrevious":"Pr&eacute;c&eacute;dent",
+				"sNext":"Suivant",
+				"sLast":"Dernier"
+				}
+			},"bFilter": false,"bStateSave": true });
+			
+			
+		$( "#dateStart" ).datepicker({ dateFormat: "yy-mm-dd" });
+		$( "#dateEnd" ).datepicker({ dateFormat: "yy-mm-dd" });
 
 // Use this variable to set up the common and page specific functions. If you 
 // rename this variable, you will also need to rename the namespace below.

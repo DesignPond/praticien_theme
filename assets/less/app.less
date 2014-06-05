@@ -445,6 +445,69 @@ p{
 #accessCode #accessform input{
 	width: 100%;
 }
+
+
+#choixPeriode{
+	width: 98%;
+}
+
+#choixPeriode .checkbox label{
+	font-size: 12px;
+	line-height: 35px;
+}
+
+
+/* -----------------------------------------
+   Header links
+----------------------------------------- */
+
+#links{
+	width:25%;
+	height:auto;
+	margin-bottom:30px;
+	float:left;
+}
+
+#links li{
+	width:21%;
+	min-width:215px;
+	min-height:35px;
+	height:auto;
+	margin:6px 2% 10px 2%;
+	line-height:33px;
+	font-size:13px;
+	color:#000;
+	display:block;
+	text-align:left;
+	z-index:5;
+}
+	
+#links li.doubleLine{
+	line-height:15px;
+}
+	
+#links li a{
+    vertical-align: 50%;
+	font-size:13px;
+	color:#0f4060;
+	height:35px;
+	display:block;
+	background:#ecf4fa url(../img/ribbon.png) 10px 12px no-repeat;
+	margin:0;
+	padding-left:27px;
+	border:1px solid #fff;
+	position:relative;
+}
+	
+#links li.doubleLine a{
+	padding-top:1px;
+}
+	
+#links li a:hover, ul#links li a.active{
+	color:#fff;
+	background:#50708a url(../img/ribbon-hover.png) 10px 10px no-repeat;
+	border:1px solid #29455c;
+}
 		
 /*===========================================
 	Home page content
@@ -531,12 +594,12 @@ p{
 	font-size: 12px;
 }
 
-
 .bloc.tf_bloc a{
 	position: absolute;
 	bottom: 15px;
 	right: 15px;
 }
+
 
 /* ==========================================================================
    Content
@@ -560,6 +623,14 @@ p{
 	padding: 15px;
 }
 
+.bloc.blocAutoHeight{
+	min-height: 0;
+	border: 1px solid #ddd;
+	padding: 10px;
+	width: 98%;
+	margin: 10px 0;
+}
+
 .blocBorder{
 	border: 1px solid #d1d1d1;
 }
@@ -577,6 +648,34 @@ p{
 #arrets_wrapper{
 	margin-top: 20px;
 	padding-right: 20px;
+}
+
+
+/* ==========================================================================
+   Tables
+   ========================================================================== */
+
+table#arrets thead th,table#arrets tfoot th, table#arrets thead td {
+    border-bottom: 1px solid #CCCCCC;
+    padding:5px 10px 5px 5px;
+    text-align: left;
+    font-size: 13px;
+    line-height: 18px;
+}
+
+table#arrets thead th,table#arrets tfoot th {
+    background: #e6e6e6;
+    border-bottom: 1px solid #bababa;
+}
+
+table#arrets tbody td {
+	font-size: 13px;
+	padding: 5px 8px;
+}
+
+#arrets_length{
+	margin-bottom: 10px;
+	height: 30px;
 }
 
 /* ==========================================================================

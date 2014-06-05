@@ -42,7 +42,7 @@ function arretLinkArret($lien){
 	
 }
 
-function getAllCategories(){
+function getAllCategories( $onlyChilden = false){
 	
 	global $wpdb;
 	
@@ -87,11 +87,16 @@ function getAllCategories(){
 	
 	$parents = array_flip($parents);
 	
+	if($onlyChilden)
+	{
+		return $children;
+	}
+	
 	return array('parents' => $parents , 'children' => $children);
 	
 }
 
-function prepareSidebar($array , $theCategorie = NULL , $choixStar = NULL){
+function prepareSidebar($array , $categorie = NULL , $star = NULL){
 
 	$parents  = $array['parents'];
 	$children = $array['children'];
@@ -106,104 +111,151 @@ function prepareSidebar($array , $theCategorie = NULL , $choixStar = NULL){
 				
 	foreach($parents as $idparent => $termparent)
 	{
-		$html .=  '<h3 class="headlink"><strong>'.$termparent.'</strong></h3>';
+		$html .= '<h3 class="headlink"><strong>'.$termparent.'</strong></h3>';
 		
 		foreach($children[$idparent] as $nameCat => $idCat) 
-		{
+		{						
+			// Rebuild url with new args			
+			$url   = add_query_arg( array( 'categorie' => $idCat, 'star' => $star) , get_permalink() );
 			
-			$html .=  '<h3 class="';
+			$html .= '<h3 class="';
 			
-			if ( $theCategorie == $idCat) { $html .=  ' active';}
+			if ( $categorie == $idCat) { $html .= ' active';}
 			
-			$html .=  '"><a href="'.get_permalink().'&amp;categorie='.$idCat; if(!empty($choixStar)){$html .= '&star=1';} $html .= '">'.$nameCat.'</a>';
-			$html .=  '</h3>';
+			$html .= '"><a href="'.$url.'">'.$nameCat.'</a>';
+			$html .= '</h3>';
 		}
 	}
 		
-	$html .=  '</div>';
+	$html .= '</div>';
 	
 	return $html;
 	
 }
 
+				
+/*********************************
+	Get extra categories
+***********************************/
 
-function getLastArrets($nbr , $page , $categorie = NULL , $annee = NULL , $mois = NULL){
+function getExtraCategories(){	
+
+	global $wpdb;
+		
+	$extraCatArray = array();
+	
+    $queryExtra = "SELECT * FROM  wp_extracategories 
+     						JOIN  wp_custom_categories on  wp_custom_categories.term_id = wp_extracategories.parent_extra
+							GROUP BY wp_custom_categories.name ";
+	 
+	$dataExtra = $wpdb->get_results($queryExtra);	
+	
+	if(!empty($dataExtra))
+	{
+		foreach ($dataExtra as $cat_extra ) 
+		{
+			$extraCatArray[] = $cat_extra->parent_extra;
+		}			
+	}	
+	
+	return $extraCatArray;
+	
+}
+
+
+function getLastArrets( $page , $categorie = NULL , $dateStart = NULL , $dateEnd = NULL , $star = NULL){
 
 	global $wpdb;
 	
 	$langue = array('Fr','All','It');
+	$limit  = NULL;
 
-	$query = 'SELECT 
-				wp_nouveautes.id_nouveaute ,wp_nouveautes.datep_nouveaute ,wp_nouveautes.dated_nouveaute , wp_nouveautes.categorie_nouveaute , wp_nouveautes.numero_nouveaute , 
-				wp_nouveautes.langue_nouveaute , 
-				wp_nouveautes.publication_nouveaute , 
-				wp_custom_categories.name as nameCat , wp_custom_categories.*, 
-				wp_subcategories.name as nameSub , wp_subcategories.* 
-			  FROM wp_nouveautes 
-			  LEFT JOIN wp_custom_categories on wp_custom_categories.term_id  = wp_nouveautes.categorie_nouveaute 
-			  LEFT JOIN wp_subcategories     on wp_subcategories.refNouveaute = wp_nouveautes.id_nouveaute  ';
-
-/*					  
-	if( $categorie )
-	{
-		if(in_array($categorie,$extraCatArray)) {
-			
-			$query = '';
-			
-			$query = 'SELECT wp_extracategories.* , wp_nouveautes.* , cat.name as nameCat , wp_custom_categories.*, 
-					  wp_subcategories.name as nameSub , wp_subcategories.*
+	/**
+	 * Query for simple list
+	 * Last inserted arrets
+	*/
+	$querySimple  =  'SELECT 
+						wp_nouveautes.id_nouveaute ,wp_nouveautes.datep_nouveaute ,wp_nouveautes.dated_nouveaute , wp_nouveautes.categorie_nouveaute , wp_nouveautes.numero_nouveaute , 
+						wp_nouveautes.langue_nouveaute , 
+						wp_nouveautes.publication_nouveaute , 
+						wp_custom_categories.name as nameCat , wp_custom_categories.*, 
+						wp_subcategories.name as nameSub , wp_subcategories.* 
+					  FROM wp_nouveautes 
+					  LEFT JOIN wp_custom_categories on wp_custom_categories.term_id  = wp_nouveautes.categorie_nouveaute 
+					  LEFT JOIN wp_subcategories     on wp_subcategories.refNouveaute = wp_nouveautes.id_nouveaute  ';
+					  
+	/**
+	 * Query for extracategories list
+	 * the categorie is a parent and we have to get all children categories
+	*/
+	$queryExtra   =  'SELECT wp_extracategories.* , wp_nouveautes.* , 
+							 cat.name as nameCat , wp_custom_categories.*,
+							 wp_subcategories.name as nameSub , 
+							 wp_subcategories.*
 					  FROM wp_extracategories 
 					  JOIN wp_custom_categories on  wp_custom_categories.term_id = wp_extracategories.parent_extra
 					  JOIN wp_nouveautes on  wp_extracategories.`nouveaute_extra` = wp_nouveautes.id_nouveaute
-						  JOIN wp_custom_categories as cat on  cat.term_id = wp_nouveautes.categorie_nouveaute
-					  LEFT JOIN wp_subcategories on wp_subcategories.refNouveaute = wp_nouveautes.id_nouveaute 
-					  WHERE wp_extracategories.parent_extra  = "'.$categorie.'"   ';
+					  JOIN wp_custom_categories as cat on  cat.term_id = wp_nouveautes.categorie_nouveaute
+					  LEFT JOIN wp_subcategories on wp_subcategories.refNouveaute = wp_nouveautes.id_nouveaute ';
 					  
-			$limit = 'all';
-
+					  
+	if( $categorie )
+	{
+		
+		// Extracategorie array list		
+		$extraCategories = getExtraCategories();
+		
+		// if the categorie we want is an extra 
+		if(in_array($categorie,$extraCategories)) 
+		{			
+			$query  = $queryExtra;
+			$query .= ' WHERE wp_extracategories.parent_extra  = "'.$categorie.'" ';					  
+			$limit  = 'all';
 		}
 		else 
 		{
-			$query .= ' WHERE wp_nouveautes.categorie_nouveaute  = "'.$categorie.'"   ';
-			$limit = 'all';
+			$query  = $querySimple;
+			$query .= ' WHERE wp_nouveautes.categorie_nouveaute  = "'.$categorie.'" ';
+			$limit  = 'all';
 		}
+	}
+	else
+	{
+		$query  = $querySimple;
 	}
 
 
 	// test category and dates
-	if( $annee  && $categorie ) {
+	if( $dateStart && $categorie ) 
+	{
+		$dateEnd = ($dateEnd ? $dateEnd : $dateStart);
+		
+		$query  .= ' AND wp_nouveautes.datep_nouveaute  BETWEEN  "'.$dateStart.'" AND "'.$dateEnd.'" ';
+	}
+	else if( $dateStart && !$categorie)
+	{
+		$query  .= ' WHERE wp_nouveautes.datep_nouveaute  BETWEEN  "'.$dateStart.'" AND "'.$dateEnd.'" ';
+	}
 
-		$debut = $choixAnnee;
-		$fin   = $choixAnnee2;
-		$query .= ' AND wp_nouveautes.datep_nouveaute  BETWEEN  "'.$debut.'" AND "'.$fin.'" ';
-		$limit = 'all';
-	}
-	else if( $annee && !$categorie){
-		$debut = $annee;
-		$fin   = $annee;
-		$query .= ' WHERE wp_nouveautes.datep_nouveaute  BETWEEN  "'.$debut.'" AND "'.$fin.'" ';
-		$limit = 'all';
-	}
-	
 	// test category and star publications
-	if( $choixStar && ($categorie or $annee) ) {
+	if( $star && ($categorie or $dateStart) ) {
 
 		$query .= ' AND wp_nouveautes.publication_nouveaute = "1" ';
-		$limit = 'all';
+		$limit  = 'all';
 	}
-	else if( $choixStar && !$categorie && !$annee){
+	else if( $star && !$categorie && !$dateStart){
 
 		$query .= ' WHERE wp_nouveautes.publication_nouveaute = "1" ';
-		$limit = 'all';
+		$limit  = 'all';
 	}			
+
+	// Order by date
+	$query .= ' ORDER BY wp_nouveautes.datep_nouveaute DESC ';
 	
-	$query .= ' ORDER BY wp_nouveautes.datep_nouveaute  DESC  ';
+	// limit if we have any
+	$query .= (!$limit ? ' LIMIT 0,50' : '');
 	
-	if($limit == 'notall'){
-	  $query .= ' LIMIT 0,50  ';
-	}
-*/
-		
+	// Run query and get results
 	$arrets = $wpdb->get_results($query);	
 	
 	$html   = '<tbody>';
@@ -216,7 +268,7 @@ function getLastArrets($nbr , $page , $categorie = NULL , $annee = NULL , $mois 
 			
 				$html .= '<td>'.$arret->datep_nouveaute.'</td>';
 				$html .= '<td>'.$arret->dated_nouveaute.'</td>';
-				$html .= '<td><a href="'.$page.'&amp;arret='.$arret->numero_nouveaute.'&amp;choixMois='.$mois.'&amp;choixAnnee='.$annee.'">';
+				$html .= '<td><a href="'.$page.'&amp;arret='.$arret->numero_nouveaute.'&amp;dateEnd='.$dateStart.'&amp;dateEnd='.$dateEnd.'">';
 				
 				if($arret->publication_nouveaute == "1") { $html .= '*';}
 				
@@ -232,6 +284,34 @@ function getLastArrets($nbr , $page , $categorie = NULL , $annee = NULL , $mois 
 	$html .= '</tbody>';	
 	
 	return $html;
+
 	
+}
+
+/**
+ * Get all wordpress categories
+ * Display as waal of links
+*/
+
+function getAllArretsCategories(){
+
+	$args = array(
+		'orderby'    => 'name',
+	    'order'      => 'ASC',
+		'hide_empty' => 1,
+		'exclude'    => '3,20'
+	); 
+	
+	$categories  = get_categories($args);
+	
+	$all = array();
+	
+	foreach($categories as $counting) 
+	{
+		if ($counting->category_parent == 0)
+		{
+		    $all[] = $counting->term_id;
+		}
+	}
 }
 
