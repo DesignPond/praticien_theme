@@ -23,7 +23,7 @@ function lastDayUpdated(){
 
 function arretLinkArret($lien){
 	
-	$resumes  = array( '' );
+	$resumes  = array( 'categories' );
 	$nouveaux = array( 'liste-des-nouveaux-arrets' );
 	
 	$pagename = get_query_var('pagename');
@@ -298,8 +298,8 @@ function getAllArretsCategories(){
 	$args = array(
 		'orderby'    => 'name',
 	    'order'      => 'ASC',
-		'hide_empty' => 1,
-		'exclude'    => '3,20'
+		'hide_empty' => 0,
+		'exclude'    => '1,156,166,168,220,336'
 	); 
 	
 	$categories  = get_categories($args);
@@ -310,8 +310,10 @@ function getAllArretsCategories(){
 	{
 		if ($counting->category_parent == 0)
 		{
-		    $all[] = $counting->term_id;
+		    $all[$counting->term_id] = $counting->name;
 		}
 	}
+	
+	return $all;
 }
 
