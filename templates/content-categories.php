@@ -12,6 +12,8 @@
 	  		
 	  		$categories = getAllArretsCategories();
 	  		
+	  		$current    = get_query_var('cat');
+	  		
 	  		if( !empty($categories)){
 				
 				$rows = array_chunk($categories, 7 , true);
@@ -29,12 +31,17 @@
 						
 						if (strlen($categorie) >= 40) { echo ' doubleLine ';}
 						
-						echo '"><a href="'.$url.'#'.$categorie.'" class="link">'.$categorie.'</a></li>';						
+						echo '"><a href="'.$url.'#'.$categorie.'" class="link ';
+						
+						if($current == $id){ echo 'active'; }
+						
+						echo '">'.$categorie.'</a></li>';						
 					}
 					
 					echo '</ul>';													
 				}
-			}		  		
+			}	
+					
   		?>	  		
   		</div>
   		

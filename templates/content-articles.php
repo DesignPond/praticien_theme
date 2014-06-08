@@ -1,36 +1,50 @@
 <?php
-	
-	// Main query for all posts in current category
-	
+			
 	// Get current category
 	$category  = get_query_var('cat');
 	
 	// Paged ? Yes please...
     $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;	
+    
+    // Filter for years
+	$annee     = (!empty($_REQUEST['annee']) ? $_REQUEST['annee'] : null );
+	$tax_query = array();
+								
+	if (!empty($annee))
+	{
+		$tax_query[] = 	array(
+			'relation' => 'AND',
+			'taxonomy' => 'annee',
+			'field'    => 'slug',
+			'terms'    => $annee
+		);
+	}
 			
 	$args = array(
 		'post_type' => 'post',
-		'paged'     =>  $paged,
+		'paged'     => $paged,
 		'is_paged'  => true,
 		'cat'       => $category,
-		// 'tax_query' => $tax_query 
+		'tax_query' => $tax_query 
 	);	
 
 	// Reste of query
 	$temp     = $wp_query;
 	$wp_query = null;
-	
-	// Main query
+		
+	// Main query for all posts in current category
 	$wp_query = new WP_Query( $args );
 
 ?>
 	
 <div class="row">
-   <div class="col-md-8">
+   <div class="col-md-9">
+  
 	<?php 
 	
 	// Loop over results	
-	if ( $wp_query->have_posts() ){
+	if ( $wp_query->have_posts() )
+	{
 		while ( $wp_query->have_posts() ) : $wp_query->the_post(); ?>
 			
 		<article>
@@ -42,20 +56,62 @@
 			
 		?>
 			<h1><?php echo $title; ?></h1>
+			
+			<!-- the content of post -->
 			<?php the_content(); ?>
+			
 		</article>			
-				
-						
-	<?php endwhile; } else { ?>	
-		<p>Rien trouvé</p>		
-	<?php }	?>
 	
-	<div class="nav-previous alignleft"><?php next_posts_link( 'Older posts' ); ?></div>
-	<div class="nav-next alignright"><?php previous_posts_link( 'Newer posts' ); ?></div>	
+	<?php echo getAutor($post,$category,$annee); ?>
 	
-	<?php wp_reset_query(); ?>
+	<?php endwhile;  ?>	
+					
+	<?php } else { ?><p>Rien trouvé</p><?php }	?>
+
+	<?php 
+	
+		  if ($wp_query->max_num_pages > 1) : 
+			wpc_pagination();
+		  endif; 
+		  
+		  wp_reset_query(); 
+		
+	?>
 
    </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
+
+    	<!-- Filter list by years -->
+         <ul id="listAnnee">
+         	 <li><a class="" href="<?php echo $url.'/?cat='.$category; ?>">Tout</a></li>
+         	 <?php
+				         	 
+				$args = array(
+				    'orderby'       => 'name', 
+				    'order'         => 'ASC',
+				    'hierarchical'  => true
+				);         	 
+       	 
+         	    $terms = get_terms('annee',$args);
+         	    
+				foreach($terms as $term) 
+				{
+					$anneeName = $term->name;
+					$anneeSlug = $term->slug;				
+					         	    
+					$url = add_query_arg( array( 'cat' => $category, 'annee' => $anneeSlug) , get_permalink() );
+					
+					echo '<li><a ';					
+						if($annee == $anneeSlug) { echo 'class="active"';}
+					echo ' href="'.$url.'">'.$anneeName.'</a></li>';
+				}
+				
+         	 ?>
+         </ul>
+         
+         <div class="clearfix"></div>
+         
+		 <?php  echo getResumesSidebat($category); ?>
+         
    </div>
 </div>

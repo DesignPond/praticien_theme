@@ -530,7 +530,6 @@ p{
 .bloc h3
 {
 	color: #fff;
-	text-transform: uppercase;
 	color: @dark-blue;
     font-size: 18px;
     font-weight: bold;
@@ -681,22 +680,88 @@ table#arrets tbody td {
    Sidebar
    ========================================================================== */
 
-.sidebar { }
 
-#sidebarNewArrets h3{
-	margin: 5px 0;
-	font-size: 16px;
+// Sidebar for arrets list
+
+#sidebar-list , #sidebar-categories {
+		width:100%;
+		display:block;
+		width:100%;
+		height:auto;
+		min-height:380px;
+		padding-left:1px;
+		background:url(../img/ombre.png) -10px 0 no-repeat;
+	}	
+	
+	#sidebar-list h3, #sidebar-list h3 a, #sidebar-categories li a{
+		color:#0f4060;
+		border:none;
+		background:none;
+		border-top:1px solid #d7d7d7;
+		display:block;
+		font-size:13px;
+		margin:0;
+	}	
+	
+	#sidebar-list h3 strong{
+		padding:4px 0 4px 15px;
+		background:#ebebeb;
+		display:block;
+		font-size:13px;
+	}	
+	
+	#sidebar-list h3 a{
+		color:#0f4060;
+		border:none;
+		margin:0;
+		display:block;
+		font-weight:normal;
+		padding:3px 3px 3px 30px;
+		text-indent:0;
+		line-height:23px;
+	}	
+	
+	#sidebar-list h3 a:hover, #sidebar-list h3.active a, #sidebar-categories li a.active{
+		color:#fff;
+		text-decoration: none;
+		background:#0f4060 url(../img/miniArrow.png) 7px 7px no-repeat;
+	}	
+	
+	
+
+#listAnnee {
+	margin-top: 40px;
+	display: block;
 }
 
-#sidebarNewArrets h3 a{
-	font-size: 14px;
-}
-
-#sidebarNewArrets h3.headlink a{
-	padding-left: 5px;
-}
-
-
+	#listAnnee li{
+		float: left;
+		width: auto;
+		display: block;
+		padding: 3px;	
+	}
+	
+	#listAnnee li:last-child{
+		clear: both;
+	}
+	
+	#listAnnee li a{
+		color:#fff;
+		display:block;
+		padding:1px 7px 3px 7px;
+		background:#43637c;
+		font-size:11px;
+		text-transform:none;
+		font-family:Verdana, Geneva, sans-serif;
+		font-weight:normal;
+		-webkit-border-radius: 3px;
+	    border-radius: 3px; 
+	}
+	
+	#listAnnee li a:hover, #listAnnee li a.active{
+		background:#243c51;
+		text-decoration: none;
+	}
 
 /* ==========================================================================
    Posts

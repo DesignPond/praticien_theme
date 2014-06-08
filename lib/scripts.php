@@ -12,7 +12,7 @@
  */
 function roots_scripts() {
 
-  wp_enqueue_style('roots_main', get_template_directory_uri() . '/assets/css/main.min.css', false, '0dab2561fcd23868d1a6e3cf844c54b4');
+  wp_enqueue_style('roots_main', get_template_directory_uri() . '/assets/css/main.min.css', false, '503c6be8e8e32a6ab6ddf938dbf49baf');
   wp_enqueue_style('datatable', '//cdn.datatables.net/1.10.0/css/jquery.dataTables.css', array(), null, false);
   wp_enqueue_style('jqueryui', get_template_directory_uri() . '/assets/css/smoothness/jquery-ui-1.10.4.custom.css', array(), null, false);
   // jQuery is loaded using the same method from HTML5 Boilerplate:
@@ -29,7 +29,7 @@ function roots_scripts() {
   }
 
   wp_register_script('modernizr', get_template_directory_uri() . '/assets/js/vendor/modernizr-2.7.0.min.js', array(), null, false);
-  wp_register_script('roots_scripts', get_template_directory_uri() . '/assets/js/scripts.min.js', array(), 'c2a9db0755043acd606718d2de76166c', true);
+  wp_register_script('roots_scripts', get_template_directory_uri() . '/assets/js/scripts.min.js', array(), 'c10d34b53129f6cb542afd674a67b1d8', true);
   
   // register datatable.js
   wp_register_script('datatable', '//cdn.datatables.net/1.10.0/js/jquery.dataTables.js', array(), null, false);

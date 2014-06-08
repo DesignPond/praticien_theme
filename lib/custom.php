@@ -24,16 +24,17 @@ function lastDayUpdated(){
 function arretLinkArret($lien){
 	
 	$resumes  = array( 'categories' );
-	$nouveaux = array( 'liste-des-nouveaux-arrets' );
+	$nouveaux = array( 'liste-des-nouveaux-arrets', 1143 );
 	
 	$pagename = get_query_var('pagename');
+	$pageid   = get_query_var('page_id');
 	
-	if( in_array($pagename, $nouveaux) && ($lien == 'nouveaux'))
+	if( ( in_array($pagename, $nouveaux) || in_array($pageid, $nouveaux) ) && ($lien == 'nouveaux'))
 	{
 		return 'active';
 	}
 
-	if( in_array($pagename, $resumes) && ($lien == 'resumes'))
+	if( ( in_array($pagename, $resumes) || in_array($pageid, $resumes) ) && ($lien == 'resumes'))
 	{
 		return 'active';
 	}
@@ -107,7 +108,7 @@ function prepareSidebar($array , $categorie = NULL , $star = NULL){
 	
 	$html  = '';
 	
-	$html .= '<div id="sidebarNewArrets">';
+	$html .= '<div id="sidebar-list">';
 				
 	foreach($parents as $idparent => $termparent)
 	{
@@ -316,4 +317,343 @@ function getAllArretsCategories(){
 	
 	return $all;
 }
+
+
+/**
+ * Get aurot for post
+*/
+
+function getAutor($post,$cat,$annee){
+	
+	$html = '';
+	$customposts = '';
+	
+	$auteurPost = get_field( "auteur" , $post->ID );
+	
+	if( $auteurPost )
+	{
+		$html .= '<h5>Auteur : <cite>';
+		$html .= $auteurPost;
+		$html .= '</cite></h5>';
+	}
+	else
+	{		
+		$args = array(
+			'post_type'  => 'auteur',
+			'taxonomies' => array('category','annee'),
+			'cat'        => $cat ,
+			'annee'      => $annee
+		);
+		
+		$customposts = get_posts($args);
+		
+		if(!empty($customposts))
+		{
+			$html .= '<h5>Auteur(s) : <cite>';
+		
+			$i = 1;
+		
+			foreach($customposts as $auteur)
+			{
+				//if($i >1 && !empty($auteur)){echo ' , ';}
+				$html .= $auteur->post_title;
+				$i++;
+			}
+			
+			$html .= '</cite></h5>';
+		}
+	}
+	
+	return $html;
+}
+
+/**
+ * Get top categorie
+*/
+
+function get_top_parent_category($cat_ID)
+{
+	$cat = get_category( $cat_ID );
+	$new = $cat->category_parent;
+	
+	if($new != "0")
+	{
+		return (get_top_parent_category($new));
+	}
+	
+	return $cat_ID;
+}	
+
+function get_category_depth($childcat)
+{
+	$cat        = get_category( $childcat );
+	$cats_str   = get_category_parents($cat->cat_ID, false, '%#%');
+	$cats_array = explode('%#%', $cats_str);
+	$cat_depth  = sizeof($cats_array)-2;
+	
+	return $cat_depth;
+}
+
+/**
+ * Sidebar for subcategories in arrêts resumés
+*/
+
+function getResumesSidebat($categorie, $annee = NULL){
+
+	$html = '';
+	
+	// Get top categorie
+	$topCat = get_top_parent_category($categorie);
+	
+	if($annee)
+	{		
+
+		$tax_query[] = 	array(
+			'relation' => 'AND',
+			'taxonomy' => 'annee',
+			'field'    => 'slug',
+			'terms'    => $annee
+		);
+				
+		$argums = array(
+			'nopaging'  => true,
+			'cat'       => $topCat,
+			'tax_query' => $tax_query 
+		);	
+		
+		$temp     = $wp_query;
+		$wp_query = null;
+		$wp_query = new WP_Query( $argums );
+		
+		while ( $wp_query->have_posts() ) : $wp_query->the_post();
+		
+			$id   = $post->ID; 			
+			$post = get_the_category( $id );
+			
+			foreach($post as $c) 
+			{ 
+				$allCat[] = $c->cat_ID;  
+			}	
+					
+		endwhile;
+
+		$allCat[]  = $topCat;
+		$allUnique = array_unique($allCat);
+		
+		$args = array(
+		    'orderby' => 'name',
+		    'order'   => 'ASC',
+			'include' => $allUnique
+		 );
+		  
+		$categories = get_categories($args);
+
+	}
+	else 
+	{
+		
+		$args = array(
+		   'orderby'    => 'name',
+		   'order'      => 'ASC',
+		   'hide_empty' => 0,
+		   'exclude'    => '3',
+		   'depth'      => 1,
+		   'child_of'   => $topCat
+		 );
+		  
+		$categories = get_categories($args);
+		
+		$childrens  = $categories;
+	}
+	
+	$html .= '<ul id="sidebar-categories">';	
+
+	if(!empty($categories))
+	{	
+		foreach($categories as $childcat) 
+		{
+			if(get_category_depth($childcat) == 1)
+			{
+			   	 $html .= '<li';
+			   	 
+				 	 if ( $childcat->cat_ID == $categorie) { $html .= ' class="active" ';}
+				 	 
+				 $html .= '><span></span><a class="anchor" href="'.$url.'/?cat='.$childcat->cat_ID.'&';
+				 
+					 if($annee) {	$html .= '&annee='.$annee.'&'; }
+					 
+				 $html .= 'section='.$section.'#' . $childcat->name.'">' . $childcat->name.'</a>';
+				  
+				 foreach($categories as $children) 
+				 {
+					 if((get_category_depth($children) == 2) and (cat_is_ancestor_of( $childcat, $children )))
+					 {
+						  $html .= '<li class="children ';
+						  
+						  if ( $children->cat_ID == $catGrandChild) { $html .= ' active ';}
+						  
+						  $html .= '"><a  class="anchor"  href="'.$url.'/?cat='.$children->cat_ID.'&';
+						  
+						   	if($annee) { $html .= '&annee='.$annee.'&'; }
+						   	
+						  $html .= 'section='.$section.'#' . $children->name.'">' . $children->name.'</a></li>';
+					 }
+				 }
+				  
+			   $html .= '</li>';
+			}
+		
+		}
+	}
+	
+	$html .= '</ul>';
+
+	return $html;
+
+}
+
+/**
+ * Taxonomy
+*/
+ 
+function add_custom_taxonomies() {
+	
+	/*------------
+		Sections
+	--------------*/
+	
+	register_taxonomy('section', 'post', array(
+		// Hierarchical taxonomy (like categories)
+		'hierarchical' => true,
+		// This array of options controls the labels displayed in the WordPress Admin UI
+		'labels' => array(
+			'name' => _x( 'Sections', 'taxonomy general name' ),
+			'singular_name' => _x( 'Section', 'taxonomy singular name' ),
+			'search_items' =>  __( 'Chercher section' ),
+			'all_items' => __( 'Toute les section' ),
+			'parent_item' => __( 'Parent section' ),
+			'parent_item_colon' => __( 'Parent section:' ),
+			'edit_item' => __( '&Eacute;diter section' ),
+			'update_item' => __( 'MAJ section' ),
+			'add_new_item' => __( 'Ajouter New section' ),
+			'new_item_name' => __( 'New section nom' ),
+			'menu_name' => __( 'Sections' ),
+		),
+		// Control the slugs used for this taxonomy
+		'rewrite' => array(
+			'slug' => 'sections', // This controls the base slug that will display before each term
+			'with_front' => false, // Don't display the category base before "/locations/"
+			'hierarchical' => true // This will allow URL's like "/locations/boston/cambridge/"
+		),
+	));
+	
+	/*------------
+		Année
+	--------------*/
+
+	register_taxonomy('annee', 'post', array(
+		// Hierarchical taxonomy (like categories)
+		'hierarchical' => true,
+		// This array of options controls the labels displayed in the WordPress Admin UI
+		'labels' => array(
+			'name' => _x( 'Années', 'taxonomy general name' ),
+			'singular_name' => _x( 'Année', 'taxonomy singular name' ),
+			'search_items' =>  __( 'Chercher Année' ),
+			'all_items' => __( 'Toutes les Années' ),
+			'parent_item' => __( 'Parent Année' ),
+			'parent_item_colon' => __( 'Parent Année:' ),
+			'edit_item' => __( '&Eacute;diter Année' ),
+			'update_item' => __( 'MAJ Année' ),
+			'add_new_item' => __( 'Ajouter Nouvelle Année' ),
+			'new_item_name' => __( 'Nouvelle Année' ),
+			'menu_name' => __( 'Année' ),
+		),
+		// Control the slugs used for this taxonomy
+		'rewrite' => array(
+			'slug' => 'annees', // This controls the base slug that will display before each term
+			'with_front' => false, // Don't display the category base before "/locations/"
+			'hierarchical' => true // This will allow URL's like "/locations/boston/cambridge/"
+		),
+	));
+	
+}
+add_action( 'init', 'add_custom_taxonomies', 0 );
+
+
+add_action('init', 'auteur_register_post_type');
+ 
+function auteur_register_post_type() {
+
+    register_post_type('auteur', array(
+	    'labels' => array(
+	    'name' => 'Auteurs',
+	    'singular_name' => 'Auteur',
+	    'add_new' => 'Ajouter nouvel Auteur',
+	    'edit_item' => 'Edit Auteur',
+	    'new_item' => 'Nouvel Auteur',
+	    'view_item' => 'Voir Auteur',
+	    'search_items' => 'Chercher Auteur',
+	    'not_found' => 'No Auteur found',
+	    'not_found_in_trash' => 'No Auteur found in Trash'
+    ),
+	    'public' => true,
+	    'supports' => array(
+	    'title',
+	    'excerpt'
+    )
+    
+  ));
+  
+  register_taxonomy_for_object_type('category', 'auteur');
+  register_taxonomy_for_object_type('annee', 'auteur');
+
+}
+
+/*
+ * custom pagination
+*/
+
+function wpc_pagination($pages = '', $range = 2)
+{
+     $showitems = ($range * 2)+1;
+     
+     global $paged;
+     
+     if( empty($paged)) $paged = 1;
+     
+     if($pages == '')
+     {
+         global $wp_query;
+         
+         $pages = $wp_query->max_num_pages;
+         
+         if(!$pages)
+         {
+             $pages = 1;
+         }
+     }
+
+     if(1 != $pages)
+     {
+         echo '<ul class="pagination text-center">';
+         
+         if($paged > 2 && $paged > $range+1 && $showitems < $pages) echo '<li><a href="'.get_pagenum_link(1).'">Première</a></li>';
+         if($paged > 1 && $showitems < $pages) echo '<li><a href="' .get_pagenum_link($paged - 1). '" rel="prev"> &lt;&lt; </a></li>';
+
+         for ($i=1; $i <= $pages; $i++)
+         {
+             if (1 != $pages &&( !($i >= $paged+$range+1 || $i <= $paged-$range-1) || $pages <= $showitems ))
+             {
+                 echo ($paged == $i)? '<li class="active"><a href="#">'. $i .'</a></li>':'<li><a href="'.get_pagenum_link($i).'">'.$i.'</a></li>';
+             }
+         }
+
+         if ($paged < $pages && $showitems < $pages) echo '<li><a href="'.get_pagenum_link($paged + 1).'" rel="next"> &gt;&gt; </a></li>';
+         if ($paged < $pages-1 &&  $paged+$range-1 < $pages && $showitems < $pages) echo '<li><a href="'.get_pagenum_link($pages).'">Dernière</a></li>';
+         
+         echo '</ul>';
+     }
+}
+
+
 
