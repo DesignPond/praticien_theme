@@ -43,6 +43,28 @@ function arretLinkArret($lien){
 	
 }
 
+
+function getDecisionByRef($reference){
+	
+	global $wpdb;
+			
+	// Get last date
+	$decision = $wpdb->get_row('SELECT wp_nouveautes.* , wp_custom_categories.name as nameCat , wp_subcategories.name as nameSub
+								FROM wp_nouveautes 
+								LEFT JOIN wp_custom_categories on wp_custom_categories.term_id  = wp_nouveautes.categorie_nouveaute 
+								LEFT JOIN wp_subcategories     on wp_subcategories.refNouveaute = wp_nouveautes.id_nouveaute 
+								WHERE numero_nouveaute = "'.$reference.'" ');
+	
+	if(!empty($decision))
+	{
+		return $decision;
+	}
+	
+	return array();	
+	
+}
+
+
 function getAllCategories( $onlyChilden = false){
 	
 	global $wpdb;
@@ -168,6 +190,9 @@ function getLastArrets( $page , $categorie = NULL , $dateStart = NULL , $dateEnd
 	
 	$langue = array('Fr','All','It');
 	$limit  = NULL;
+	
+	// Page to link decision to
+	$page_decision = get_ID_by_slug('decision');
 
 	/**
 	 * Query for simple list
@@ -263,11 +288,14 @@ function getLastArrets( $page , $categorie = NULL , $dateStart = NULL , $dateEnd
 	{
 		foreach($arrets as $arret)
 		{
+			// Prepapre url to link to
+			$url   = add_query_arg( array( 'arret' => $arret->numero_nouveaute , 'dateStart' => $dateStart, 'dateEnd' => $dateEnd ) , get_permalink($page_decision) );
+			
 			$html .= '<tr>';
 			
 				$html .= '<td>'.$arret->datep_nouveaute.'</td>';
 				$html .= '<td>'.$arret->dated_nouveaute.'</td>';
-				$html .= '<td><a href="'.$page.'&amp;arret='.$arret->numero_nouveaute.'&amp;dateEnd='.$dateStart.'&amp;dateEnd='.$dateEnd.'">';
+				$html .= '<td><a href="'.$url.'">';
 				
 				if($arret->publication_nouveaute == "1") { $html .= '*';}
 				
@@ -283,8 +311,6 @@ function getLastArrets( $page , $categorie = NULL , $dateStart = NULL , $dateEnd
 	$html .= '</tbody>';	
 	
 	return $html;
-
-	
 }
 
 /**
@@ -503,6 +529,12 @@ function getResumesSidebat($categorie, $annee = NULL){
 
 }
 
+/* ================================================================ 
+	
+	Taxonomy , Filters & Actions wordpress	
+	
+ ================================================================ */
+
 /**
  * Taxonomy
 */
@@ -598,6 +630,19 @@ function auteur_register_post_type() {
   register_taxonomy_for_object_type('category', 'auteur');
   register_taxonomy_for_object_type('annee', 'auteur');
 
+}
+
+function get_ID_by_slug($page_slug) {
+
+    $page = get_page_by_path($page_slug);
+    
+    if ($page) 
+    {
+        return $page->ID;
+    } else 
+    {
+        return null;
+    }
 }
 
 /*

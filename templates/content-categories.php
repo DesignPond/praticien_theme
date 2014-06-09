@@ -15,8 +15,8 @@
 		  		if(!empty($current))
 		  		{
 		  			// Make sur current is a top category
-		  			$current    = get_query_var('cat');		  	
-		  			$current    =  get_top_parent_category($current);			  		
+		  			$current = get_query_var('cat');		  	
+		  			$current = get_top_parent_category($current);			  		
 		  		}
 
 		  		

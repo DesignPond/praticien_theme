@@ -13,9 +13,9 @@
 
 <div class="row">
   <div class="col-md-9">
-  		
+  
   		<!-- Bloc search -->
-  		<div class="bloc blocAutoHeight">	         
+  		<div id="filterByDates" class="bloc blocAutoHeight">	         
 			<form class="form-inline" id="choixPeriode" method="post" action="<?php echo get_permalink(); ?>" role="form">
 				
 				<div class="row">

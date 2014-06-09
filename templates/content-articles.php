@@ -58,17 +58,17 @@
 			<h1><?php echo $title; ?></h1>
 			
 			<!-- the content of post -->
-			<?php the_content(); ?>
-			<?php echo getAutor($post,$category,$annee); ?>
-			<?php
-				$commentPost = get_field( "commentaire_pour_arrêt" , $post->ID );
-						
-				if( $commentPost )
-				{
-					echo '<h4>Commentaire</h4>';
-					echo $commentPost;
-				}
-			?>
+		<?php 
+				
+			the_content(); 
+			echo getAutor($post,$category,$annee); 
+			
+			$commentPost = get_field( "commentaire_pour_arrêt" , $post->ID );				
+			$commentPost = ($commentPost ? '<h4>Commentaire</h4>'.$commentPost : '');
+			
+			echo $commentPost;
+			
+		?>
 			
 		</article>			
 	
@@ -78,9 +78,7 @@
 
 	<?php 
 	
-		  if ($wp_query->max_num_pages > 1) : 
-			wpc_pagination();
-		  endif; 
+		  if ($wp_query->max_num_pages > 1){ wpc_pagination(); }
 		  
 		  wp_reset_query(); 
 		
