@@ -23,7 +23,7 @@ function lastDayUpdated(){
 
 function arretLinkArret($lien){
 	
-	$resumes  = array( 'categories' );
+	$resumes  = array( 'categories' , 22534);
 	$nouveaux = array( 'liste-des-nouveaux-arrets', 1143 );
 	
 	$pagename = get_query_var('pagename');
@@ -80,9 +80,7 @@ function getAllCategories( $onlyChilden = false){
 				{
 					$children[$row->term_id][$row->name] = $row->id;
 				}
-			}
-			
-			
+			}			
 		}
 	}
 	
@@ -466,7 +464,10 @@ function getResumesSidebat($categorie, $annee = NULL){
 		$childrens  = $categories;
 	}
 	
-	$html .= '<ul id="sidebar-categories">';	
+	$html .= '<div id="sidebar-categories">';
+	
+	// current category for active state
+	$catCurretActive = get_query_var('cat');	
 
 	if(!empty($categories))
 	{	
@@ -474,39 +475,29 @@ function getResumesSidebat($categorie, $annee = NULL){
 		{
 			if(get_category_depth($childcat) == 1)
 			{
-			   	 $html .= '<li';
-			   	 
-				 	 if ( $childcat->cat_ID == $categorie) { $html .= ' class="active" ';}
-				 	 
-				 $html .= '><span></span><a class="anchor" href="'.$url.'/?cat='.$childcat->cat_ID.'&';
+				 $url    = add_query_arg( array( 'cat' => $childcat->cat_ID, 'section' => $section.'#'.$childcat->name , 'annee' => $annee ) , get_permalink() );
 				 
-					 if($annee) {	$html .= '&annee='.$annee.'&'; }
-					 
-				 $html .= 'section='.$section.'#' . $childcat->name.'">' . $childcat->name.'</a>';
+				 $active = ($childcat->cat_ID == $catCurretActive ? 'class="active"' : '' );
+				 
+				 $html  .= '<h3 '.$active.'><a href="'.$url.'">'.$childcat->name.'</a></h3>';
 				  
 				 foreach($categories as $children) 
 				 {
 					 if((get_category_depth($children) == 2) and (cat_is_ancestor_of( $childcat, $children )))
 					 {
-						  $html .= '<li class="children ';
-						  
-						  if ( $children->cat_ID == $catGrandChild) { $html .= ' active ';}
-						  
-						  $html .= '"><a  class="anchor"  href="'.$url.'/?cat='.$children->cat_ID.'&';
-						  
-						   	if($annee) { $html .= '&annee='.$annee.'&'; }
-						   	
-						  $html .= 'section='.$section.'#' . $children->name.'">' . $children->name.'</a></li>';
+					 
+					 	 $url1  = add_query_arg( array( 'cat' => $children->cat_ID, 'section' => $section.'#'.$children->name , 'annee' => $annee ) , get_permalink() );
+				 
+						 $act   = ($children->cat_ID == $catCurretActive ? 'active' : '' );
+						 
+						 $html .= '<h3 class="'.$act.'"><a href="'.$url1.'">'.$children->name.'</a></h3>';
 					 }
-				 }
-				  
-			   $html .= '</li>';
-			}
-		
+				 }				 			   
+			}		
 		}
 	}
 	
-	$html .= '</ul>';
+	$html .= '</div>';
 
 	return $html;
 

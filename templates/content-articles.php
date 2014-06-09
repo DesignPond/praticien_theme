@@ -59,10 +59,18 @@
 			
 			<!-- the content of post -->
 			<?php the_content(); ?>
+			<?php echo getAutor($post,$category,$annee); ?>
+			<?php
+				$commentPost = get_field( "commentaire_pour_arrêt" , $post->ID );
+						
+				if( $commentPost )
+				{
+					echo '<h4>Commentaire</h4>';
+					echo $commentPost;
+				}
+			?>
 			
 		</article>			
-	
-	<?php echo getAutor($post,$category,$annee); ?>
 	
 	<?php endwhile;  ?>	
 					
@@ -80,8 +88,9 @@
 
    </div>
     <div class="col-md-3">
-
-    	<!-- Filter list by years -->
+		
+		 <h2 class="sectionTitle">Sections</h2>
+    	 <!-- Filter list by years -->
          <ul id="listAnnee">
          	 <li><a class="" href="<?php echo $url.'/?cat='.$category; ?>">Tout</a></li>
          	 <?php
