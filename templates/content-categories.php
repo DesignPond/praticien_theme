@@ -10,15 +10,13 @@
 		  		
 		  		$categories = getAllArretsCategories();
 		  		
-		  		$current = '';
+		  		$current = get_query_var('cat');		
 		  		
 		  		if(!empty($current))
 		  		{
-		  			// Make sur current is a top category
-		  			$current = get_query_var('cat');		  	
+		  			// Make sur current is a top category	  	
 		  			$current = get_top_parent_category($current);			  		
 		  		}
-
 		  		
 		  		if( !empty($categories)){
 					

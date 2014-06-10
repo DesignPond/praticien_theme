@@ -671,28 +671,352 @@ a:hover,a:focus{
 	background: #fff;
 }
 
+
+/*-----------------
+	Tabs		
+-------------------*/
+
+#tabs{
+	margin-bottom: 20px;
+	clear: both;
+	background: none repeat scroll 0 0 rgba(0, 0, 0, 0);
+    border: medium none;
+}
+
+	#tabs ul#tabbed{
+		width:100%;
+		margin-bottom: 20px;
+		display:block;
+		float:left;
+		border-top:none;
+		border-left:none;
+		border-bottom:none;
+		padding: 0.2em 0 0;
+	}
+	
+		#tabs ul#tabbed li {
+			background:none;
+			color:#0f4060;
+			border:none;
+			display:block;
+			float:none;
+		}
+		
+		#tabs ul#tabbed li a{
+			border:none;
+			color:#0f4060;
+			display:block;
+			float:none;
+		}
+		
+		#tabs ul#tabbed li.ui-tabs-selected a ,#tabs ul#tabbed li.ui-state-active a ,#tabs ul#tabbed li.ui-state-hover a{
+			background:#0f4060;
+			color:#fff;
+		}
+		
+		#tabs div.ui-tabs-panel {
+			width:100%;
+			display:block;
+			float:left;
+			margin-top:30px;
+		}
+		
+		#tabs .ui-widget-header {
+		    border: none;
+		    background: none;
+		}
+
+	
+/***************************
+	checkboxes
+***************************/
+
+fieldset.bgcategorie{
+	background:#fff;
+	padding-bottom:10px;
+	margin-top: 0;
+}
+
+.check-title{
+	width: 21%;
+	margin-right: 4%;
+	display: block;
+	float: left;
+}
+
+.check-choice{
+	width: 74%;
+	display: block;
+	float: left;
+}
+
+	.checklist {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		background:#fff;
+		display:block;
+		width:100%;
+	}
+ 
+	.checklist li {
+	   	background: none repeat scroll 0 0 #F0F0F0;
+	    border: 1px solid #E1E1E1;
+	    border-radius: 4px 4px 4px 4px;
+	    clear: both;
+	    color: #000000;
+	    font-family: Arial,Sans-serif;
+	    height: auto;
+	    list-style: none outside none;
+	    margin: 15px 10px ;
+	    padding: 0 15px 15px 15px;
+	    position: relative;
+	}
+
+p.new_input{
+	width:90%;
+	position:relative;
+	z-index:50;
+}
+
+i.remove_input{
+    background: url("../images/delete.png") no-repeat scroll 0 0 transparent;
+    display: block;
+    height: 25px;
+    position: absolute;
+    right: 0;
+    top: 7px;
+    width: 25px;
+	cursor:pointer;
+	z-index:20;
+}
+
+.checklist li a.addKeywords{
+ 	background: url("../images/addKeywords.png") no-repeat scroll 8px 7px #fff;
+    color: #666666;
+    display: block;
+    height: auto;
+    padding: 2px 13px 2px 22px;
+    position: absolute;
+    right: 7px;
+    top: 7px;
+    width: auto;
+    font-size: 12px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px; 
+    border: 1px solid #dfdfdf;
+}
+
+.checklist li a.addKeywords:hover{
+    color: #000;
+}
+
+
+.checklist li.selected {
+background: #43637c ;
+color: #fff;
+}
+
+.checklist li.nomarge {
+	margin-right:0;
+}
+ 
+.checklist li.selected .checkbox-select , .checklist li.selected .addKeywords , .checklist li.selected .check-ispub {
+display: none;
+}
+ 
+.checkbox-select {
+	display: block;
+	width: 100%;
+	height: 25px;
+	line-height:25px;
+	background:#43637c;
+	text-align:center;
+	color:#fff;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+	text-transform:uppercase;
+}
+ 
+.checklist li input {
+	display: none;
+}
+
+.checklist li input.ispub{
+	display: inline-block;
+    margin: 5px 5px 0 0;
+}
+
+
+.check-ispub{
+	font-size: 11px;
+	padding-top: 8px;	
+}
+
+.checklist li p.successMsg {
+    display: none;
+	color:#e2f2ff;
+	font-size: 13px;
+	font-weight:bold;
+    height: auto;
+    position: absolute;
+    right: 7px;
+    top: 24px;
+    width: 160px;
+}
+
+.checklist li i.limite-pub{
+	display: none;
+    font-size: 11px;
+    position: absolute;
+    right: 10px;
+    text-align: right;
+    top: 5px;
+}
+
+.checklist li.selected i.limite-pub{
+	display: block;
+}
+
+.checklist li a{
+	text-decoration:none;
+	border:none;
+	z-index:10;
+	color:#fff;
+	font-size: 13px;
+}
+	
+.checklist li a.selectlink{
+	position: relative;
+}
+
+.checklist li a:hover{
+	
+	color:#fff;
+}
+ 
+a.checkbox-deselect {
+	display: none;
+	color: #ff8282;
+	font-size: 12px;
+	text-decoration: none;
+	position: absolute;
+	bottom: 4px;
+	right: 5px;
+	width:25px;
+	height:25px;
+	text-align:center;
+	line-height:14px;
+	text-indent:-99999px;
+	background:url(../images/desabonner.png) no-repeat;
+}
+ 
+.checklist li span.vu{
+	width:30px;
+	height:30px;
+	position:absolute;
+    display: none;
+	bottom:8px;
+	left:8px;
+	z-index:10;
+	background:url(../images/abonne.png)no-repeat;
+}
+
+.checklist li div.keywords{
+	color: #FFFFFF;
+    display: none;
+    font-size: 12px;
+    height: auto;
+    line-height: 15px;
+    margin-bottom: 5px;
+    width: 100%;
+    z-index: 5;
+}
+
+.checklist li div.keywords p{
+	color:#fff;
+	font-size:11px;
+	line-height:13px;
+	margin-bottom: 0;
+}
+
+.checklist li div.keywords strong{
+	display: none;
+}
+
+.checklist li.selected div.check-choice div.keywords, .checklist li.selected div.check-choice div.keywords strong{
+	display:block;
+}
+
+.checklist li.selected span.vu{
+	display:block;
+}
+ 
+.checklist li.selected a.checkbox-deselect {
+	display: block;
+}
+ 
+.checklist li label {
+	color: #000000;
+	width: 70%;
+    display: block;
+    font-size: 15px;
+    font-weight: bold;
+    height: auto;
+    line-height: 16px;
+    padding: 20px 0 15px 0;
+    text-align: left;
+    word-wrap: break-word;
+}
+
+.checklist li input.key{
+	width: 90%;
+	min-height:30px;
+	height: auto;
+	display:block;
+	color:#666666;
+	position:relative;
+	z-index:10;
+}
+
+	.checklist li.selected p.new_input{
+		display:none;
+	}
+	
+	.checklist li.selected label {
+	color:#fff;
+	font-size:14px;
+	}
+	 
+	
+	.checklist li.general label {
+		height: 40px;	
+	}
+	
+	.checklist li.general input.key {
+	    height: 80px;
+	}
+
 /* ==========================================================================
    Tables
    ========================================================================== */
 
 table#arrets thead th,table#arrets tfoot th, table#arrets thead td {
-    border-bottom: 1px solid #CCCCCC;
     padding:5px 10px 5px 5px;
     text-align: left;
     font-size: 13px;
     line-height: 18px;
-    background: @darker-blue;
+    background: @dark-blue;
     color: #fff;
 }
 
 table#arrets thead th,table#arrets tfoot th {
-    background: @darker-blue;
-    border-bottom: 1px solid #bababa;
+    background: @dark-blue;
 }
 
 table#arrets tbody td {
 	font-size: 13px;
-	padding: 5px 8px;
+	padding:10px 8px;
 }
 
 #arrets_length{

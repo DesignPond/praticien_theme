@@ -74,7 +74,7 @@
 	
 	<?php endwhile;  ?>	
 					
-	<?php } else { ?><p>Rien trouvé</p><?php }	?>
+	<?php } else { ?><article><p>Aucun arrêt ne correspond à votre demande</p></article><?php }	?>
 
 	<?php 
 	
