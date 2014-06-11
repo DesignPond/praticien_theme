@@ -67,6 +67,7 @@ function roots_display_sidebar() {
       'template-arrets.php',
       'template-decision.php',
       'template-alertes.php',
+      'template-results.php',
       'template-resumes.php'
     )
   );

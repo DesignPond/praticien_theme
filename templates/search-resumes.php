@@ -1,10 +1,13 @@
+<?php  $link = get_ID_by_slug('resultats-recherche'); ?>
+
 <div class="row">
 
 	<div class="col-md-3" id="searchKey">	
 		<label class="searchText">Recherche par mots-clés</label>
-		<form role="search" method="get" id="searchform" class="search-form form-inline" action="<?php echo home_url( '/' ); ?>">
+		<form role="search" method="post" id="searchform" class="search-form form-inline" action="<?php echo get_permalink($link); ?>">
 		    <div class="input-group">
-				<input class="search-field form-control" type="search" placeholder="" name="s" value="">
+				<input class="search-field form-control" type="search" placeholder="" name="term" value="">
+				<input type="hidden" name="search" value="simple" />
 				<label class="hide">Rechercher :</label>
 				<span class="input-group-btn">
 					<button class="search-submit btn btn-blue" type="submit">Ok</button>
@@ -15,14 +18,16 @@
 	
 	<div class="col-md-9">	
 	
-		<form role="search" method="post" id="searchDetail" action="<?php bloginfo('url'); ?>/index.php?page_id=2524">
+		<form role="search" method="post" id="searchDetail" action="<?php echo get_permalink($link); ?>">
 
 			<!-- clone terms inputs -->
 			<a id="cloneForm" href=""><span class="glyphicon glyphicon-plus"></span></a>
 			<a id="deleteForm" href=""><span class="glyphicon glyphicon-minus"></span></a>
 			
 			<label class="searchText">Recherche par article &nbsp;
-				<span id="infoTip" data-toggle="tooltip" data-placement="right" title="Exemple = article : <strong>405</strong> , loi: <strong>CPC</strong> , alinéa: <strong>1</strong>, chiffre: <strong>2</strong>, lettre: <strong>c</strong>" class="glyphicon glyphicon-info-sign"></span><!-- info on search terms -->	
+				<span id="infoTip" data-toggle="tooltip" data-placement="right" 
+					title="Exemple = article : <strong>405</strong> , loi: <strong>CPC</strong> , alinéa: <strong>1</strong>, chiffre: <strong>2</strong>, lettre: <strong>c</strong>" 
+					class="glyphicon glyphicon-info-sign"></span><!-- info on search terms -->	
 			</label>
 			
 			<div id="containerFormAtf">  
@@ -51,7 +56,8 @@
 						echo '</select></p>';
 					}
 				?>
-							
+				
+				<input type="hidden" name="search" value="terms" />			
 				<p class="search-term"><input type="submit" value="Ok" id="searchBtn" class="btn btn-blue" /></p>
 			
 				<div class="clearfix"></div>
@@ -59,7 +65,6 @@
 			
 			<!-- container for cloned forms -->
 			<div class="newForms"></div>
-
 					
 		</form>
 	

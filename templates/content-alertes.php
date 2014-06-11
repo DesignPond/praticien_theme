@@ -18,8 +18,6 @@
 	$user_id = $current_user->ID;		
 	$rythme  =  get_user_meta($user_id, 'rythme_abo' , true); 
 
-
-
 ?>
 
 
