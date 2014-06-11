@@ -16,6 +16,77 @@
 
 (function($) {
 
+	// Position of body when selecting categorie in resumes list
+	if(window.location.hash) {
+		var position = $("#anchorTitle").position();
+	
+		$('html, body').animate({
+			scrollTop: 600
+		}, 600);
+	}
+	
+	// Tooltips
+	$('#infoTip').tooltip({
+		'html': true
+	});
+	
+	// Form placeholder css	
+	$('.default-value').each(function() {
+	
+		var default_value = this.value;
+		
+		$(this).css('color', '#aeaeae'); // this could be in the style sheet instead
+		
+		$(this).focus(function()
+		{
+			if(this.value === default_value) {
+				this.value = '';
+				$(this).css('color', '#0f4060');
+			}
+		});
+		
+		$(this).blur(function()
+		{
+			if(this.value === '') {
+				$(this).css('color', '#aeaeae');
+				this.value = default_value;
+			}
+		});
+		
+	});
+	
+	// Cloning form
+	$("#cloneForm").click(function(e){
+	
+		e.preventDefault();
+		var clones = $('.newForms .formAtf').length;
+		
+		if(clones === 0)
+		{
+			$("#deleteForm").show();
+		}
+		
+		$('#containerFormAtf .formAtf').clone().appendTo('.newForms');
+	});
+	
+	$("#deleteForm").click(function(e) {
+	
+		e.preventDefault();
+		
+		$(".newForms div:last-child").remove();
+		
+		var clones = $('.newForms .formAtf').length;
+		
+		if(clones === 0)
+		{
+			$("#deleteForm").hide();
+		}
+	});
+	
+	$( "#choixAnnee" ).datepicker({ dateFormat: "yy-mm-dd" });
+	$( "#choixAnnee2" ).datepicker({ dateFormat: "yy-mm-dd" });
+
+
 	// New arrets list
 	$('#arrets').dataTable({
 		"aaSorting": [[ 0, "desc" ]],"iDisplayLength": 25,"bAutoWidth": false , "aoColumns" : [{ "sWidth": "10%"},{ "sWidth": "10%"},{ "sWidth": "10%"},{ "sWidth": "25%"},{ "sWidth": "35%"},{ "sWidth": "10%"}],

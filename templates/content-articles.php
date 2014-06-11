@@ -41,6 +41,21 @@
    <div class="col-md-9">
   
 	<?php 
+				
+	// The categorie for anchor	
+	$parentName = '';
+	
+	$cat_id  = get_query_var('cat');
+	$name    = get_cat_name( $cat_id );
+	$child   = get_top_parent_category($cat_id);	
+	
+	if(!empty($cat_id) && ($child != $cat_id))
+	{	  	
+		$parentName = get_cat_name( $child ); 
+		$parentName = $parentName.' / ';		  		
+	}
+		
+	echo '<a id="anchorTitle"><h2 class="sectionTitre">'.$parentName.''.$name.'</h2></a>';
 	
 	// Loop over results	
 	if ( $wp_query->have_posts() )
@@ -49,20 +64,21 @@
 			
 		<article>
 		<?php
-		
+			
+			// Get the atf if there is one
 			$atf   = get_post_meta($post->ID, 'atf', true);
-			// check if the custum field has a value
+			// check if the custom field has a value
 			$title = ($atf != '' ? $atf : get_the_title() );
 			
-		?>
-			<h1><?php echo $title; ?></h1>
+			echo '<h1>'.$title.'</h1>';
 			
-			<!-- the content of post -->
-		<?php 
-				
+			// the content of post 
 			the_content(); 
+			
+			// The autor of post
 			echo getAutor($post,$category,$annee); 
 			
+			// The comment if there is one
 			$commentPost = get_field( "commentaire_pour_arrêt" , $post->ID );				
 			$commentPost = ($commentPost ? '<h4>Commentaire</h4>'.$commentPost : '');
 			

@@ -529,17 +529,6 @@ function getResumesSidebat($categorie, $annee = NULL){
 
 }
 
- 
-
-/* ================================================================ 
-	
-	AJAX functions	
-	
- ================================================================ */
- 
- 
-
-
 /* ================================================================ 
 	
 	Taxonomy , Filters & Actions wordpress	
@@ -650,7 +639,8 @@ function get_ID_by_slug($page_slug) {
     if ($page) 
     {
         return $page->ID;
-    } else 
+    } 
+    else 
     {
         return null;
     }

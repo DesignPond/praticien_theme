@@ -154,11 +154,11 @@ a:hover,a:focus{
 			margin-right: 20px;
 		}
 		
-		.navbar-default .navbar-nav.main-nav > li > a:hover, 
-		.navbar-default .navbar-nav.main-nav > li > a:focus,			
-		.navbar-default .navbar-nav.main-nav > .active > a, 
-		.navbar-default .navbar-nav.main-nav > .active > a:hover, 
-		.navbar-default .navbar-nav.main-nav > .active > a:focus{
+		.navbar-nav.main-nav > li > a:hover, 
+		.navbar-nav.main-nav > li > a:focus,			
+		.navbar-nav.main-nav > .active > a, 
+		.navbar-nav.main-nav > .active > a:hover, 
+		.navbar-nav.main-nav > .active > a:focus{
 			color: #ffffff;
 			background: @hover-blue;
 		}
@@ -167,19 +167,7 @@ a:hover,a:focus{
 /* ==========================================================================
    Homepage header
    ========================================================================== */
-
-.partnerLogo{
-
-}
-
-#logoUnine{
-	
-}
-
-#logoCemaj{
-
-}
-   
+  
 #home-header{
 	height: 300px;
 	position: relative;
@@ -259,6 +247,44 @@ a:hover,a:focus{
 	font-size: 15px;
 	line-height: 22px;
 }
+
+
+/* ==========================================================================
+   User menu bar
+   ========================================================================== */
+   
+#header-user{
+	background: #fff;
+	border-bottom: 1px solid #ddd;
+}
+
+	#header-user .navbar{
+		min-height: 40px;
+	}
+
+	#header-user .navbar-brand {
+		height: 40px;
+		line-height: 40px;
+		padding: 0;
+	}
+	
+	#header-user .navbar-nav > li > a {
+	    padding-bottom: 10px;
+	    padding-top: 10px;
+	}
+	
+		#header-user .navbar-nav > li > a:hover, 
+		#header-user .navbar-nav > li > a:focus,			
+		#header-user .navbar-nav > li.active > a, 
+		#header-user .navbar-nav > li.active > a:hover, 
+		#header-user .navbar-nav > li.active > a:focus{
+			background: @light-grey;
+			color: @darker-blue;
+		}
+	
+	#header-user .navbar-nav > li > a span.glyphicon{
+		top: 2px;
+	}
 
 /* ==========================================================================
    Formulaires
@@ -604,6 +630,94 @@ a:hover,a:focus{
 
 
 /* ==========================================================================
+   Search forms
+   ========================================================================== */
+   
+p.shadow{
+	width:98%;
+	height:30px;
+	background:url(../img/shadow.png) center -5px no-repeat;
+	display:block;
+	margin:0px auto 0 auto;
+}
+
+#rechercheTip{
+	position:absolute;
+	top:0;
+	left:20px;
+	width:16px;
+	height:16px;
+	display:block;
+	cursor:pointer;
+	background:url(../img/help.png) no-repeat;
+}
+
+#searchDetail {
+    border-left: 1px solid #DDDDDD;
+    margin-bottom: 20px;
+    padding-bottom: 5px;
+    padding-left: 50px;
+    position: relative;
+}
+
+	#searchDetail .tooltip-inner{
+		max-width: 500px !important;
+		background: @dark-blue;
+		color: #fff;
+		font-weight: normal;
+		font-size: 13px;
+		padding: 5px 10px !important;
+	}	
+	
+	#searchDetail .tooltip.right > .tooltip-arrow{
+	    border-right:5px solid @dark-blue;
+	}
+	
+#cloneForm{
+    display: block;
+    height: 16px;
+    left: 20px;
+    position: absolute;
+    top: 33px;
+    width: 16px;
+    z-index: 50;
+}
+	
+#containerFormAtf{
+	position: relative;
+	z-index: 30;
+}
+
+	#searchDetail .search-term{
+		float: left;
+		width: 10%;
+		margin-right: 15px;
+	}
+	
+	#searchDetail .search-term-select{
+		width: 15%;
+	}
+	
+	#searchDetail .newForms .formAtf{
+		clear: both;
+	}
+	
+#deleteForm{
+    left: 20px;
+    position: absolute;
+    top: 75px;
+	width:16px;
+	height:16px;
+	display:none;
+	z-index: 80;
+}
+
+#searchBtn {
+    margin-top: 1px;
+}
+
+
+/* ==========================================================================
    Content
    ========================================================================== */
 
@@ -653,10 +767,19 @@ a:hover,a:focus{
 }
 
 
+.sectionTitre{
+	color: @dark-red;
+	font-size: 14px;
+	line-height: 20px;
+	text-transform: uppercase;
+}
+
+
 .centerTitle{
 	text-align: center;
 	line-height: 40px;
-	margin-bottom: 30px;
+	margin-bottom: 10px;
+	font-size: 24px;
 }
 
 #arret-text{
@@ -1064,13 +1187,29 @@ table#arrets tbody td {
 // Sidebar for arrets list
 
 #sidebar-list , #sidebar-categories {
+	width:100%;
+	display:block;
+	height:auto;
+	padding-left:1px;
+	background:url(../img/ombre_body.png) -10px 0 repeat-y; 
+}	
+
+	#sidebar-list:before , #sidebar-categories:before {
 		width:100%;
 		display:block;
+		height:20px;
+		margin-left: -11px;
+		background: none;
+		content:url(../img/ombre_header.png);
+	}	
+	
+	#sidebar-list:after , #sidebar-categories:after {
 		width:100%;
-		height:auto;
-		min-height:380px;
-		padding-left:1px;
-		background:url(../img/ombre.png) -10px 0 no-repeat;
+		display:block;
+		height:20px;
+		background: none;
+		margin-left: -11px;
+		content:url(../img/ombre_footer.png);
 	}	
 	
 	#sidebar-list h3, #sidebar-list h3 a, #sidebar-categories h3 {
@@ -1111,14 +1250,13 @@ table#arrets tbody td {
 .sectionTitle{
 	border-bottom: 4px solid @dark-blue;
     color: @dark-red;
-    font-size: 17px;
+    font-size: 14px;
     line-height: 20px;
-    padding: 3px 0;
+    padding: 0;
     text-align: right;
-    text-transform: none;
+    text-transform: uppercase;
     width: 100%;
-    font-weight: bold;
-}	
+}
 
 #listAnnee {
 	margin-top: 20px;
