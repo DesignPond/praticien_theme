@@ -57,13 +57,16 @@
    ========================================================================== */
 @lighter-blue: #deebf3;
 @light-blue:   #a1bdd1;
-@middle-blue:  #7ba1b6;
+@middle-blue:  #82acc8;
+@hover-blue:   #74a5c6;
 @dark-blue:    #0f4060;
 @link-blue:    #255d82;
 @darker-blue:  #093450;
-@dark-red:     #912137;
 
+@dark-red:     #912137;
 @darker-red:  darken(@dark-red, 5%);
+
+@light-grey:   #e8e8e8;
 
 /* ==========================================================================
    Base
@@ -109,7 +112,7 @@ a:hover,a:focus{
 }
 
 	.navbar-default .navbar-brand{
-		font-size: 40px;
+		font-size: 34px;
 		color: #FFFFFF;
 	    height: 60px;
 		line-height: 50px;
@@ -137,16 +140,7 @@ a:hover,a:focus{
 		.navbar-default .navbar-nav > li > a {
 		    color: #ffffff;
 		    line-height: 50px;
-		    border-left: 1px solid @light-blue;
 		}
-		
-		.navbar-default .navbar-nav > li:last-child > a {
-		    border-right: 1px solid @light-blue;
-		}
-		
-		.navbar-default .navbar-nav.logos > li > a {
-		    border:none;
-		}	
 
 		.navbar-nav.logos > li > a {
 		    padding: 10px 10px;
@@ -166,7 +160,7 @@ a:hover,a:focus{
 		.navbar-default .navbar-nav.main-nav > .active > a:hover, 
 		.navbar-default .navbar-nav.main-nav > .active > a:focus{
 			color: #ffffff;
-			background: @light-blue;
+			background: @hover-blue;
 		}
 
 
@@ -523,7 +517,6 @@ a:hover,a:focus{
 	Home page content
   ============================================*/
 
-
 #homeContent{
 	margin-top: 30px;
 }
@@ -671,6 +664,38 @@ a:hover,a:focus{
 	background: #fff;
 }
 
+/*-------------------
+	Page alertes
+--------------------*/
+
+.infoBloc{
+	padding: 15px;
+	background: @light-grey;
+	margin-bottom: 10px;
+}
+
+#rythmeBox{
+	background: @light-grey;
+    display: block;
+    height: auto;
+    padding: 5px;
+    text-align: center;
+    width: auto;
+	margin-bottom:15px;
+}
+
+	#rythmeBox select{
+		display: block;
+	    height: 30px;
+	    line-height: 20px;
+	    margin: 5px auto;
+	    padding: 2px;
+	    font-size: 13px;
+	}
+	
+	#rythmeBox form{
+		margin-bottom:0;
+	}
 
 /*-----------------
 	Tabs		
@@ -704,13 +729,17 @@ a:hover,a:focus{
 		
 		#tabs ul#tabbed li a{
 			border:none;
+			border-bottom: 1px solid @light-grey;
 			color:#0f4060;
 			display:block;
 			float:none;
+			font-size: 14px;
+			background: #fff;
+			padding: 0.4em 0.5em;
 		}
 		
 		#tabs ul#tabbed li.ui-tabs-selected a ,#tabs ul#tabbed li.ui-state-active a ,#tabs ul#tabbed li.ui-state-hover a{
-			background:#0f4060;
+			background:@dark-blue;
 			color:#fff;
 		}
 		
@@ -718,7 +747,8 @@ a:hover,a:focus{
 			width:100%;
 			display:block;
 			float:left;
-			margin-top:30px;
+			padding: 0;
+			margin-top: 15px;
 		}
 		
 		#tabs .ui-widget-header {
@@ -733,8 +763,8 @@ a:hover,a:focus{
 
 fieldset.bgcategorie{
 	background:#fff;
-	padding-bottom:10px;
-	margin-top: 0;
+	margin-top: 25px;
+	padding: 10px;
 }
 
 .check-title{
@@ -760,14 +790,13 @@ fieldset.bgcategorie{
 	}
  
 	.checklist li {
-	   	background: none repeat scroll 0 0 #F0F0F0;
+	   	background:@light-grey;
 	    border: 1px solid #E1E1E1;
 	    border-radius: 4px 4px 4px 4px;
 	    clear: both;
 	    color: #000000;
-	    font-family: Arial,Sans-serif;
 	    height: auto;
-	    list-style: none outside none;
+	    list-style: none;
 	    margin: 15px 10px ;
 	    padding: 0 15px 15px 15px;
 	    position: relative;
@@ -813,16 +842,18 @@ i.remove_input{
 
 
 .checklist li.selected {
-background: #43637c ;
-color: #fff;
+	background: @dark-blue ;
+	color: #fff;
 }
 
 .checklist li.nomarge {
 	margin-right:0;
 }
  
-.checklist li.selected .checkbox-select , .checklist li.selected .addKeywords , .checklist li.selected .check-ispub {
-display: none;
+.checklist li.selected .checkbox-select , 
+.checklist li.selected .addKeywords , 
+.checklist li.selected .check-ispub {
+	display: none;
 }
  
 .checkbox-select {
@@ -830,7 +861,7 @@ display: none;
 	width: 100%;
 	height: 25px;
 	line-height:25px;
-	background:#43637c;
+	background: @light-grey;
 	text-align:center;
 	color:#fff;
 	-webkit-border-radius: 4px;
@@ -888,6 +919,7 @@ display: none;
 	
 .checklist li a.selectlink{
 	position: relative;
+	background: @dark-blue;
 }
 
 .checklist li a:hover{
@@ -908,7 +940,7 @@ a.checkbox-deselect {
 	text-align:center;
 	line-height:14px;
 	text-indent:-99999px;
-	background:url(../images/desabonner.png) no-repeat;
+	background:url(../img/desabonner.png) no-repeat;
 }
  
 .checklist li span.vu{
@@ -919,7 +951,7 @@ a.checkbox-deselect {
 	bottom:8px;
 	left:8px;
 	z-index:10;
-	background:url(../images/abonne.png)no-repeat;
+	background:url(../img/abonne.png)no-repeat;
 }
 
 .checklist li div.keywords{
@@ -1190,6 +1222,14 @@ table#arrets tbody td {
 }
 
 .top-buffer { margin-top:40px; }
+
+hr.clearfix{
+	visibility: hidden;
+	margin: 0;
+	padding: 0;
+	clear: both;
+	border: none;
+}
 
 
 /* ==========================================================================

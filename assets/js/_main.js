@@ -16,27 +16,242 @@
 
 (function($) {
 
-		$('#arrets').dataTable({
-			"aaSorting": [[ 0, "desc" ]],"iDisplayLength": 25,"bAutoWidth": false , "aoColumns" : [{ "sWidth": "10%"},{ "sWidth": "10%"},{ "sWidth": "10%"},{ "sWidth": "25%"},{ "sWidth": "35%"},{ "sWidth": "10%"}],
-			"oLanguage": {
-			"sLengthMenu": "Montrer _MENU_ lignes par page",
-			"sZeroRecords": "Rien trouv&eacute;",
-			"sInfo": "_START_ &agrave; _END_ sur _TOTAL_ lignes",
-			"sInfoEmpty": "0 &agrave; 0 sur 0 lignes",
-			"sInfoFiltered": "(filtre de _MAX_ total lignes)",
-			"oPaginate": {
-				"sFirst":"Premier",
-				"sPrevious":"Pr&eacute;c&eacute;dent",
-				"sNext":"Suivant",
-				"sLast":"Dernier"
-				}
-			},"bFilter": false,"bStateSave": true });
-			
-			
-		$( "#dateStart" ).datepicker({ dateFormat: "yy-mm-dd" });
-		$( "#dateEnd" ).datepicker({ dateFormat: "yy-mm-dd" });
+	// New arrets list
+	$('#arrets').dataTable({
+		"aaSorting": [[ 0, "desc" ]],"iDisplayLength": 25,"bAutoWidth": false , "aoColumns" : [{ "sWidth": "10%"},{ "sWidth": "10%"},{ "sWidth": "10%"},{ "sWidth": "25%"},{ "sWidth": "35%"},{ "sWidth": "10%"}],
+		"oLanguage": {
+		"sLengthMenu": "Montrer _MENU_ lignes par page",
+		"sZeroRecords": "Rien trouv&eacute;",
+		"sInfo": "_START_ &agrave; _END_ sur _TOTAL_ lignes",
+		"sInfoEmpty": "0 &agrave; 0 sur 0 lignes",
+		"sInfoFiltered": "(filtre de _MAX_ total lignes)",
+		"oPaginate": {
+			"sFirst":"Premier",
+			"sPrevious":"Pr&eacute;c&eacute;dent",
+			"sNext":"Suivant",
+			"sLast":"Dernier"
+			}
+		},"bFilter": false,"bStateSave": true });
 		
-		$( "#tabs" ).tabs();
+	
+	// Date filter for new arrets
+	$( "#dateStart" ).datepicker({ dateFormat: "yy-mm-dd" });
+	$( "#dateEnd" ).datepicker({ dateFormat: "yy-mm-dd" });
+	
+	// alertes tabs
+	$( "#tabs" ).tabs();
+	
+
+	/**
+	 * Rythm function
+	*/
+		$('select#rythme').change(function(){
+			var rythme = $(this).val();
+
+			$.ajax({
+				url:"wp-admin/admin-ajax.php",
+				type:'POST',
+				data:'action=set_rythme&rythme=' + rythme,
+				success:function(results)
+				{
+					console.log('rythm changed');
+				}
+			});
+		});
+					
+	/**
+	 * End Rythm function
+	*/
+		
+	/**
+	 * Alertes functions
+	*/
+		// Input for keywords
+		$("a.addKeywords").click(function(e) {
+			e.preventDefault();
+			var $wrapper   = $('<p />',{'class': 'new_input' });
+			var $icon      = $('<i />',{'class': 'remove_input' });
+			var $input     = $('<input class="key" type="text" name="selectKey[]" placeholder="Mots clés séparés par virgules" value="" />');
+			var $container =  $(this).parent().closest('li').find('.check-choice');
+			 
+			$icon.appendTo($wrapper);
+			$input.appendTo($wrapper);
+			$wrapper.appendTo($container);
+			 
+		});
+				
+		$('body').on('click', 'i.remove_input', function (event) {
+			event.preventDefault();
+			$(this).parent().remove();
+		});
+		
+		// Checkboxes
+		$(".checklist input:checked").parent().addClass("selected");
+		$('.check-choice input[class="key"]:empty').remove();
+		
+
+		/**
+		* Checkbox alertes select functions 
+		*/
+		$(".checklist .checkbox-select").click( function(event) {
+		
+			// Prevent default behavior
+			event.preventDefault();
+			
+			// Cleaning empty inputs
+			$(":input.key").each(function() {
+				if($(this).val() === ""){
+					$(this).remove();
+				}
+			});
+			
+			// Data
+			var textArray = [];
+			
+			// Retrive all keywords from inputs and put in array
+			$(this).parent()
+				.closest('li')
+				.find(".check-choice input[class='key']")
+				.each(function(){
+					textArray.push($(this).val());
+				}
+			);
+			
+			// Filter empty values
+			textArray.filter(function(e){return e;});
+			
+			// Get categorie id
+			var catid = $(this).parent().closest('li').data("id");
+			
+			// only publications checked?
+			var $pub = $(this).parent().closest('li').find(".check-ispub input[class='ispub']");
+			
+			var ispub = ($pub.is(':checked')) ? 1 : 0;
+			
+			// Preparing data to pass via ajax
+			var data = {
+				action   : 'set_abos',
+				catid    : catid,
+				keywords : textArray,
+				ispub    : ispub
+			};
+			
+			// reference to this checkbox for inside ajax succes callbak
+			var self = $(this);
+			
+						// Ajax call						 
+			$.ajax({
+				url     : "wp-admin/admin-ajax.php",
+				type    : 'POST',
+				data    : data,
+				success : function(results)
+				{
+					// Hide or show limit-pub
+					var limit = self.parent().closest('li').find('i.limite-pub');
+					
+					if(ispub === 0) {limit.hide();}
+					else {limit.show();}
+					
+					// empty keywords from list
+					var p = self.parent().closest('li').find('div.keywords div.listeCles');
+					p.empty();
+					
+					// add all "new keywords"
+					$.each( textArray, function( key, value )
+					{
+						var $keyp = $('<p>'+value+'</p>');
+						$keyp.appendTo(p);
+					});
+					
+					// Add class select to checkbox, checked and flash succes message
+					self.parent().parent().addClass("selected");
+					self.parent().parent().find(":checkbox").attr("checked","checked");
+					self.parent().parent().find(".successMsg").fadeIn(900).fadeOut(1800);
+				}
+			}); // end ajax call
+			
+		});
+
+		/**
+		 * Checkbox alertes deselect functions
+		*/
+		$(".checklist .checkbox-deselect").click(function(event) {
+		
+			// Prevent default behavior
+			event.preventDefault();
+			
+			// Get id to send
+			var catid = $(this).parent().closest('li').data("id");
+			
+			// Nouveau tableau
+			var bakArray = [];
+			
+			// Recupère les entrées des inputs
+			$(this).parent()
+				.closest('li')
+				.find("div.keywords div.listeCles p")
+				.each(function()
+				{
+					bakArray.push($(this).text());
+				}
+			);
+			
+			// FIltre le tableau pour enlever les chaines vides
+			bakArray.filter(function(value) {
+				return value !== "" && value !== null;
+			});
+			
+			// reference to this checkbox for inside ajax succes callbak
+			var self = $(this);
+			
+			// Enleve les inputs restants
+			var $container2 =  $(this).parent().closest('li').find('.check-choice');
+			$container2.find('.new_input').remove();
+			
+			
+			$.ajax({
+				url    : "wp-admin/admin-ajax.php",
+				type   : 'POST',
+				data   : 'action=delete_abos&catid=' + catid,
+				success: function(results)
+				{
+					// empty keywords from list
+					var p = self.parent().closest('li').find('div.keywords div.listeCles');
+					p.empty();
+					
+					// Add keywords in inputs
+					$.each( bakArray, function( key, value )
+					{
+					var $wrapper = $('<p />',{'class': 'new_input' });
+					var $icon    = $('<i />',{'class': 'remove_input' });
+					
+					var $input2  = $('<input />',{
+						'type' : 'text',
+						'value': value,
+						'name' : 'selectKey[]',
+						'placeholder' : 'Mots clés séparés par virgules',
+						'class': 'key'
+					});
+					
+					$icon.appendTo($wrapper);
+					$input2.appendTo($wrapper);
+					$wrapper.appendTo($container2);
+					});
+					
+					// Remove class select to checkbox, checked and hide limit pub icon
+					self.parent().parent().removeClass("selected");
+					self.parent().parent().find(":checkbox").removeAttr("checked");
+					self.parent().closest('li').find('i.limite-pub').hide();
+				}
+			}); // end ajax call
+		
+		});
+						
+	/**
+	 * End alertes functions
+	*/
+	
+	
 
 // Use this variable to set up the common and page specific functions. If you 
 // rename this variable, you will also need to rename the namespace below.

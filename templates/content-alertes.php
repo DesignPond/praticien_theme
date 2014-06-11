@@ -1,6 +1,6 @@
 <?php
 
-	$abosUser = getUserAboList();
+	$abosUser    = getUserAboList();
 	$userHasCat  = $abosUser['userHasCat'];
 	$userHasPub  = $abosUser['userHasPub'];
 	$userHasKey  = $abosUser['userHasKey'];	
@@ -8,163 +8,87 @@
 	$categories = prepareAlertesCategories();
 	$parents    = $categories['parents'];
 	$children   = $categories['children'];
+			
+   /*========================================
+		 Rythme des envois
+   =========================================*/
+   
+	$current_user = wp_get_current_user();
+	
+	$user_id = $current_user->ID;		
+	$rythme  =  get_user_meta($user_id, 'rythme_abo' , true); 
+
+
 
 ?>
 
+
+<h2>Alertes e-mail aux derniers arrêts du TF </h2>
+
+<div class="row">
+	<div class="col-md-12">	
+        <div class="infoBloc">
+       		<p>Recevez les nouveaux arrêts rendus par le TF correspondants aux rubriques choisies avec ou sans mots clés. 
+            Vous pouvez aussi choisir de ne recevoir que les 
+                arrêts correspondants à certains mots clés en les indiquant dans la rubrique "Général".</p>
+	        <p>Les mots clés recherchés doivent être séparés par virgules. Ils peuvent être sous la forme d'un groupe de mots entre guillemets, 
+                exemple => <strong>"Grand Conseil de Genève"</strong> ou seulement d'un mot, exemple => <strong>CPC</strong>. Les arrêts trouvés sont ceux qui comprennent 
+                l'ensemble des mots clés séparés par virgules. Plusieurs listes de mots clés peuvent être créées sous la même rubrique. 
+                Il est possible de mettre les mots clés en plusieurs langues afin d'obtenir plus de résultats.</p>
+            
+        </div>
+    </div>
+</div>
+
 <div class="row">
    
+   <!-- Start tab section -->
    <div id="tabs">	
-	   <div class="col-md-3">	
+	   <div class="col-md-4">	
 	   
+		   <!-- rythm of sending -->
+		   <h4><strong>Fréquence des envois</strong></h4>
+	        <div id="rythmeBox">
+	        	<form action="<?php echo get_permalink(); ?>" method="post" id="choixRythme">
+			        <select name="rythme" id="rythme">
+		             	<option value="one" <?php if($rythme == 'one'){echo 'selected="selected"';} ?>>Une fois par semaine</option>
+				        <option value="all" <?php if($rythme == 'all'){echo 'selected="selected"';} ?>>Tous les jours</option>
+			        </select>
+	            </form>
+	        </div>
+
 			<?php
-			
-				echo '<ul id="tabbed">';			
-				echo '<li><a href="#tabs-22">Général</a></li>';
 				
-				foreach ($children as $catid => $cats) 
-				{ 
-					if(isset($parents[$catid]) && $catid != 22)
-					{
-						echo '<li><a href="#tabs-'.$catid.'">'.$parents[$catid].'</a></li>';
+				$number = count($children);
+				$numberGeneral = $number +1;
+				
+				echo '<ul id="tabbed">';			
+					echo '<li><a href="#tabs-'.$numberGeneral.'">Général</a></li>';
+					
+					foreach ($children as $catid => $cats) 
+					{ 
+						if(isset($parents[$catid]) && $catid != $numberGeneral)
+						{
+							echo '<li><a href="#tabs-'.$catid.'">'.$parents[$catid].'</a></li>';
+						}
 					}
-				}
 				
 				echo '</ul>';
 		 	
 			?>
 			
 	   </div>
-	   <div class="col-md-9">	
+	   <div class="col-md-8">	
 
 	       <form action="<?php echo esc_attr($_SERVER['REQUEST_URI']); ?>" method="post">  
+	       
+	       	   <?php  echo createCheckedAbos($children,$user_id,$abosUser, 247); ?>
 	        
-		   	   <!-- GENERAL OUTSIDE LOOP -->	
-			   <div id="tabs-22">
-		            <fieldset class="bgcategorie">
-						<ul class="checklist">
-			            <?php
-								
-							$checked = ($userHasCat && in_array( '247' , $userHasCat) ? ' checked="checked ': '');
-							$visible = (in_array( '247' , $userHasPub) ? ' style="display:none;" ' : '');
-								
-							echo '<li data-id="247">';
-								echo '<input id="choice_247" name="selectCat[]" '.$checked.' value="247" type="checkbox">';							
-								echo '<label for="choice_247">Général</label>';
-								
-								// is pub checked
-								echo '<i class="limite-pub" '.$visible.'>Limité aux arrêts proposé pour la publication</i>';						
-									
-								echo '<div class="check-title">';
-									echo '<a class="checkbox-select selectlink" href="#">sélectionner </a>';
-									echo '<a class="checkbox-deselect" href="#">Désabonner ou Modfier</a>';
-								echo '</div>';
-								
-								echo '<div class="check-choice">';
-									
-								if(isset($userHasKey[247]['keywords']))
-								{
-									foreach($userHasKey[247]['keywords'] as $idkeys => $keys)
-									{
-										echo '<p class="new_input">
-											<input class="key" type="text" name="selectKey[]" placeholder="Mots clés séparés par virgules" value="'.$keys.'" />
-											<i id="'.$idkeys.'" class="remove_input"></i>
-										</p>';
-									}
-								}
-								
-								echo '<div class="keywords"><strong>Mots clés</strong><div class="listeCles">';							
-									
-									if(isset($userHasKey[247]['keywords']))
-									{
-										foreach($userHasKey[247]['keywords'] as $idkeys => $keys)
-										{
-											echo '<p>'.$keys.'</p>';
-										}
-									}
-			
-								echo '</div></div>';						
-								echo '<a href="#" class="addKeywords">Limiter par mots-clés</a><p class="successMsg">Abonnement enregistré!</p>';
-								echo '</div><hr/>';																
-								echo '<div class="check-ispub"><input class="ispub" id="ispub_247" type="checkbox" name="ispub" value="1" />Limiter aux arrêts proposés pour la publication</div>';
-										
-							echo '</li>';
-							
-						?>
-					 	</ul>
-		            </fieldset>
-		        </div>
-			             
-		       <?php 
-		            
-				$i = 0;
-				
-				foreach ($children as $catid => $cats) 
-				{ 				
-					$nbrCat = count($cats); ?>
-					
-				 <div id="tabs-<?php  echo $catid; ?>"><!-- start #tabs -->
-		        	<fieldset class="bgcategorie">        		
-						<ul class="checklist">
-							<?php
-								foreach ($cats as $id => $terms) 
-								{ 					
-									$checked = ( $userHasCat && (in_array( $id , $userHasCat)) ? ' checked="checked ': '');
-									$visible = ( in_array($id , $userHasPub) ? ' style="display:none;" ' : '');									
-									$general = (!empty($terms['general']) ? $terms['general'] :  $terms['name']);
-								
-									echo '<li data-id="'.$id.'">';
-										
-										echo '<input id="choice_'.$i.'" name="selectCat[]" '.$checked.' value="'.$id.'" type="checkbox">';									
-										echo '<label for="choice_'.$i.'">'.$general.'</label>';
+		   	</form>
+		   	
+		</div><!-- end col -->
 		
-										// is pub checked
-										echo '<i class="limite-pub" '.$visible.'>Limité aux arrêts proposé pour la publication</i>';
-										
-										echo '<div class="check-title">';
-											echo '<a class="checkbox-select selectlink" href="#">sélectionner </a>';
-											echo '<a class="checkbox-deselect" href="#">Désabonner ou Modfier</a>';
-										echo '</div>';
-										
-										echo '<div class="check-choice">';
-											
-											if(isset($userHasKey[$id]['keywords']))
-											{
-												foreach($userHasKey[$id]['keywords'] as $idkeys => $keys)
-												{
-													echo '<p class="new_input">
-														  <input class="key" type="text" name="selectKey[]" placeholder="Mots clés séparés par virgules" value="'.$keys.'" />
-														  <i id="'.$idkeys.'" class="remove_input"></i></p>';
-												}
-											}
-		
-											echo '<div class="keywords"><strong>Mots clés</strong><div class="listeCles">';
-												
-												if(isset($userHasKey[$id]['keywords']))
-												{
-													foreach($userHasKey[$id]['keywords'] as $idkeys => $keys)
-													{
-														echo '<p>'.$keys.'</p>';
-													}
-												}
-												
-											echo '</div></div>';								
-										echo '<a href="#" class="addKeywords">Limiter par mots-clés</a><p class="successMsg">Abonnement enregistré!</p>';	
-										echo '</div><hr/>';								
-										echo '<div class="check-ispub"><input class="ispub" id="ispub_'.$i.'" type="checkbox" name="ispub" value="1" />Limiter aux arrêts proposé pour la publication</div>';
-										
-									echo '</li>';
-				
-								 $i++;
-							   } // end foreach
-						     ?>			           		
-						</ul>
-
-		            </fieldset>			
-				</div>	
-
-				<?php } ?>
-			</form>
-		</div><!-- end #tabs -->
 		<div class="clearfix"></div>
-	</div><!-- end col -->
+		
+	</div><!-- end #tabs -->
 </div><!-- end row -->

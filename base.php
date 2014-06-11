@@ -21,17 +21,19 @@
       get_template_part('templates/header');
     }
   
-  	if ( is_front_page() ) {
+  	if ( is_front_page() ) 
+  	{
 	  	// Homepage header with book
 	  	get_template_part('templates/home', 'header'); 
 	} 
-	else 
-	{
-	    // This is not a homepage
-	}
   	
 	get_template_part('templates/page', 'arrets'); 
-
+	
+	if(is_user_logged_in())
+	{
+		// User menu bar
+		get_template_part('templates/header', 'user'); 
+	}
 	
   ?>
 
