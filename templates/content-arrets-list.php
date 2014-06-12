@@ -12,34 +12,7 @@
 
 <div class="row">
   <div class="col-md-9">
-  
-  		<!-- Bloc search -->
-  		<div id="filterByDates" class="bloc blocAutoHeight">	         
-			<form class="form-inline" id="choixPeriode" method="post" action="<?php echo get_permalink(); ?>" role="form">
-				
-				<div class="row">
-				
-					<div class="form-group col-sm-3">
-						&nbsp;<input placeholder="Du" type="text" class="form-control" name="dateStart" id="dateStart">
-					</div>
-					<div class="form-group col-sm-3">
-						<input placeholder="au" type="text" class="form-control" name="dateEnd" id="dateEnd">
-					</div>					
-					<div class="checkbox col-sm-4">
-						<label><input value="1" name="star" <?php if($star){echo ' checked="checked" ';} ?> type="checkbox"> Que proposé pour la publication</label>
-					</div>
-					
-					<?php if($categorie){ echo '<input type="hidden" value="'.$categorie.'" name="categorie" />'; } ?>
-					
-					<div class="col-sm-2 text-right">
-						<button type="submit" class="btn btn-default btn-blue">Ok</button>	
-					</div>
-					
-				</div>
-							
-			</form>			         
-  		</div>
-  		
+    		
   		<!-- Table list arrêts -->
   		<table id="arrets" class="hover table" cellspacing="0" width="100%">
 			<thead>

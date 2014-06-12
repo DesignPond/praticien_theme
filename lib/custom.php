@@ -23,7 +23,7 @@ function lastDayUpdated(){
 
 function arretLinkArret($lien){
 	
-	$resumes  = array( 'categories' , 22534);
+	$resumes  = array( 'categories' , 22534 , 22550);
 	$nouveaux = array( 'liste-des-nouveaux-arrets', 1143 );
 	
 	$pagename = get_query_var('pagename');
