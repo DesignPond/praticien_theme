@@ -224,3 +224,112 @@ function articleTermsSearch(){
 	return $myrows;
 
 }
+
+
+/**
+ * Search in decisions from TF
+*/
+function decisionSearch($s) {
+
+	global $wpdb;
+		
+	$searchArray =  array();
+	// Decode special chars
+	$s =  htmlspecialchars_decode($s);
+	
+    preg_match_all('/"(?:\\\\.|[^\\\\"])*"|\S+/', $s, $matches);
+	
+	$recherche = $matches[0];
+	
+	foreach($recherche as $rech)
+	{
+		if (preg_match('/\"([^\"]*?)\"/', $rech, $m)) 
+		{
+		   $string = $m[1];
+		   $string = str_replace('"', '', $string);
+		   $item   = str_replace('"', '', $string);
+		   
+	 	   $rechercheArray['quote'][] = $item;   
+		}
+		else
+		{
+		   $string = str_replace('"', '', $rech);
+		   $item   = str_replace('"', '', $string);
+		   
+		   $rechercheArray['normal'][] = $string;   
+		}
+	}
+	
+	$search = $_REQUEST['search-type'];
+								
+	// contruction de la requete
+	$query = 'SELECT wp_nouveautes.id_nouveaute ,
+					 wp_nouveautes.datep_nouveaute ,
+					 wp_nouveautes.dated_nouveaute ,
+					 wp_nouveautes.categorie_nouveaute ,
+					 wp_nouveautes.numero_nouveaute , 
+					 wp_nouveautes.langue_nouveaute , 
+					 wp_nouveautes.publication_nouveaute , 
+					 wp_custom_categories.name as nameCat , 
+					 wp_custom_categories.*, 
+					 wp_subcategories.name as nameSub ,
+					 wp_subcategories.*
+			  FROM wp_nouveautes 
+			  JOIN wp_custom_categories on wp_custom_categories.term_id = wp_nouveautes.categorie_nouveaute 
+			  LEFT JOIN wp_subcategories on wp_subcategories.refNouveaute = wp_nouveautes.id_nouveaute 
+			  WHERE ';
+
+	
+	$quotes = (!empty( $rechercheArray['quote'])  ? $rechercheArray['quote']  : array() );
+	$normal = (!empty( $rechercheArray['normal']) ? $rechercheArray['normal'] : array() );
+	
+	// count nbr of items in arrays		  
+	$nbrItemQuote  = count($quotes);
+	$nbrItemNormal = count($normal);
+	
+	$i = 1; 
+	
+	// use REGEXP for strings in quotes
+	if($quotes)
+	{
+		foreach($quotes as $q)
+		{	
+			$query .= 'wp_nouveautes.texte_nouveaute REGEXP "[[:<:]]'.$q.'[[:>:]]"  ';
+			
+			$searchArray[] = $q;
+			
+			$query .= ($i < $nbrItemQuote ? ' AND ' : '');
+			
+			$i++;
+		}
+	}
+	
+	$j = 1;
+	
+	// use LIKE for simple strings
+	if($normal)
+	{
+		foreach($normal as $n)
+		{					
+			$query .= ($nbrItemQuote > 0 ? ' AND ' : '');			
+			$query .= 'wp_nouveautes.texte_nouveaute LIKE "%'.$n.'%"  ';
+			
+			$searchArray[] = $n;
+
+			$query .= ($j < $nbrItemNormal ? ' AND ' : '');
+			
+			$j++;
+		}
+	}
+	
+	$query .= ' GROUP BY id_nouveaute ORDER BY wp_nouveautes.datep_nouveaute  DESC  ';
+	
+	// Get result with the query
+	$result = $wpdb->get_results($query);
+	
+	$resultat['terms']  = $searchArray;
+	$resultat['result'] = $result;
+
+	return $query;  
+		
+}

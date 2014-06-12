@@ -1,6 +1,7 @@
 <?php  
 	
-	$link       = get_ID_by_slug('resultats-recherche'); 
+	$link       = get_ID_by_slug('resultats-recherche-decisions'); 
+	
 	$categorie  = ( !empty($_REQUEST['categorie']) ? $_REQUEST['categorie'] : NULL);
 	$dateStart  = ( !empty($_REQUEST['dateStart']) ? $_REQUEST['dateStart'] : NULL);
 	$dateEnd    = ( !empty($_REQUEST['dateEnd']) ? $_REQUEST['dateEnd'] : NULL);
@@ -14,7 +15,7 @@
 		<form role="search" method="post" id="searchform" class="search-form form-inline" action="<?php echo get_permalink($link); ?>">
 		    <div class="input-group">
 				<input class="search-field form-control" type="search" placeholder="" name="term" value="">
-				<input type="hidden" name="search" value="simple" />
+				<input type="hidden" name="search" value="decisions" />
 				<label class="hide">Rechercher :</label>
 				<span class="input-group-btn">
 					<button class="search-submit btn btn-blue" type="submit">Ok</button>
@@ -25,10 +26,11 @@
 	</div>
 	<div class="col-md-8">
   		<!-- Bloc search -->
+  		
+  		<?php if( $post->ID != $link){ ?>
   		<div id="filterByDates">
   		  	<label class="searchText">Filtrer par date</label>	         
-			<form class="form-inline" id="choixPeriode" method="post" action="<?php echo get_permalink(); ?>" role="form">
-				
+			<form class="form-inline" id="choixPeriode" method="post" action="<?php echo get_permalink(); ?>" role="form">				
 				<div class="row">
 				
 					<div class="form-group col-sm-3">
@@ -47,11 +49,10 @@
 						<button type="submit" class="btn btn-default btn-blue">Ok</button>	
 					</div>
 					
-				</div>
-							
+				</div>							
 			</form>			         
   		</div>	
-  		
+  		<?php } ?>
 	</div>	
 	
 	<div class="clearfix"></div>

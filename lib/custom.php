@@ -24,7 +24,7 @@ function lastDayUpdated(){
 function arretLinkArret($lien){
 	
 	$resumes  = array( 'categories' , 22534 , 22550);
-	$nouveaux = array( 'liste-des-nouveaux-arrets', 1143 );
+	$nouveaux = array( 'liste-des-nouveaux-arrets', 1143 , 22552);
 	
 	$pagename = get_query_var('pagename');
 	$pageid   = get_query_var('page_id');
@@ -184,15 +184,11 @@ function getExtraCategories(){
 }
 
 
-function getLastArrets( $page , $categorie = NULL , $dateStart = NULL , $dateEnd = NULL , $star = NULL){
+function getLastArrets( $categorie = NULL , $dateStart = NULL , $dateEnd = NULL , $star = NULL ){
 
 	global $wpdb;
 	
-	$langue = array('Fr','All','It');
 	$limit  = NULL;
-	
-	// Page to link decision to
-	$page_decision = get_ID_by_slug('decision');
 
 	/**
 	 * Query for simple list
@@ -277,7 +273,16 @@ function getLastArrets( $page , $categorie = NULL , $dateStart = NULL , $dateEnd
 	$query .= ' ORDER BY wp_nouveautes.datep_nouveaute DESC ';
 	
 	// limit if we have any
-	$query .= (!$limit ? ' LIMIT 0,50' : '');
+	$query .= (!$limit ? ' LIMIT 0,35' : '');	
+	
+	return $query;
+}
+
+function prepareListDecisions($query , $page , $retour = NULL , $term = NULL , $dateStart = NULL, $dateEnd = NULL ){
+
+	global $wpdb;
+	
+	$langue = array('Fr','All','It');
 	
 	// Run query and get results
 	$arrets = $wpdb->get_results($query);	
@@ -289,7 +294,7 @@ function getLastArrets( $page , $categorie = NULL , $dateStart = NULL , $dateEnd
 		foreach($arrets as $arret)
 		{
 			// Prepapre url to link to
-			$url   = add_query_arg( array( 'arret' => $arret->numero_nouveaute , 'dateStart' => $dateStart, 'dateEnd' => $dateEnd ) , get_permalink($page_decision) );
+			$url   = add_query_arg( array( 'arret' => $arret->numero_nouveaute , 'retour' => $retour , 'term' => $term , 'dateStart' => $dateStart, 'dateEnd' => $dateEnd ) , get_permalink($page) );
 			
 			$html .= '<tr>';
 			
@@ -311,6 +316,7 @@ function getLastArrets( $page , $categorie = NULL , $dateStart = NULL , $dateEnd
 	$html .= '</tbody>';	
 	
 	return $html;
+	
 }
 
 /**

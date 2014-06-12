@@ -26,7 +26,18 @@
 				</tr>
 			</thead>
 			
-			<?php echo getLastArrets( get_permalink() , $categorie , $dateStart , $dateEnd , $star); ?>	
+			<?php 
+			
+				// Query with params
+				$query = getLastArrets( $categorie , $dateStart , $dateEnd , $star);
+				
+				// Page to link decision to
+				$page_decision = get_ID_by_slug('decision');
+				
+				// echo list
+				echo prepareListDecisions($query , $page_decision , $post->ID, NULL , $dateStart , $dateEnd );
+				
+			 ?>	
 					
 			<tfoot>
 				<tr>
@@ -42,7 +53,8 @@
 	  
   </div>
   <div class="col-md-3">
-  
+  	
+  	<h2 class="sectionTitle">Catégories</h2>
 	<?php
 			
 		// Sidebar for nouveautes arrets	
