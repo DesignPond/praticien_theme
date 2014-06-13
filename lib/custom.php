@@ -348,6 +348,92 @@ function getAllArretsCategories(){
 	return $all;
 }
 
+/**
+ * Get hompage bloc with latest arret 
+*/
+
+function homepageBloc($nbr,$offset){
+
+	global $wpdb;
+	
+	// Page to link arret to
+	$page = get_ID_by_slug('arrets-tf');
+	
+	$html  = '';
+	
+	$query = 'SELECT 
+				wp_nouveautes.id_nouveaute ,wp_nouveautes.datep_nouveaute ,wp_nouveautes.dated_nouveaute , wp_nouveautes.categorie_nouveaute , wp_nouveautes.numero_nouveaute , 
+				wp_nouveautes.publication_nouveaute , 
+				wp_custom_categories.name as nameCat , wp_custom_categories.*, 
+				wp_subcategories.name as nameSub , wp_subcategories.* 
+			  FROM wp_nouveautes 
+			  LEFT JOIN wp_custom_categories on wp_custom_categories.term_id  = wp_nouveautes.categorie_nouveaute 
+			  LEFT JOIN wp_subcategories     on wp_subcategories.refNouveaute = wp_nouveautes.id_nouveaute  
+			  GROUP BY wp_nouveautes.id_nouveaute ORDER BY wp_nouveautes.datep_nouveaute DESC  LIMIT '.$offset.','.$nbr.'';
+					  
+	$arrets = $wpdb->get_results($query);					  
+	
+	if( !empty($arrets))
+	{
+		foreach($arrets as $arret)
+		{	
+			$url   = add_query_arg( array('categorie' => $arret->categorie_nouveaute) , get_permalink($page) );
+				
+			$html .= '<div class="col-md-4">';
+				$html .= '<div class="bloc blocBorder tf_bloc">';
+					$html .= '<h3>'.$arret->nameCat.'</h3>';
+					$html .= '<h4>'.$arret->nameCat.'</h4>';	
+					$html .= '<p>'.$arret->nameSub.'</p>';	
+					$html .= '<a class="btn btn-blue btn-sm" href="'.$url.'">Voir la liste</a>';	
+					$html .= '<p class="calendar">Publications du '.mysql2date('j M Y', $arret->datep_nouveaute ).'</p>';	
+				$html .= '</div>';	
+			$html .= '</div>';			
+		}
+	}
+	
+	return $html;
+	
+}
+
+/**
+ * Newsletter bloc!
+*/
+
+function newsletterBloc(){
+
+	$html = '<div class="col-md-4"><!-- start col 4 -->
+			
+				<div class="bloc newsletterHome">
+			  	  <h3>Newsletter</h3>
+			  	  
+				  <div class="row">
+				  	 <div class="col-md-6">
+				  	 	Responsabilité civile<br/>
+						Assurances sociales<br/>
+						Assurances privées
+				  	 </div>
+				  	 <div class="col-md-6">
+				  	 	<img src="'.get_bloginfo('template_directory').'/assets/img/newsletter_logo.png" />
+				  	 </div>
+				  </div>
+	
+				  <div class="row newsletterLinks">
+				  	 <div class="col-md-6">
+				  	 	<a class="btn btn-default btn-sm" href="">Inscription</a>
+				  	 	<a class="btn btn-praticien btn-sm" href="">Assurances sociales</a>
+				  	 </div>
+				  	 <div class="col-md-6">
+				  	 	<a class="btn btn-default btn-sm" href="">Archives</a>
+				  	 	<a class="btn btn-praticien btn-sm" href="">Responsabilité civile</a>
+				  	 </div>
+				  </div>
+				  
+			  </div><!-- end newsletterHome -->
+			  					
+			</div><!-- end col 4 -->';
+	
+	return $html;
+}
 
 /**
  * Get aurot for post
