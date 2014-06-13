@@ -1,3 +1,8 @@
+<?php
+	$lastDayUpdated = lastDayUpdated();
+	
+	$newsletterBloc = newsletterBloc();
+?>
 <div id="homeContent">
 	
 
@@ -6,7 +11,7 @@
 		<!-- Homepage login, acces code and newsletter -->		
 		<div class="row"><!-- start row -->			
 			
-			<?php echo newsletterBloc(); ?>
+			<?php echo $newsletterBloc; ?>
 			
 			<div class="col-md-8"><!-- start col 8 -->				
 					<div id="homepageAcces">
@@ -79,9 +84,9 @@
 			<div class="bloc blocBorder tf_bloc">
 				<h3>Derniers arrêts rendus</h3>
 				<h4>Tribunal fédéral - Jurisprudence</h4>
-				<p>Liste des dernières décisions du <?php echo lastDayUpdated(); ?></p>
+				<p>Liste des dernières décisions du <?php echo $lastDayUpdated; ?></p>
 				<a class="btn btn-blue btn-sm" target="_blank" href="http://www.bger.ch/fr/index/juridiction/jurisdiction-inherit-template/jurisdiction-recht/jurisdiction-recht-urteile2000neu.htm">Voir la liste</a>
-				<p class="calendar">Publications du <?php echo lastDayUpdated(); ?></p>
+				<p class="calendar">Publications du <?php echo $lastDayUpdated; ?></p>
 			</div>		
 		</div><!-- end col 4 -->
 		
@@ -98,7 +103,7 @@
 				<h4>Tribunal fédéral - Jurisprudence</h4>
 				<p>Liste des décisions destinées à la publication</p>
 				<a class="btn btn-blue btn-sm" href="<?php echo $url_list; ?>">Voir la liste</a>
-				<p class="calendar">Publications du <?php echo lastDayUpdated(); ?></p>
+				<p class="calendar">Publications du <?php echo $lastDayUpdated; ?></p>
 			</div>		
 		</div><!-- end col 4 -->
 				
@@ -106,7 +111,7 @@
 		
 			if(is_user_logged_in())
 			{
-				echo newsletterBloc();
+				echo $newsletterBloc;
 			}
 			else
 			{
@@ -124,5 +129,12 @@
 		</div>
 		
 	<?php } ?>
+
+<?php
+
+echo "<!--\n";
+var_dump($wpdb->queries);
+echo "\n-->";
+?>
 
 </div>

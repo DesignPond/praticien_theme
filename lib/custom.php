@@ -364,10 +364,10 @@ function homepageBloc($nbr,$offset){
 	$query = 'SELECT 
 				wp_nouveautes.id_nouveaute ,wp_nouveautes.datep_nouveaute ,wp_nouveautes.dated_nouveaute , wp_nouveautes.categorie_nouveaute , wp_nouveautes.numero_nouveaute , 
 				wp_nouveautes.publication_nouveaute , 
-				wp_custom_categories.name as nameCat , wp_custom_categories.*, 
-				wp_subcategories.name as nameSub , wp_subcategories.* 
+				wp_custom_categories.name as nameCat ,
+				wp_subcategories.name as nameSub 
 			  FROM wp_nouveautes 
-			  LEFT JOIN wp_custom_categories on wp_custom_categories.term_id  = wp_nouveautes.categorie_nouveaute 
+			  JOIN wp_custom_categories on wp_custom_categories.term_id  = wp_nouveautes.categorie_nouveaute 
 			  LEFT JOIN wp_subcategories     on wp_subcategories.refNouveaute = wp_nouveautes.id_nouveaute  
 			  GROUP BY wp_nouveautes.id_nouveaute ORDER BY wp_nouveautes.datep_nouveaute DESC  LIMIT '.$offset.','.$nbr.'';
 					  
