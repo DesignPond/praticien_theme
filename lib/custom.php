@@ -198,11 +198,9 @@ function getLastArrets( $categorie = NULL , $dateStart = NULL , $dateEnd = NULL 
 						wp_nouveautes.id_nouveaute ,wp_nouveautes.datep_nouveaute ,wp_nouveautes.dated_nouveaute , wp_nouveautes.categorie_nouveaute , wp_nouveautes.numero_nouveaute , 
 						wp_nouveautes.langue_nouveaute , 
 						wp_nouveautes.publication_nouveaute , 
-						wp_custom_categories.name as nameCat , wp_custom_categories.*, 
-						wp_subcategories.name as nameSub , wp_subcategories.* 
+						wp_custom_categories.name as nameCat
 					  FROM wp_nouveautes 
-					  LEFT JOIN wp_custom_categories on wp_custom_categories.term_id  = wp_nouveautes.categorie_nouveaute 
-					  LEFT JOIN wp_subcategories     on wp_subcategories.refNouveaute = wp_nouveautes.id_nouveaute  ';
+					  LEFT JOIN wp_custom_categories on wp_custom_categories.term_id  = wp_nouveautes.categorie_nouveaute  ';
 					  
 	/**
 	 * Query for extracategories list
@@ -296,6 +294,10 @@ function prepareListDecisions($query , $page , $retour = NULL , $term = NULL , $
 			// Prepapre url to link to
 			$url   = add_query_arg( array( 'arret' => $arret->numero_nouveaute , 'retour' => $retour , 'term' => $term , 'dateStart' => $dateStart, 'dateEnd' => $dateEnd ) , get_permalink($page) );
 			
+			// Subcategories
+			$subcat  = $wpdb->get_row(' SELECT name as nameSub FROM wp_subcategories WHERE refNouveaute = "'.$arret->id_nouveaute.'" ');			
+			$nameSub = ( !empty($subcat) ? $subcat->nameSub : '' );
+			
 			$html .= '<tr>';
 			
 				$html .= '<td>'.$arret->datep_nouveaute.'</td>';
@@ -306,7 +308,7 @@ function prepareListDecisions($query , $page , $retour = NULL , $term = NULL , $
 				
 				$html .= ''.$arret->numero_nouveaute.'</a></td>';
 				$html .= '<td>'.$arret->nameCat.'</td>';
-				$html .= '<td>'.$arret->nameSub.'</td>';
+				$html .= '<td>'.$nameSub.'</td>';
 				$html .= '<td>'.$langue[$arret->langue_nouveaute].'</td>';
 				
 			$html .= '</tr>';			
@@ -364,11 +366,9 @@ function homepageBloc($nbr,$offset){
 	$query = 'SELECT 
 				wp_nouveautes.id_nouveaute ,wp_nouveautes.datep_nouveaute ,wp_nouveautes.dated_nouveaute , wp_nouveautes.categorie_nouveaute , wp_nouveautes.numero_nouveaute , 
 				wp_nouveautes.publication_nouveaute , 
-				wp_custom_categories.name as nameCat ,
-				wp_subcategories.name as nameSub 
+				wp_custom_categories.name as nameCat  
 			  FROM wp_nouveautes 
 			  JOIN wp_custom_categories on wp_custom_categories.term_id  = wp_nouveautes.categorie_nouveaute 
-			  LEFT JOIN wp_subcategories     on wp_subcategories.refNouveaute = wp_nouveautes.id_nouveaute  
 			  GROUP BY wp_nouveautes.id_nouveaute ORDER BY wp_nouveautes.datep_nouveaute DESC  LIMIT '.$offset.','.$nbr.'';
 					  
 	$arrets = $wpdb->get_results($query);					  
@@ -377,13 +377,16 @@ function homepageBloc($nbr,$offset){
 	{
 		foreach($arrets as $arret)
 		{	
-			$url   = add_query_arg( array('categorie' => $arret->categorie_nouveaute) , get_permalink($page) );
+			$subcat  = $wpdb->get_row(' SELECT name as nameSub FROM wp_subcategories WHERE refNouveaute = "'.$arret->id_nouveaute.'" ');			
+			$nameSub = ( !empty($subcat) ? $subcat->nameSub : '' );
+			
+			$url = add_query_arg( array('categorie' => $arret->categorie_nouveaute) , get_permalink($page) );
 				
 			$html .= '<div class="col-md-4">';
 				$html .= '<div class="bloc blocBorder tf_bloc">';
 					$html .= '<h3>'.$arret->nameCat.'</h3>';
 					$html .= '<h4>'.$arret->nameCat.'</h4>';	
-					$html .= '<p>'.$arret->nameSub.'</p>';	
+					$html .= '<p>'.$nameSub.'</p>';	
 					$html .= '<a class="btn btn-blue btn-sm" href="'.$url.'">Voir la liste</a>';	
 					$html .= '<p class="calendar">Publications du '.mysql2date('j M Y', $arret->datep_nouveaute ).'</p>';	
 				$html .= '</div>';	
@@ -392,6 +395,12 @@ function homepageBloc($nbr,$offset){
 	}
 	
 	return $html;
+	
+}
+
+function getSubCat($id){
+
+	
 	
 }
 
