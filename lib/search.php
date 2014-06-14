@@ -122,6 +122,25 @@ function trailSearch(){
 	
 }
 
+	
+function sortArrayByArray( $array , $orderArray) 
+{
+    $ordered = array();
+    
+    foreach($orderArray as $key) 
+    {
+        if(array_key_exists($key,$array)) 
+        {
+            $ordered[$key] = $array[$key];
+			unset($array[$key]);
+        }
+    }
+    return $ordered + $array;
+}
+
+/**
+ * Terms search 
+*/
 function articleTermsSearch(){
 	
 	global $wpdb;
@@ -151,68 +170,55 @@ function articleTermsSearch(){
 	if($annee)   { $_SESSION['annee'] = $annee; }
 	
 	$orderArray  = array('article', 'loi', 'alinea', 'lettre', 'chiffre');
-	$termsSearch = $_SESSION['search'];
-	
-	function sortArrayByArray( $array , $orderArray) 
-	{
-	    $ordered = array();
-	    
-	    foreach($orderArray as $key) 
-	    {
-	        if(array_key_exists($key,$array)) 
-	        {
-	            $ordered[$key] = $array[$key];
-				unset($array[$key]);
-	        }
-	    }
-	    return $ordered + $array;
-	}
-
-	$values = sortArrayByArray($termsSearch , $orderArray);
-	
-	$lois   = $values['loi'];
-		  			
-  	foreach($values as $terms) 
-  	{ 
-  		foreach($terms as $number => $term) 
-  		{ 
-  			$termsArranged[$number][] = $term;
-  		}
-  	}
-	
-	foreach($termsArranged as $termsReversed) 
-  	{ 
-		$separated        = implode(":", $termsReversed);
-  		$termsSeparated[] = $separated;  	
-	}
+	$termsSearch = $_SESSION['search'];	
 
 	$query = 'SELECT * FROM wp_postmeta	
 			  JOIN wp_posts  ON wp_posts.ID = wp_postmeta.post_id 			
 			  JOIN wp_term_relationships r ON r.object_id = wp_posts.ID
 			  JOIN wp_term_taxonomy t ON r.term_taxonomy_id = t.term_taxonomy_id
 			  JOIN wp_terms terms ON terms.term_id = t.term_id
-			  WHERE meta_key = "termes_rechercher" 
-			  AND t.taxonomy = "annee" ';
-	
-	foreach($termsSeparated as $meta_value)
+			  WHERE meta_key = "termes_rechercher" ';
+			  
+	if (!empty($_SESSION['search']) )
 	{
-		$pieces    = explode(":", $meta_value);
-		$firstItem = $pieces[0]; 
-		$second    = $pieces[1]; 
+		$values = sortArrayByArray($termsSearch , $orderArray);
 		
-		if( is_numeric($firstItem) and is_string($second) ) 
-		{
-			$query .= 'AND meta_value LIKE "'.$meta_value.'%" OR meta_value LIKE "%,'.$meta_value.'%" ';
+		$lois   = $values['loi'];
+			  			
+	  	foreach($values as $terms) 
+	  	{ 
+	  		foreach($terms as $number => $term) 
+	  		{ 
+	  			$termsArranged[$number][] = $term;
+	  		}
+	  	}
+		
+		foreach($termsArranged as $termsReversed) 
+	  	{ 
+			$separated        = implode(":", $termsReversed);
+	  		$termsSeparated[] = $separated;  	
 		}
-		else
+		
+		foreach($termsSeparated as $meta_value)
 		{
-			$query .= 'AND meta_value LIKE "%'.$meta_value.'%" ';
+			$pieces    = explode(":", $meta_value);
+			$firstItem = $pieces[0]; 
+			$second    = $pieces[1]; 
+			
+			if( is_numeric($firstItem) and is_string($second) ) 
+			{
+				$query .= 'AND meta_value LIKE "'.$meta_value.'%" OR meta_value LIKE "%,'.$meta_value.'%" ';
+			}
+			else
+			{
+				$query .= 'AND meta_value LIKE "%'.$meta_value.'%" ';
+			}
 		}
-	}
+	}	
 	
-	if (!empty($_SESSION['annee']) &&( $_SESSION['annee'] != 'all') )
+	if (!empty($_SESSION['annee']) )
 	{ 
-		$query .= ' AND terms.slug = "'.$annee.'" '; 
+		$query .= ' AND (t.taxonomy = "annee" AND terms.slug = "'.$annee.'") '; 
 	}
 	
 	$query .= ' GROUP BY post_id '; 

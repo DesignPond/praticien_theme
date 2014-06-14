@@ -73,7 +73,7 @@
 						echo '<h1>'.$title.'</h1>';
 						
 						// the content of post 
-						echo $post->post_content; 
+						echo nl2br($post->post_content); 
 						
 						// The autor of post
 						echo getAutor($id,$category,$annee); 
@@ -92,3 +92,10 @@
    </div>
 
 </div>
+
+<?php
+
+echo "<!--\n";
+var_dump($wpdb->queries);
+echo "\n-->";
+?>
