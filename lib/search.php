@@ -272,12 +272,10 @@ function decisionSearch($s) {
 					 wp_nouveautes.langue_nouveaute , 
 					 wp_nouveautes.publication_nouveaute , 
 					 wp_custom_categories.name as nameCat , 
-					 wp_custom_categories.*, 
-					 wp_subcategories.name as nameSub ,
-					 wp_subcategories.*
+					 wp_subcategories.name as nameSub 
 			  FROM wp_nouveautes 
 			  JOIN wp_custom_categories on wp_custom_categories.term_id = wp_nouveautes.categorie_nouveaute 
-			  LEFT JOIN wp_subcategories on wp_subcategories.refNouveaute = wp_nouveautes.id_nouveaute 
+			  JOIN wp_subcategories on wp_subcategories.refNouveaute = wp_nouveautes.id_nouveaute 
 			  WHERE ';
 
 	
@@ -295,7 +293,9 @@ function decisionSearch($s) {
 	{
 		foreach($quotes as $q)
 		{	
-			$query .= 'wp_nouveautes.texte_nouveaute REGEXP "[[:<:]]'.$q.'[[:>:]]"  ';
+			$query .= '( wp_nouveautes.texte_nouveaute REGEXP "[[:<:]]'.$q.'[[:>:]]" ';
+			
+			$query .= 'OR wp_subcategories.name REGEXP "[[:<:]]'.$q.'[[:>:]]" ) ';
 			
 			$searchArray[] = $q;
 			
@@ -313,7 +313,8 @@ function decisionSearch($s) {
 		foreach($normal as $n)
 		{					
 			$query .= ($nbrItemQuote > 0 ? ' AND ' : '');			
-			$query .= 'wp_nouveautes.texte_nouveaute LIKE "%'.$n.'%"  ';
+			$query .= '( wp_nouveautes.texte_nouveaute LIKE "%'.$n.'%" ';
+			$query .= 'OR wp_subcategories.name LIKE "%'.$n.'%" ) ';
 			
 			$searchArray[] = $n;
 
