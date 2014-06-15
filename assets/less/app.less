@@ -82,11 +82,15 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
     color: @darker-blue;
 }
 
+h3{
+	margin-bottom: 20px;
+}
+
 p,label{
 	color: @dark-blue;
 }
 
-a {
+a,a.list-group-item {
 	color: @darker-blue;
 }
 
@@ -357,10 +361,13 @@ a:hover,a:focus{
 
 	#loginform p,#accessform p{
 		padding: 0;
-		margin: 0 0 15px;
+		margin: 0 0 10px;
 		display: block;
 	}
-
+	
+	#accessform p.login-submit{
+		margin: 0;
+	}
 
 	#loginform p{
 		float: left;
@@ -459,13 +466,16 @@ a:hover,a:focus{
 
 		#accessform p input[type="submit"]{
 		    display: inline-block;
-		    margin-top: 20px;	
+		    margin-top: 5px;	
 		}
 		
 		#accessform p input[type="text"]{
 			width: 100%;
 		}
 		
+		#accessform  p input[type="submit"]{
+		    background: @darker-red;
+		}
 
 #accessCode{
 	background: rgba(255,255,255,0.5);
@@ -1189,6 +1199,7 @@ table#arrets tbody td {
 	height: 30px;
 }
 
+
 /* ==========================================================================
    Sidebar
    ========================================================================== */
@@ -1373,11 +1384,9 @@ input[type="text"]{
 	background: url(../img/icons/email.png) no-repeat;	
 }
 
-.hentry header { }
-.hentry time { }
-.hentry .byline { }
-.hentry .entry-content { }
-.hentry footer { }
+.highlight{
+	background: #ffffca;
+}
 
 #arrets_paginate{
 	margin-top: 10px;

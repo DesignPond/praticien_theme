@@ -16,7 +16,7 @@
 			'paged'          =>  $paged,
 			'is_paged'       => true,
 			's'              =>  $s
-		);	
+		);
 		
 		$search = new WP_Query( $args );
 
@@ -28,6 +28,7 @@
 		   		
 		   	endwhile;
 		}
+
 	} 
 
 	if($typeSearch == 'terms')
@@ -43,8 +44,7 @@
 			   	$posts[] = $post->ID;
 		   	}
 		}	
-	} 	
-
+	} 
 
 ?>
 	
@@ -62,9 +62,7 @@
 		   			$post = get_post($id);
 
 			   		?><article><?php
-		   				
-		   				echo '<h2 class="sectionTitre">'.trailCategoriesPost($post->ID).'</h2>';
-									
+		   							
 						// Get the atf if there is one
 						$atf   = get_post_meta($post->ID, 'atf', true);
 						// check if the custom field has a value
@@ -72,9 +70,19 @@
 						
 						echo '<h1>'.$title.'</h1>';
 						
+						// Categories
+						echo '<h2 class="sectionTitre">'.trailCategoriesPost($post->ID).'</h2>';
+						
 						// the content of post 
 						echo nl2br($post->post_content); 
 						
+						// Get top categorie for autor
+						$categories = wp_get_post_categories( $post->ID );
+						$category   = get_top_parent_category($categories[0]);
+						
+						// Get annee for autor
+						$annee = getAnne( $post->ID );
+					
 						// The autor of post
 						echo getAutor($id,$category,$annee); 
 						
@@ -86,9 +94,9 @@
 						
 					?></article><?php					   			
 		   		}
-		   	}
-
-	   ?>
+		   	}	   	
+		   	else{ echo '<article><br/><h4 class="text-danger"><span class="glyphicon glyphicon-search"></span> &nbsp;La recherche n\'a rien donnée.</h4></article>'; }
+		?>
    </div>
 
 </div>

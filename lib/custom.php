@@ -388,7 +388,7 @@ function homepageBloc($nbr,$offset){
 					$html .= '<h4>'.$arret->nameCat.'</h4>';	
 					$html .= '<p>'.$nameSub.'</p>';	
 					$html .= '<a class="btn btn-blue btn-sm" href="'.$url.'">Voir la liste</a>';	
-					$html .= '<p class="calendar">Publications du '.mysql2date('j M Y', $arret->datep_nouveaute ).'</p>';	
+					$html .= '<p class="calendar">Décision du '.mysql2date('j M Y', $arret->dated_nouveaute ).'</p>';	
 				$html .= '</div>';	
 			$html .= '</div>';			
 		}
@@ -403,7 +403,17 @@ function homepageBloc($nbr,$offset){
 */
 
 function newsletterBloc(){
-
+	
+	$page = get_ID_by_slug('inscription-a-la-newsletter-droit-pour-le-praticien'); 
+	
+	$url  = add_query_arg( array('id' => 4) , get_permalink($page) );
+	
+	// url to categories
+	// Assurance sociales
+	$categories     = get_ID_by_slug('categories');
+	$assurance      = add_query_arg( array('cat' => '10#Assurances sociales') , get_permalink($categories) );
+	$responsabilite = add_query_arg( array('cat' => '3455#Responsabilité civile') , get_permalink($categories) );	
+	
 	$html = '<div class="col-md-4"><!-- start col 4 -->
 			
 				<div class="bloc newsletterHome">
@@ -422,12 +432,12 @@ function newsletterBloc(){
 	
 				  <div class="row newsletterLinks">
 				  	 <div class="col-md-6">
-				  	 	<a class="btn btn-default btn-sm" href="">Inscription</a>
-				  	 	<a class="btn btn-praticien btn-sm" href="">Assurances sociales</a>
+				  	 	<a class="btn btn-default btn-sm" href="'.$url.'">Inscription</a>
+				  	 	<a class="btn btn-praticien btn-sm" href="'.$assurance.'">Assurances sociales</a>
 				  	 </div>
 				  	 <div class="col-md-6">
-				  	 	<a class="btn btn-default btn-sm" href="">Archives</a>
-				  	 	<a class="btn btn-praticien btn-sm" href="">Responsabilité civile</a>
+				  	 	<a class="btn btn-default btn-sm" href="'.$url.'">Archives</a>
+				  	 	<a class="btn btn-praticien btn-sm" href="'.$responsabilite.'">Responsabilité civile</a>
 				  	 </div>
 				  </div>
 				  
@@ -474,7 +484,7 @@ function getAutor($post,$cat,$annee){
 		
 			foreach($customposts as $auteur)
 			{
-				//if($i >1 && !empty($auteur)){echo ' , ';}
+				if($i >1 && !empty($auteur)){echo ' ';}
 				$html .= $auteur->post_title;
 				$i++;
 			}
@@ -484,6 +494,26 @@ function getAutor($post,$cat,$annee){
 	}
 	
 	return $html;
+}
+
+/**
+ *  Get anne for post
+*/
+
+function getAnne($post_id){
+	
+	 $annee = '';
+	 $terms = get_the_terms( $post_id, 'annee' );
+	 
+	 if( !empty($terms))
+	 {
+		foreach($terms as $term)
+		{
+			$annee = $term->slug;
+		}
+	 }
+	 
+	 return $annee;
 }
 
 /**
@@ -741,7 +771,38 @@ function get_ID_by_slug($page_slug) {
     }
 }
 
-/*
+
+/**
+ * Hightlight terms
+*/
+function highlightTerms($text_string,$keywords) {
+    // $text_sting:    the text from which you want to highlight and return...
+    // $keywords:      either string or array or words that should be highlighted in the text.		
+	if (!is_array($keywords)) 
+	{
+        //explode the keywords
+        $keywords = explode(",",$keywords);
+    }
+    //find matches
+    for ($x = 0; $x < count($keywords); $x++) 
+    {		
+       if (strlen($keywords[$x]) > 1) 
+       {
+           preg_match_all('~\b(?<!["\'])' . $keywords[$x] . '~i', $text_string, $items);
+
+           for ($y=0;$y<count($items);$y++) 
+           {
+               if (isset($items[$y][0])) 
+               {				  
+                   $text_string = str_replace($items[$y][0],'<span class="highlight">'.$items[$y][0].'</span>',$text_string);
+               }
+           }        
+        }
+    }
+	return $text_string;
+}
+
+/**
  * custom pagination
 */
 
@@ -878,4 +939,43 @@ function displayPubDroitPraticien( $atts = NULL ){
 	
 }
 add_shortcode( 'pub_droitpraticien', 'displayPubDroitPraticien' );
+
+
+function dp_archives_newsletter( $atts ) {
+
+	extract( shortcode_atts( array( 'list' => 'list' ), $atts ) );
+
+	global $wpdb;
+	
+	$campaigns = array();
+	
+	$query = 'SELECT wp_wysija_list.* , wp_wysija_campaign_list.* , wp_wysija_email.email_id, wp_wysija_email.subject , wp_wysija_email.sent_at FROM wp_wysija_list 
+			 		   LEFT JOIN wp_wysija_campaign_list on wp_wysija_campaign_list.list_id = wp_wysija_list.list_id
+			 		   LEFT JOIN wp_wysija_email on wp_wysija_campaign_list.campaign_id = wp_wysija_email.campaign_id
+			 		   WHERE wp_wysija_list.list_id = "'.esc_attr($list).'" ORDER BY  wp_wysija_email.campaign_id DESC';
+			 		   
+	$campaigns = $wpdb->get_results( $query );
+	
+	/* Contruct the list */
+	
+	$content = '';
+	
+	if(!empty($campaigns)){
+				
+		$content .= '<div class="list-group">';
+		
+		foreach($campaigns as $campaign)
+		{
+			$url = get_bloginfo('url').'?wysija-page=1&controller=email&action=view&email_id='.$campaign->email_id.'&wysijap=subscriptions';
+			
+			$content .=  '<a class="list-group-item" target="_blank" href="'.$url.'"><span class="glyphicon glyphicon-inbox"></span> &nbsp;'.$campaign->subject.'</a>';
+		}
+		
+		$content .=  '</div>';
+	}
+	
+	return $content;		
+}
+
+add_shortcode( 'archives_newsletter', 'dp_archives_newsletter' );
 

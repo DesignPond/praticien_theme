@@ -75,6 +75,13 @@
 			// the content of post 
 			the_content(); 
 			
+			// Get top categorie for autor
+			$categories = wp_get_post_categories( $post->ID );
+			$category   = get_top_parent_category($categories[0]);
+			
+			// Get annee for autor
+			$annee = getAnne( $post->ID );
+			
 			// The autor of post
 			echo getAutor($post,$category,$annee); 
 			

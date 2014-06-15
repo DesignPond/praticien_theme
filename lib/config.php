@@ -69,6 +69,7 @@ function roots_display_sidebar() {
       'template-alertes.php',
       'template-results.php',
       'template-resumes.php',
+	  'template-newsletter.php',
       'template-results-decisions.php'
     )
   );

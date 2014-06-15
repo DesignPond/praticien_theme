@@ -47,7 +47,7 @@
 					if ( $count > 0 )
 					{
 						echo '<p class="search-term search-term-select"><select name="annee" class="annee form-control" id="searchYear">';
-						echo '<option value="all">Toutes</option>';
+						echo '<option value="">Toutes</option>';
 						
 						foreach ( $terms as $term ) 
 						{

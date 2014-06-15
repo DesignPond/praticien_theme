@@ -27,6 +27,7 @@
 													<label for="accescode">Code d'accès</label>
 													<input type="text" name="accescode" id="accescode" class="input" value="" size="20" tabindex="20" />
 												</p>
+												<a href="mailto:cindy.leschaud@unine.ch">Problème avec votre code d'accès?</a>
 												<p class="login-submit">
 													<input type="submit" name="wp-submit" id="wp-submit" class="btn btn-buy" value="Envoyer &raquo;" tabindex="100" />
 													<input type="hidden" name="redirect_to" value="http://droitpourlepraticien.ch" />
@@ -44,18 +45,18 @@
 											<?php
 											
 												$args = array(
-											        'echo' => true,
-											        'redirect' => site_url( $_SERVER['REQUEST_URI'] ), 
-											        'form_id' => 'loginform',
+											        'echo'           => true,
+											        'redirect'       => site_url( $_SERVER['REQUEST_URI'] ), 
+											        'form_id'        => 'loginform',
 											        'label_username' => __( 'Username' ),
 											        'label_password' => __( 'Password' ),
 											        'label_remember' => __( 'Remember Me' ),
-											        'label_log_in' => __( 'Log In' ),
-											        'id_username' => 'user_login',
-											        'id_password' => 'user_pass',
-											        'id_remember' => 'rememberme',
-											        'id_submit' => 'wp-submit',
-											        'remember' => true,
+											        'label_log_in'   => __( 'Log In' ),
+											        'id_username'    => 'user_login',
+											        'id_password'    => 'user_pass',
+											        'id_remember'    => 'rememberme',
+											        'id_submit'      => 'wp-submit',
+											        'remember'       => true,
 											        'value_username' => NULL,
 											        'value_remember' => false
 											     );
@@ -130,11 +131,5 @@
 		
 	<?php } ?>
 
-<?php
-
-echo "<!--\n";
-var_dump($wpdb->queries);
-echo "\n-->";
-?>
 
 </div>

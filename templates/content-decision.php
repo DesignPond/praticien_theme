@@ -10,13 +10,18 @@
 			$term       = ( !empty($_REQUEST['term']) ? $_REQUEST['term'] : NULL);
 			$retour     = ( !empty($_REQUEST['retour']) ? $_REQUEST['retour'] : NULL);
 		
-			$reference = ( !empty($_REQUEST['arret']) ? $_REQUEST['arret'] : '');
+			$reference  = ( !empty($_REQUEST['arret']) ? $_REQUEST['arret'] : '');
 			
-			$decision  = getDecisionByRef($reference);
+			$decision   = getDecisionByRef($reference);
 			
 			$catName         = $decision->nameCat;
 			$subcatName      = $decision->nameSub;
-			$texte_nouveaute = $decision->texte_nouveaute;	
+			$texte_nouveaute = $decision->texte_nouveaute;
+			
+			if($term)
+			{
+				$texte_nouveaute = highlightTerms($texte_nouveaute,$term);
+			}	
 						
 			$returnUrl =  add_query_arg( array( 'categorie' => $category, 'term' => $term  ,'dateStart' => $dateStart, 'dateEnd' => $dateEnd, 'star' => $star) , get_permalink($retour) );
 	 	

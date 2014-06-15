@@ -1,3 +1,7 @@
+<?php
+
+	$apropos = get_ID_by_slug('a-propos');
+?>
 <div id="home-header">
 	<div class="container">
 	
@@ -20,7 +24,7 @@
 				
 				<p>
 					<a href="http://www.publications-droit.ch/#/cat/publications/item/229" target="_blank" class="btn btn-buy">Acheter</a>
-					<a href="http://www.publications-droit.ch/#/cat/publications/item/229" target="_blank" class="btn btn-default">En savoir plus</a>
+					<a href="<?php echo get_permalink($apropos); ?>" class="btn btn-default">En savoir plus</a>
 				</p>				
 			</div>								
 		</div>

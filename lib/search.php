@@ -1,10 +1,5 @@
 <?php
 
-
-function simpleTermSearch(){
-	
-}
-
 function trailCategoriesPost($post_id){
 	
 	$post_categories = wp_get_post_categories( $post_id );
@@ -154,7 +149,7 @@ function articleTermsSearch(){
 	$alinea  = $_REQUEST['alinea'];
 	$chiffre = $_REQUEST['chiffre'];
 	$lettre  = $_REQUEST['lettre'];
-	$annee   = $_REQUEST['annee'];
+	$annee   = (!empty($_REQUEST['annee']) ? $_REQUEST['annee'] : null);
 
 	$article = array_filter($article);
 	$loi     = array_filter($loi);
@@ -167,7 +162,6 @@ function articleTermsSearch(){
 	if($alinea)  { $_SESSION['search']['alinea']  = $alinea; }
 	if($lettre)  { $_SESSION['search']['lettre']  = $lettre; }
 	if($chiffre) { $_SESSION['search']['chiffre'] = $chiffre; }
-	if($annee)   { $_SESSION['annee'] = $annee; }
 	
 	$orderArray  = array('article', 'loi', 'alinea', 'lettre', 'chiffre');
 	$termsSearch = $_SESSION['search'];	
@@ -178,6 +172,12 @@ function articleTermsSearch(){
 			  JOIN wp_term_taxonomy t ON r.term_taxonomy_id = t.term_taxonomy_id
 			  JOIN wp_terms terms ON terms.term_id = t.term_id
 			  WHERE meta_key = "termes_rechercher" ';
+			  
+		
+	if (!empty($annee) )
+	{ 
+		$query .= ' AND (t.taxonomy = "annee" AND terms.slug = "'.$annee.'") '; 
+	}
 			  
 	if (!empty($_SESSION['search']) )
 	{
@@ -215,11 +215,6 @@ function articleTermsSearch(){
 			}
 		}
 	}	
-	
-	if (!empty($_SESSION['annee']) )
-	{ 
-		$query .= ' AND (t.taxonomy = "annee" AND terms.slug = "'.$annee.'") '; 
-	}
 	
 	$query .= ' GROUP BY post_id '; 
 	
