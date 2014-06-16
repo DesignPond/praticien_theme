@@ -9,6 +9,8 @@ function activeUserAccount( $atts = NULL ){
 	
 	$args = shortcode_atts( array('edition' => '2012/2013' ), $atts );
 	
+	$action   = admin_url( 'admin-post.php');
+	
 	$edition = $args['edition'];
 	
 	$today     = date('Y-m-d');
@@ -20,14 +22,44 @@ function activeUserAccount( $atts = NULL ){
 	$end = ( ($today < $bookIsOut) ? $yearEnd : $nextYear);
 	$end = mysql2date('j F Y', $end );
 	
+	$user = (!empty($_REQUEST['user']) ? $_REQUEST['user'] : null); 
+	
 	// Start buffer!!!
 	ob_start(); ?>
 	
-	<p>Afin d'activer votre compte sur le site, merci d'indiquer le code d'accès obtenu sur le livre "Le droit pour le praticien" édition <strong><?php echo $edition; ?></strong>.</p>
-
-	<p>Votre compte sera alors actif jusqu'au <?php echo $end; ?></p>
-	
-	
+	<div class="row top-buffer">
+		<div class="col-sm-4">
+			<img src="<?php echo get_bloginfo('template_directory');?>/assets/img/book.png" alt="livre le droit pour le praticien" />
+		</div>
+		<div class="col-sm-8">
+			<h4 class="sectionTitre">La validité de votre compte est arrivé à expiration.</h4>
+			<p>Afin de reactiver votre compte sur le site, merci d'indiquer le code d'accès obtenu sur le livre "<strong>Le droit pour le praticien</strong>" 
+			édition <strong><?php echo $edition; ?></strong>.</p>
+			<p>Votre compte sera alors actif jusqu'au <?php echo $end; ?></p>	
+			<?php  
+				if(isset($_GET['error']))
+				{
+					$errorCodes = array(1 => 'Le code n\'est pas valide' , 2 => 'Merci d\'indiquer un code d\'accès');
+					echo '<p class="bg-danger text-danger">'.$errorCodes[$_GET['error']].'</p>';
+				}
+			?>		
+			<form class="form-horizontal top-buffer codeaccess" method="post" role="form" action="">	
+				<input type="hidden" name="user" id="user" value="<?php echo $user; ?>" />
+				<input type="hidden" name="action" value="submit-code" />		
+				<div class="form-group">
+					<label for="codeaccess" class="col-sm-3 control-label">Code d'accès</label>
+					<div class="col-sm-7">
+						<div class="input-group">
+					      <input type="text" class="form-control" id="accescode" name="accescode" size="20" placeholder="Code">				
+					      <span class="input-group-btn">
+					         <button type="submit" class="btn btn-buy">Envoyer</button>
+					      </span>
+					    </div>				    
+					</div>
+				</div>	
+			</form>			
+		</div>
+	</div>
 	
 	<?php
 	$content = ob_get_clean();

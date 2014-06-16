@@ -61,6 +61,11 @@ function soi_login_redirect( $redirect_to, $request, $user  ) {
 	$year   = date('Y-m-d');
 	$limite = get_user_meta($user->ID, 'date_abo_active' ,true); 
 	
+	$page = get_ID_by_slug('reactiver-votre-compte');
+	
+	// Return url
+	$return  = add_query_arg( array('user' => $user->ID ) , get_permalink($page) );
+	
 	if($limite)
 	{
 		if($year < $limite)
@@ -70,13 +75,13 @@ function soi_login_redirect( $redirect_to, $request, $user  ) {
 		else
 		{
 			wp_logout();
-			$url = site_url().'?page_id=18783&&user='.$user->ID.'';
+			$url = $return;
 		}
 	}
 	else
 	{
 		wp_logout();
-		$url = site_url().'?page_id=18783&&user='.$user->ID.'';
+		$url = $return;
 	}
 			
 	return $url;

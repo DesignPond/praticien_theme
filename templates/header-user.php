@@ -13,13 +13,17 @@
 ?>	
 <div id="header-user">
 	<div class="container">
-	
+
 		<div class="row">				
 			<div class="col-sm-12">
-
+				
 				<nav class="navbar navbar-info" role="navigation">
 					<div class="container-fluid">					
-					    <div class="navbar-header"><a class="navbar-brand">Bonjour <strong><?php echo $nomUser; ?></strong></a></div>	
+					    <div class="navbar-header">
+					    	<a class="navbar-brand">Bonjour <strong><?php echo $nomUser; ?></strong>
+					    	&nbsp;&nbsp;<?php if(isset($_GET['reactivate'])){ ?><small class="text-center bg-success text-success">Votre compte a été réactivé</small><?php } ?>
+					    	</a>			    	
+					    </div>	
 					    <ul class="nav navbar-nav navbar-right">
 					        <li class="<?php if($postSlug == 'alertes-configuration'){ echo 'active'; } ?>">
 					        	<a href="<?php echo get_permalink($link); ?>"><span class="glyphicon glyphicon-envelope"></span> &nbsp;Gérer vos alertes e-mail</a>
