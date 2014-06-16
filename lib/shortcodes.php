@@ -45,7 +45,8 @@ function activeUserAccount( $atts = NULL ){
 			?>		
 			<form class="form-horizontal top-buffer codeaccess" method="post" role="form" action="">	
 				<input type="hidden" name="user" id="user" value="<?php echo $user; ?>" />
-				<input type="hidden" name="action" value="submit-code" />		
+				<input type="hidden" name="action" value="submit-code" />
+				<input type="hidden" name="reactive_user" value="1" />		
 				<div class="form-group">
 					<label for="codeaccess" class="col-sm-3 control-label">Code d'accès</label>
 					<div class="col-sm-7">
