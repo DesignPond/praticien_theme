@@ -20,3 +20,4 @@ require_once locate_template('/lib/scripts.php');         // Scripts and stylesh
 require_once locate_template('/lib/custom.php');          // Custom functions
 require_once locate_template('/lib/alertes.php');         // Alertes functions
 require_once locate_template('/lib/search.php');          // Search functions
+require_once locate_template('/lib/shortcodes.php');      // Shortcodes

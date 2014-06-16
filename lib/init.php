@@ -23,3 +23,64 @@ function roots_setup() {
   add_editor_style('/assets/css/editor-style.css');
 }
 add_action('after_setup_theme', 'roots_setup');
+
+/**
+ * If an email address is entered in the username box, then look up the matching username and authenticate as per normal, using that.
+ *
+ * @param string $user
+ * @param string $username
+ * @param string $password
+ * @return Results of autheticating via wp_authenticate_username_password(), using the username found when looking up via email.
+ */
+function dr_email_login_authenticate( $user, $username, $password ) {
+	if ( is_a( $user, 'WP_User' ) )
+		return $user;
+
+	if ( !empty( $username ) ) 
+	{
+		$username = str_replace( '&', '&amp;', stripslashes( $username ) );
+		$user     = get_user_by( 'email', $username );
+		
+		if ( isset( $user, $user->user_login, $user->user_status ) && 0 == (int) $user->user_status )
+			$username = $user->user_login;
+	}
+
+	return wp_authenticate_username_password( null, $username, $password );
+}
+
+remove_filter( 'authenticate', 'wp_authenticate_username_password', 20, 3 );
+add_filter( 'authenticate', 'dr_email_login_authenticate', 20, 3 );
+
+/**
+ * Redirect non-admins to the homepage after logging into the site.
+ *
+ * @since 	1.0
+ */
+function soi_login_redirect( $redirect_to, $request, $user  ) {
+
+	$year   = date('Y-m-d');
+	$limite = get_user_meta($user->ID, 'date_abo_active' ,true); 
+	
+	if($limite)
+	{
+		if($year < $limite)
+		{
+			$url = site_url();
+		}
+		else
+		{
+			wp_logout();
+			$url = site_url().'?page_id=18783&&user='.$user->ID.'';
+		}
+	}
+	else
+	{
+		wp_logout();
+		$url = site_url().'?page_id=18783&&user='.$user->ID.'';
+	}
+			
+	return $url;
+	
+} // end soi_login_redirect
+
+add_filter( 'login_redirect', 'soi_login_redirect', 30, 3 );
