@@ -207,7 +207,7 @@ function articleTermsSearch(){
 			
 			if( is_numeric($firstItem) and is_string($second) ) 
 			{
-				$query .= 'AND meta_value LIKE "'.$meta_value.'%" OR meta_value LIKE "%,'.$meta_value.'%" ';
+				$query .= 'AND (meta_value LIKE "'.$meta_value.'%" OR meta_value LIKE "%,'.$meta_value.'%") ';
 			}
 			else
 			{
@@ -218,8 +218,6 @@ function articleTermsSearch(){
 	
 	$query .= ' GROUP BY post_id '; 
 	
-	// return  $query;
-	
 	$myrows = $wpdb->get_results($query);
 	
 	return $myrows;
@@ -228,41 +226,59 @@ function articleTermsSearch(){
 
 
 /**
- * Search in decisions from TF
+ * Format keywords for search
+*/		 
+function formatSearch($search){
+
+	$search = htmlspecialchars_decode($search);
+	$search = stripcslashes($search);
+	
+	/**
+	 *  Remove string in double quotes and put each in array
+	 *  Get rest and replace virgule by space
+	 *  Explode string by space and put in array
+	*/
+	
+	if (preg_match_all('/"([^"]+)"/', $search, $m)) 
+	{
+	    $quotes   = $m[0]; 
+	    $noquotes = $m[1];   
+	} 
+	
+	if(!empty($quotes))
+	{	
+		// remove string in quotes	
+		$newsearch = str_replace($quotes , '' , $search);	
+		// remove commas and dots		
+		$newsearch = str_replace(array('.', ','), '' , $newsearch); 
+		
+		$find   = explode(" ", $newsearch);	
+		// merge quotes string and normal words		
+		$result = array_merge($noquotes , $find);
+	}
+	else
+	{
+		// remove commas and dots
+		$search = str_replace(array('.', ','), '' , $search); 
+		$result = explode(" ", $search);
+	}
+	
+	// remove empty
+	$result = array_filter($result);
+	
+	return $result;	
+}
+
+/**
+ * Other search function
 */
-function decisionSearch($s) {
+
+function newDecisionSearch($search){
 
 	global $wpdb;
 		
-	$searchArray =  array();
-	// Decode special chars
-	$s =  htmlspecialchars_decode($s);
+	$nbrItem = count($search);
 	
-    preg_match_all('/"(?:\\\\.|[^\\\\"])*"|\S+/', $s, $matches);
-	
-	$recherche = $matches[0];
-	
-	foreach($recherche as $rech)
-	{
-		if (preg_match('/\"([^\"]*?)\"/', $rech, $m)) 
-		{
-		   $string = $m[1];
-		   $string = str_replace('"', '', $string);
-		   $item   = str_replace('"', '', $string);
-		   
-	 	   $rechercheArray['quote'][] = $item;   
-		}
-		else
-		{
-		   $string = str_replace('"', '', $rech);
-		   $item   = str_replace('"', '', $string);
-		   
-		   $rechercheArray['normal'][] = $string;   
-		}
-	}
-	
-	$search = $_REQUEST['search-type'];
-								
 	// contruction de la requete
 	$query = 'SELECT wp_nouveautes.id_nouveaute ,
 					 wp_nouveautes.datep_nouveaute ,
@@ -277,50 +293,18 @@ function decisionSearch($s) {
 			  JOIN wp_custom_categories on wp_custom_categories.term_id = wp_nouveautes.categorie_nouveaute 
 			  JOIN wp_subcategories on wp_subcategories.refNouveaute = wp_nouveautes.id_nouveaute 
 			  WHERE ';
-
-	
-	$quotes = (!empty( $rechercheArray['quote'])  ? $rechercheArray['quote']  : array() );
-	$normal = (!empty( $rechercheArray['normal']) ? $rechercheArray['normal'] : array() );
-	
-	// count nbr of items in arrays		  
-	$nbrItemQuote  = count($quotes);
-	$nbrItemNormal = count($normal);
-	
-	$i = 1; 
-	
-	// use REGEXP for strings in quotes
-	if($quotes)
-	{
-		foreach($quotes as $q)
-		{	
-			$query .= '( wp_nouveautes.texte_nouveaute REGEXP "[[:<:]]'.$q.'[[:>:]]" ';
-			
-			$query .= 'OR wp_subcategories.name REGEXP "[[:<:]]'.$q.'[[:>:]]" ) ';
-			
-			$searchArray[] = $q;
-			
-			$query .= ($i < $nbrItemQuote ? ' AND ' : '');
-			
-			$i++;
-		}
-	}
-	
-	$j = 1;
+	$i = 1;
 	
 	// use LIKE for simple strings
-	if($normal)
+	if($search)
 	{
-		foreach($normal as $n)
-		{					
-			$query .= ($nbrItemQuote > 0 ? ' AND ' : '');			
-			$query .= '( wp_nouveautes.texte_nouveaute LIKE "%'.$n.'%" ';
-			$query .= 'OR wp_subcategories.name LIKE "%'.$n.'%" ) ';
-			
-			$searchArray[] = $n;
+		foreach($search as $word)
+		{							
+			$query .= '( wp_nouveautes.texte_nouveaute LIKE "%'.$word.'%" OR wp_subcategories.name LIKE "%'.$word.'%" ) ';
 
-			$query .= ($j < $nbrItemNormal ? ' AND ' : '');
+			$query .= ($i < $nbrItem ? ' AND ' : '');
 			
-			$j++;
+			$i++;
 		}
 	}
 	
@@ -329,9 +313,8 @@ function decisionSearch($s) {
 	// Get result with the query
 	$result = $wpdb->get_results($query);
 	
-	$resultat['terms']  = $searchArray;
+	$resultat['terms']  = $s;
 	$resultat['result'] = $result;
 
 	return $query;  
-		
 }

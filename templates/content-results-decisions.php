@@ -1,9 +1,23 @@
-<?php $search = $_REQUEST['term']; ?>
+<?php 
+
+// Retrive search terms arguments
+$search_terms = $_REQUEST['term']; 				
+// Format query string
+$format = formatSearch($search_terms);
+// Query with params							
+$query  = newDecisionSearch($format);
+// Page to link decision to
+$page_decision = get_ID_by_slug('decision');
+
+// Url params
+$terms = http_build_query( array('term' => $format) ,'','&');
+
+?>
 	
 <div class="row">
   <div class="col-md-12">
     	
-    	<h3>Résultats pour : <small><?php echo $search; ?></small></h3>	
+    	<h3>Résultats pour : <small><?php echo $searching; ?></small></h3>	
   		<!-- Table list arrêts -->
   		<table id="arrets" class="hover table" cellspacing="0" width="100%">
 			<thead>
@@ -17,18 +31,7 @@
 				</tr>
 			</thead>
 			
-			<?php 
-			
-				// Query with params
-				$query = decisionSearch($search);
-				
-				// Page to link decision to
-				$page_decision = get_ID_by_slug('decision');
-				
-				// list
-				echo prepareListDecisions($query , $page_decision , $post->ID , $search );
-				
-			 ?>	
+			<?php echo prepareListDecisions($query , $page_decision , $post->ID , $terms ); ?>	
 					
 			<tfoot>
 				<tr>

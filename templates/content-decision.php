@@ -19,11 +19,14 @@
 			$texte_nouveaute = $decision->texte_nouveaute;
 			
 			if($term)
-			{
-				$texte_nouveaute = highlightTerms($texte_nouveaute,$term);
+			{	
+				foreach($term as $word)
+				{
+					$texte_nouveaute = highlightTerms($texte_nouveaute,$word);
+				}					
 			}	
 						
-			$returnUrl =  add_query_arg( array( 'categorie' => $category, 'term' => $term  ,'dateStart' => $dateStart, 'dateEnd' => $dateEnd, 'star' => $star) , get_permalink($retour) );
+			$returnUrl =  add_query_arg( array( 'categorie' => $category, $term ,'dateStart' => $dateStart, 'dateEnd' => $dateEnd, 'star' => $star) , get_permalink($retour) );
 	 	
 		?>	
 			

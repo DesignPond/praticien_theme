@@ -51,7 +51,7 @@
 <div class="row">
    <div class="col-md-12">
    		
-   	   <h3>Résultats pour: <small><?php echo $s; ?></small></h3>			
+   	   <h3>Résultats pour: <small><?php echo stripslashes($s); ?></small></h3>			
    	   	
 	   <?php
 

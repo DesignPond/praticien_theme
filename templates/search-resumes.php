@@ -21,8 +21,8 @@
 		<form role="search" method="post" id="searchDetail" action="<?php echo get_permalink($link); ?>">
 
 			<!-- clone terms inputs -->
-			<a id="cloneForm" href=""><span class="glyphicon glyphicon-plus"></span></a>
-			<a id="deleteForm" href=""><span class="glyphicon glyphicon-minus"></span></a>
+			<a id="cloneForm" data-toggle="tooltip" data-placement="right" title="Ajouter des termes de recherche" href=""><span class="glyphicon glyphicon-plus"></span></a>
+			<a id="deleteForm" data-toggle="tooltip" data-placement="right" title="Supprimer les termes de recherche" href=""><span class="glyphicon glyphicon-minus"></span></a>
 			
 			<label class="searchText">Recherche par article &nbsp;
 				<span id="infoTip" data-toggle="tooltip" data-placement="right" 

@@ -292,7 +292,7 @@ function prepareListDecisions($query , $page , $retour = NULL , $term = NULL , $
 		foreach($arrets as $arret)
 		{
 			// Prepapre url to link to
-			$url   = add_query_arg( array( 'arret' => $arret->numero_nouveaute , 'retour' => $retour , 'term' => $term , 'dateStart' => $dateStart, 'dateEnd' => $dateEnd ) , get_permalink($page) );
+			$url = add_query_arg( array('arret' => $arret->numero_nouveaute ,'retour' => $retour ,'dateStart' => $dateStart,'dateEnd' => $dateEnd),get_permalink($page));
 			
 			// Subcategories
 			$subcat  = $wpdb->get_row(' SELECT name as nameSub FROM wp_subcategories WHERE refNouveaute = "'.$arret->id_nouveaute.'" ');			
@@ -302,7 +302,7 @@ function prepareListDecisions($query , $page , $retour = NULL , $term = NULL , $
 			
 				$html .= '<td>'.$arret->datep_nouveaute.'</td>';
 				$html .= '<td>'.$arret->dated_nouveaute.'</td>';
-				$html .= '<td><a href="'.$url.'">';
+				$html .= '<td><a href="'.$url.'&'.$term.'">';
 				
 				if($arret->publication_nouveaute == "1") { $html .= '*';}
 				

@@ -26,9 +26,10 @@
 	}
 	
 	// Tooltips
-	$('#infoTip').tooltip({
-		'html': true
-	});
+	$('#infoTip').tooltip({ 'html': true});
+	
+	$('#cloneForm').tooltip({ 'html': true});
+	$('#deleteForm').tooltip({ 'html': true});
 	
 	// Form placeholder css	
 	$('.default-value').each(function() {
