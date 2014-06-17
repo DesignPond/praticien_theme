@@ -8,9 +8,17 @@
 			   		
 	  		<?php
 		  		
-		  		$categories = getAllArretsCategories();
+		  		// Sessions for user suscribed to newsletter	
+				$suscribedToNewsletter = (!empty($_SESSION['suscribedToNewsletter']) ? $_SESSION['suscribedToNewsletter'] : null );
+				$idListNewsletter      = (!empty($_SESSION['idListNewsletter']) ? $_SESSION['idListNewsletter'] : null );
+				
+		  		$list = ($suscribedToNewsletter ? getAllCatsByNewsletterList($idListNewsletter) : null );
 		  		
-		  		$current = get_query_var('cat');		
+		  		if($list){$list = implode(",", $list);}
+		  		
+		  		$categories = getAllArretsCategories($list);
+		  		
+		  		$current    = get_query_var('cat');		
 		  		
 		  		if(!empty($current))
 		  		{

@@ -3,12 +3,7 @@
 	global $wp;
 	$current_url = add_query_arg( $wp->query_string, '', site_url( $_SERVER['REQUEST_URI'] ));
 	
-	// Get category to test if we can see the content by suscribing to newsletter
-	$cat_id  = get_query_var('cat');
-	
-	$isSuscribedNewseltter = (!empty($_SESSION['isSuscribedNewseltter']) ? $_SESSION['isSuscribedNewseltter'] : null );
-	
-	$cols = ($isSuscribedNewseltter ? 'col-md-6' : 'col-md-6 col-md-offset-3' );
+	$cols = (!$suscribedToNewsletter ? 'col-md-6' : 'col-md-6 col-md-offset-3' );
 ?>
 <div class="row">
 
@@ -51,12 +46,52 @@
 				
    </div>
    		
-   <?php if($isSuscribedNewseltter){ ?>
-   		<div class="col-md-6">
-   			<div id="bloc_newsletter">
-   				<h3>Inscrit à la newsletter</h3>
-   			</div>
-		</div>   
-   <?php } ?>
+	<?php 
+		
+		// Current category
+		$currentCat  = get_query_var('cat');
+		// Is the categry linked to a newsletter list?
+		$isSubscribe = getCatNewsletter($currentCat);
+		
+		// If yes and we are not in session show the form
+		if( !$suscribedToNewsletter && $isSubscribe )
+		{ 	 
+			// Get page for inscription to the newsletter  		
+	   		$page = get_ID_by_slug('inscription-a-la-newsletter-droit-pour-le-praticien');
+	   		// Get name of the list
+	   		$name = getCampaignName($isSubscribe);
+	   		// Get list of categories we can see with this list
+	   		$list = getAllCatsByNewsletterList($isSubscribe);
+	   		if($list){$list = implode(",", $list);}
+		  	// Retrive the categories 	
+		  	$categories = getAllArretsCategories($list);
+	   		// Link to page for inscription
+	   		$url_inscription = add_query_arg( array( 'id' => $isSubscribe ) , get_permalink($page) );
+		   	
+	?>
+	<div class="col-md-6">
+		<h3>Inscrit à la newsletter</h3>
+		<p>Si vous êtes inscrit à la newsletter <strong><?php echo $name; ?></strong></p>
+		<form class="form-inline" action="<?php echo $current_url; ?>" method="post" role="form" id="bloc_newsletter">
+		  <legend>Accéder au contenu</legend>
+		  <p>Entrez votre email utilisé lors de votre inscription à la newsletter pour consulter le contenu de des rubriques suivantes:<br/>
+			  <?php
+				  if( !empty($categories))
+				  {
+					 echo '<strong>'.implode(",", $categories).'</strong>';
+				  }
+			  ?>
+		  </p>
+		  <div class="form-group">
+		    <input type="email" style="width:250px;" class="form-control" name="email_newsletter" placeholder="email">
+		    <input type="hidden" name="id_newsletter" value="<?php echo $isSubscribe; ?>">
+		  </div>
+		  <button type="submit" class="btn btn-blue">Valider</button>
+		  <div class="clearfix"></div><br/>
+		  <a href="<?php echo $url_inscription; ?>"><span class="glyphicon glyphicon-envelope"></span> &nbsp;S'inscrire à la newsletter : <?php echo $name; ?></a>
+		</form>
+	</div> 
+	  
+	<?php } ?>
    
 </div>

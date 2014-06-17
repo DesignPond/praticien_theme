@@ -10,7 +10,7 @@
 /**
  * Return campagin name by id
 */
-function get_campaing_name($id){
+function getCampaignName($id){
 	
 	global $wpdb;
 	
@@ -25,7 +25,7 @@ function get_campaing_name($id){
 /**
  * Return campagin url by id
 */
-function get_campaing_url($id){
+function getCampaingUrl($id){
 	
 	global $wpdb;
 	
@@ -40,7 +40,7 @@ function get_campaing_url($id){
 /**
  * Return id of list visible for this category
 */
-function get_cat_newsletter($cat){
+function getCatNewsletter($cat){
 	
 	global $wpdb;
 	
@@ -49,30 +49,79 @@ function get_cat_newsletter($cat){
 	
 	if(!empty($in))
 	{
-		$id_list = $in->id_list;
-		return $id_list;
+		return $in->id_list;
 	}
 	else
 	{
-		return -1;
+		return false;
 	}
+}
+
+/**
+ * Return list of catgories for this list id
+*/
+function getAllCatsByNewsletterList($id_list){
+	
+	global $wpdb;
+	
+	$list = array(); 
+	
+	$query      = 'SELECT * FROM wp_newsletter_auth WHERE id_list = "'.$id_list.'" ';
+	$categories = $wpdb->get_results( $query );
+	
+	if(!empty($categories))
+	{
+		foreach($categories as $categorie)
+		{
+			$list[] = $categorie->cat_auth;
+		}
+		
+		return $list;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+/**
+ *  Is the email suscribed to the newsletter
+*/
+function isEmailSuscribed($id,$email){
+	
+	global $wpdb;
+	
+	$query  = 'SELECT email,wp_wysija_user.user_id,status 
+			   FROM wp_wysija_user 
+			   LEFT JOIN wp_wysija_user_list on wp_wysija_user_list.user_id = wp_wysija_user.user_id
+			   WHERE wp_wysija_user.email = "'.$email.'" AND wp_wysija_user.status = "1" AND wp_wysija_user_list.list_id = "'.$id.'" ';
+			   
+			   
+	$result = $wpdb->get_row($query);
+	
+	if(!empty($result))
+	{
+		return true;
+	}
+	
+	return false;
 }
 
 /**
  * Get archives for newsletter by list id
 */
-function get_archives_newsletter($list){
+function getArchivesNewsletter($list){
 	
-		global $wpdb;
-		
-		$query = 'SELECT wp_wysija_list.* , wp_wysija_campaign_list.* , wp_wysija_email.email_id, wp_wysija_email.subject , wp_wysija_email.sent_at FROM wp_wysija_list 
-				 		   LEFT JOIN wp_wysija_campaign_list on wp_wysija_campaign_list.list_id = wp_wysija_list.list_id
-				 		   LEFT JOIN wp_wysija_email on wp_wysija_campaign_list.campaign_id = wp_wysija_email.campaign_id
-				 		   WHERE wp_wysija_list.list_id = "'.$list.'" ORDER BY  wp_wysija_email.campaign_id DESC';
-				 		   
-		$campaigns = $wpdb->get_results( $query );
-		
-		return $campaigns;
+	global $wpdb;
+	
+	$query = 'SELECT wp_wysija_list.* , wp_wysija_campaign_list.* , wp_wysija_email.email_id, wp_wysija_email.subject , wp_wysija_email.sent_at FROM wp_wysija_list 
+			 		   LEFT JOIN wp_wysija_campaign_list on wp_wysija_campaign_list.list_id = wp_wysija_list.list_id
+			 		   LEFT JOIN wp_wysija_email on wp_wysija_campaign_list.campaign_id = wp_wysija_email.campaign_id
+			 		   WHERE wp_wysija_list.list_id = "'.$list.'" ORDER BY  wp_wysija_email.campaign_id DESC';
+			 		   
+	$campaigns = $wpdb->get_results( $query );
+	
+	return $campaigns;
 }
 
 /**
@@ -84,7 +133,7 @@ function dp_archives_newsletter( $atts ) {
 
 	global $wpdb;
 	
-	$campaigns = get_archives_newsletter($list);
+	$campaigns = getArchivesNewsletter($list);
 	
 	/* Contruct the list */
 	

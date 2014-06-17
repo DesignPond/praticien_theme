@@ -41,8 +41,6 @@
    <div class="col-md-9">
   
 	<?php 
-	
-	echo get_campaing_name(3);
 				
 	// The categorie for anchor	
 	$parentName = '';

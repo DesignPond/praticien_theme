@@ -326,7 +326,7 @@ function prepareListDecisions($query , $page , $retour = NULL , $term = NULL , $
  * Display as waal of links
 */
 
-function getAllArretsCategories(){
+function getAllArretsCategories( $list = NULL ){
 
 	$args = array(
 		'orderby'    => 'name',
@@ -334,6 +334,11 @@ function getAllArretsCategories(){
 		'hide_empty' => 1,
 		'exclude'    => '3'
 	); 
+	
+	if($list)
+	{
+		$args['include'] = $list;
+	}
 	
 	$categories  = get_categories($args);
 	
