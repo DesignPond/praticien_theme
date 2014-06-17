@@ -74,14 +74,14 @@
 		<p>Si vous êtes inscrit à la newsletter <strong><?php echo $name; ?></strong></p>
 		<form class="form-inline" action="<?php echo $current_url; ?>" method="post" role="form" id="bloc_newsletter">
 		  <legend>Accéder au contenu</legend>
-		  <p>Entrez votre email utilisé lors de votre inscription à la newsletter pour consulter le contenu de des rubriques suivantes:<br/>
+		  <p>Entrez votre email utilisé lors de votre inscription à la newsletter pour consulter le contenu de des rubriques suivantes:<br/><br/>
 			  <?php
 				  if( !empty($categories))
 				  {
-					 echo '<strong>'.implode(",", $categories).'</strong>';
+					 echo '<strong>'.implode(", ", $categories).'</strong>';
 				  }
 			  ?>
-		  </p>
+		  </p><br/>
 		  <div class="form-group">
 		    <input type="email" style="width:250px;" class="form-control" name="email_newsletter" placeholder="email">
 		    <input type="hidden" name="id_newsletter" value="<?php echo $isSubscribe; ?>">

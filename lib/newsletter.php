@@ -10,6 +10,19 @@
 /**
  * Return campagin name by id
 */
+function getAllCampaignName(){
+	
+	global $wpdb;
+	
+	$query      = 'SELECT name FROM wp_wysija_list';
+	$campaigns  = $wpdb->get_results($query);
+	
+	return $campaigns;
+}
+
+/**
+ * Return campagin name by id
+*/
 function getCampaignName($id){
 	
 	global $wpdb;
@@ -21,6 +34,7 @@ function getCampaignName($id){
 	
 	return $nom;
 }
+
 
 /**
  * Return campagin url by id
