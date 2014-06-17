@@ -848,41 +848,4 @@ function wpc_pagination($pages = '', $range = 2)
      }
 }
 
-function dp_archives_newsletter( $atts ) {
-
-	extract( shortcode_atts( array( 'list' => 'list' ), $atts ) );
-
-	global $wpdb;
-	
-	$campaigns = array();
-	
-	$query = 'SELECT wp_wysija_list.* , wp_wysija_campaign_list.* , wp_wysija_email.email_id, wp_wysija_email.subject , wp_wysija_email.sent_at FROM wp_wysija_list 
-			 		   LEFT JOIN wp_wysija_campaign_list on wp_wysija_campaign_list.list_id = wp_wysija_list.list_id
-			 		   LEFT JOIN wp_wysija_email on wp_wysija_campaign_list.campaign_id = wp_wysija_email.campaign_id
-			 		   WHERE wp_wysija_list.list_id = "'.esc_attr($list).'" ORDER BY  wp_wysija_email.campaign_id DESC';
-			 		   
-	$campaigns = $wpdb->get_results( $query );
-	
-	/* Contruct the list */
-	
-	$content = '';
-	
-	if(!empty($campaigns)){
-				
-		$content .= '<div class="list-group">';
-		
-		foreach($campaigns as $campaign)
-		{
-			$url = get_bloginfo('url').'?wysija-page=1&controller=email&action=view&email_id='.$campaign->email_id.'&wysijap=subscriptions';
-			
-			$content .=  '<a class="list-group-item" target="_blank" href="'.$url.'"><span class="glyphicon glyphicon-inbox"></span> &nbsp;'.$campaign->subject.'</a>';
-		}
-		
-		$content .=  '</div>';
-	}
-	
-	return $content;		
-}
-
-add_shortcode( 'archives_newsletter', 'dp_archives_newsletter' );
 

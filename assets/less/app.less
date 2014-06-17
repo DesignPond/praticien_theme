@@ -82,6 +82,10 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
     color: @darker-blue;
 }
 
+h1{
+	margin-bottom: 20px;
+}
+
 h3{
 	margin-bottom: 20px;
 }
@@ -330,6 +334,12 @@ a:hover,a:focus{
     padding: 0 20px 0 0;
 }
 
+#loginSimple{
+	margin-top: 20px;
+	padding: 15px 20px 10px 20px;
+	background: #fff;
+}
+
 #login{
 	margin-top: 0;
     padding-left: 5px;
@@ -365,6 +375,13 @@ a:hover,a:focus{
 		display: block;
 	}
 	
+	#access p.text-danger{
+		margin: 0;
+		margin-top: -10px;
+		background: #ffc5c5;
+		font-size: 13px;
+	}
+	
 	#accessform p.login-submit{
 		margin: 0;
 	}
@@ -384,7 +401,7 @@ a:hover,a:focus{
 		color: #FFFFFF;
 		font-size: 13px;
 		font-weight: normal;
-		padding:5px 0;
+		padding:3px 0;
 		display: block;
 		clear: both;
 	}
@@ -510,6 +527,27 @@ a:hover,a:focus{
 	line-height: 35px;
 }
 
+p.registerNameHeading, p.registerAboutYourselfHeader , p.registerContactInfoHeading , .form-reCAPTCHA label{
+	font-size: 16px;
+	text-transform: uppercase;
+	color: @dark-red;
+}
+
+.recaptchatable, 
+#recaptcha_area tr, 
+#recaptcha_area td, 
+#recaptcha_area th {
+	line-height:0!important;
+}
+
+.recaptcha_input_area{
+	height: 30px!important;
+}
+
+#recaptcha_area input[type="text"] {
+  display: inline-block;
+  height: auto;
+}
 
 /* -----------------------------------------
    Header links

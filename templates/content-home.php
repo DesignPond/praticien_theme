@@ -17,25 +17,10 @@
 					<div id="homepageAcces">
 							
 							<div class="row">
-								<div class="col-md-4 bloc"><!-- start col 8 -->							
-					
-										<!-- Acces code bloc -->
-										<div id="access">
-											<h2>S'inscrire sur le site</h2>									
-									  		<form name="accessform" id="accessform" action="http://droitpourlepraticien.ch/wp-code.php" method="post">
-												<p class="login-password">
-													<label for="accescode">Code d'accès</label>
-													<input type="text" name="accescode" id="accescode" class="input" value="" size="20" tabindex="20" />
-												</p>
-												<a href="mailto:cindy.leschaud@unine.ch">Problème avec votre code d'accès?</a>
-												<p class="login-submit">
-													<input type="submit" name="wp-submit" id="wp-submit" class="btn btn-buy" value="Envoyer &raquo;" tabindex="100" />
-													<input type="hidden" name="redirect_to" value="http://droitpourlepraticien.ch" />
-												</p>						
-											</form>									
-										</div>	
-										<!-- end Acces code bloc -->						
-								
+								<div class="col-md-4 bloc"><!-- start col 8 -->	
+																			
+									<?php echo do_shortcode('[code_activation]'); ?>
+																							
 								</div>
 								<div class="col-md-8 bloc"><!-- start col 8 -->
 						

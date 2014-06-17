@@ -1,4 +1,10 @@
 <?php
+
+if (!session_id()) 
+{
+    session_start();
+}
+
 /**
  * Roots initial setup and constants
  */
@@ -61,16 +67,18 @@ function soi_login_redirect( $redirect_to, $request, $user  ) {
 	$year   = date('Y-m-d');
 	$limite = get_user_meta($user->ID, 'date_abo_active' ,true); 
 	
-	$page = get_ID_by_slug('reactiver-votre-compte');
+	$page   = get_ID_by_slug('reactiver-votre-compte');
+	
+	$redirect = (!empty($redirect_to) ? $redirect_to : site_url() );
 	
 	// Return url
-	$return  = add_query_arg( array('user' => $user->ID ) , get_permalink($page) );
+	$return = add_query_arg( array('user' => $user->ID ) , get_permalink($page) );
 	
 	if($limite)
 	{
 		if($year < $limite)
 		{
-			$url = site_url();
+			$url = $redirect;
 		}
 		else
 		{

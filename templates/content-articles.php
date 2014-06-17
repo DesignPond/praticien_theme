@@ -41,6 +41,8 @@
    <div class="col-md-9">
   
 	<?php 
+	
+	echo get_campaing_name(3);
 				
 	// The categorie for anchor	
 	$parentName = '';
@@ -99,12 +101,10 @@
 					
 	<?php } else { ?><article><p>Aucun arrêt ne correspond à votre demande</p></article><?php }	?>
 
-	<?php 
-	
+	<?php 	
 		  if ($wp_query->max_num_pages > 1){ wpc_pagination(); }
 		  
 		  wp_reset_query(); 
-		
 	?>
 
    </div>

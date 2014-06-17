@@ -21,7 +21,7 @@
 					<div class="container-fluid">					
 					    <div class="navbar-header">
 					    	<a class="navbar-brand">Bonjour <strong><?php echo $nomUser; ?></strong>
-					    	&nbsp;&nbsp;<?php if(isset($_GET['reactivate'])){ ?><small class="text-center bg-success text-success">Votre compte a été réactivé</small><?php } ?>
+					    	&nbsp;&nbsp;<?php if(isset($_GET['reactivate'])){ ?><small class="text-center bg-success text-success">Votre compte est maintenant actif</small><?php } ?>
 					    	</a>			    	
 					    </div>	
 					    <ul class="nav navbar-nav navbar-right">
