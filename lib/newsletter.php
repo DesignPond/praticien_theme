@@ -14,7 +14,7 @@ function getAllCampaignName(){
 	
 	global $wpdb;
 	
-	$query      = 'SELECT name FROM wp_wysija_list';
+	$query      = 'SELECT name , list_id FROM wp_wysija_list';
 	$campaigns  = $wpdb->get_results($query);
 	
 	return $campaigns;

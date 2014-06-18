@@ -12,7 +12,7 @@
 		<h3>Accès</h3>
 		<p>Vous devez être inscrit sur le site pour voir ce contenu.</p>
 		
-		<form name="login" id="loginSimple" class="form-horizontal" action="<?php echo wp_login_url(); ?>" method="post">
+		<form name="login" id="loginSimple" class="bloc_newsletter form-horizontal" action="<?php echo wp_login_url(); ?>" method="post">
 		  <legend>S'identifier</legend>
 		  <div class="form-group">
 		    <label for="user_login" class="col-sm-4 control-label">Identifiant</label>
@@ -72,7 +72,7 @@
 	<div class="col-md-6">
 		<h3>Inscrit à la newsletter</h3>
 		<p>Si vous êtes inscrit à la newsletter <strong><?php echo $name; ?></strong></p>
-		<form class="form-inline" action="<?php echo $current_url; ?>" method="post" role="form" id="bloc_newsletter">
+		<form class="form-inline bloc_newsletter" action="<?php echo $current_url; ?>" method="post" role="form" id="bloc_newsletter">
 		  <legend>Accéder au contenu</legend>
 		  <p>Entrez votre email utilisé lors de votre inscription à la newsletter pour consulter le contenu de des rubriques suivantes:<br/><br/>
 			  <?php

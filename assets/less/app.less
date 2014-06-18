@@ -308,10 +308,6 @@ a:hover,a:focus{
 	width: 90%;
 }
 
-#dateStart,#dateEnd{
-	
-}
-
 #homepageAcces{
 	background-color: @dark-blue;
 	max-height: 200px;
@@ -334,11 +330,6 @@ a:hover,a:focus{
     padding: 0 20px 0 0;
 }
 
-#loginSimple , #bloc_newsletter{
-	margin-top: 20px;
-	padding: 15px 20px 10px 20px;
-	background: #fff;
-}
 
 #login{
 	margin-top: 0;
@@ -547,6 +538,38 @@ p.registerNameHeading, p.registerAboutYourselfHeader , p.registerContactInfoHead
 #recaptcha_area input[type="text"] {
   display: inline-block;
   height: auto;
+}
+
+/* -----------------------------------------
+  Newsletter 
+----------------------------------------- */
+
+.gradient (@startColor: @light-blue, @endColor: @lighter-blue) {
+	background-color: @startColor;
+	background-image: -webkit-gradient(linear, left top, right top, from(@startColor), to(@endColor));
+	background-image: -webkit-linear-gradient(left, @startColor, @endColor);
+	background-image: -moz-linear-gradient(left, @startColor, @endColor);
+	background-image: -ms-linear-gradient(left, @startColor, @endColor);
+	background-image: -o-linear-gradient(left, @startColor, @endColor);
+}
+
+.bloc_newsletter_praticien{
+	color: #fff;
+	min-height: 120px;
+	.gradient;
+}
+
+.title_newsletter {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+
+.bloc_newsletter_nlrcas{
+	background: @dark-blue;
+	color: #fff;
+	min-height: 120px;
 }
 
 /* -----------------------------------------
