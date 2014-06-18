@@ -1,7 +1,4 @@
-<?php
-
-	$apropos = get_ID_by_slug('a-propos');
-?>
+<?php $apropos = get_ID_by_slug('a-propos'); ?>
 <div id="home-header">
 	<div class="container">
 	

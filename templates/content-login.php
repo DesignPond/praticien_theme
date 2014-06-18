@@ -42,6 +42,7 @@
 		      <button type="submit" name="wp-submit" id="wp-submit" class="btn btn-blue">Connexion</button>
 		    </div>			    	    
 		  </div>
+		  <div class="clearfix"></div>
 		</form>
 				
    </div>

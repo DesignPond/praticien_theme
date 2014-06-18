@@ -6,6 +6,24 @@ if (!session_id())
 }
 
 /**
+ * Destroy session variables from newsletter categorie with log out
+*/
+add_action('wp_logout', 'destroy_newsletter_session');
+
+function destroy_newsletter_session() {
+
+   if ( isset( $_SESSION['suscribedToNewsletter'] ) ) 
+   {
+      unset( $_SESSION['suscribedToNewsletter'] );
+   }
+   if ( isset( $_SESSION['idListNewsletter'] ) ) 
+   {
+      unset( $_SESSION['idListNewsletter'] );
+   }
+
+}
+
+/**
  * Roots initial setup and constants
  */
 function roots_setup() {

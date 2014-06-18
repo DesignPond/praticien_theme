@@ -20,10 +20,10 @@
     {
       get_template_part('templates/header');
     }
-  
+	
+	// Homepage header with book
   	if ( is_front_page() ) 
   	{
-	  	// Homepage header with book
 	  	get_template_part('templates/home', 'header'); 
 	} 
   	
@@ -33,6 +33,13 @@
 	{
 		// User menu bar
 		get_template_part('templates/header', 'user'); 
+	}
+	
+	// Sessions for user suscribed to newsletter	
+	$suscribedToNewsletter = (!empty($_SESSION['suscribedToNewsletter']) ? $_SESSION['suscribedToNewsletter'] : null );
+	if($suscribedToNewsletter)
+	{
+		get_template_part('templates/header', 'session'); 
 	}
 	
   ?>

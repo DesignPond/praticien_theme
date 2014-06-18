@@ -84,10 +84,12 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 
 h1{
 	margin-bottom: 20px;
+	font-size: 28px;
 }
 
 h3{
 	margin-bottom: 20px;
+	font-size: 22px;
 }
 
 p,label,legend{
@@ -544,6 +546,18 @@ p.registerNameHeading, p.registerAboutYourselfHeader , p.registerContactInfoHead
   Newsletter 
 ----------------------------------------- */
 
+.bloc_newsletter,{
+	padding: 20px 20px 15px 20px;
+	display: block;
+	position: relative;
+	background: #fff;
+}
+
+#bloc_newsletter a{
+	margin-bottom: 10px;
+	display: block;
+}
+
 .gradient (@startColor: @light-blue, @endColor: @lighter-blue) {
 	background-color: @startColor;
 	background-image: -webkit-gradient(linear, left top, right top, from(@startColor), to(@endColor));
@@ -553,24 +567,48 @@ p.registerNameHeading, p.registerAboutYourselfHeader , p.registerContactInfoHead
 	background-image: -o-linear-gradient(left, @startColor, @endColor);
 }
 
-.bloc_newsletter_praticien{
-	color: #fff;
-	min-height: 120px;
-	.gradient;
+.list_newsletter{
+	height: 100px;
+	padding: 20px;
+	display: block;
+	position: relative;
 }
 
-.title_newsletter {
-  position: relative;
-  top: 50%;
-  transform: translateY(-50%);
+	.list_newsletter_nlrcas span{
+		color: #fff;
+	}
+
+	.list_newsletter_praticien span{
+		color: @darker-blue;
+	}
+
+	.list_newsletter span{
+		font-size: 16px;
+		margin: 0;	
+		font-weight: bold;
+		line-height: 20px;	
+	}
+
+	.list_newsletter span i{
+		font-size: 13px;
+		font-style: normal;
+	}
+		
+	.list_newsletter_praticien{
+		.gradient;
+	}
+	
+	.list_newsletter_nlrcas{
+		background: @dark-blue;
+	}
+
+.list_newsletter img{
+	position: absolute;
+	top: 0;
+	right: 0;
 }
 
 
-.bloc_newsletter_nlrcas{
-	background: @dark-blue;
-	color: #fff;
-	min-height: 120px;
-}
 
 /* -----------------------------------------
    Header links

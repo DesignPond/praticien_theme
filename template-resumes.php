@@ -13,35 +13,6 @@ if(!empty($cat))
 	$topCat = get_top_parent_category($cat);			  		
 }
 
-if(!empty($_REQUEST['email_newsletter']))
-{
-	$email = $_REQUEST['email_newsletter'];
-	$id    = $_REQUEST['id_newsletter'];
-	
-	// Is the email suscribed to the list?
-	$isSuscribed = isEmailSuscribed($id,$email);
-	
-	if($isSuscribed)
-	{
-		// Reset session
-		$_SESSION = array();
-		
-		// Set new values in session
-		$_SESSION['suscribedToNewsletter'] = $email;
-		$_SESSION['idListNewsletter']      = $id;
-	}
-	else
-	{
-		// Redirect to inscription to the newsletter  	
-		// Get page with form	
-	   	$page = get_ID_by_slug('inscription-a-la-newsletter-droit-pour-le-praticien');
-	   	$url  = add_query_arg( array( 'id' => $id ) , get_permalink($page) );
-	   	
-	   	wp_redirect( $url );
-	   	exit;
-	}
-}
-
 /**
  * Test if user is logged in
  * If not we show the login form and the newsletter suscribe form if category is linked to newsletter
