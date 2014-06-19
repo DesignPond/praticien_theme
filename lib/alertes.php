@@ -123,7 +123,7 @@ function createCheckedAbos($categories, $user_id , $abosUser, $general_id){
 	/* The loop over all parent categories , test if we want general or not */
 	foreach ($all as $categorie_id => $children) 
 	{ 
-	
+
 		$html .= '<div id="tabs-'.$categorie_id.'">';
 			$html .= '  <fieldset class="bgcategorie">';
 				$html .= '	<ul class="checklist">';
@@ -132,11 +132,10 @@ function createCheckedAbos($categories, $user_id , $abosUser, $general_id){
 				foreach ($children as $id => $terms) 
 				{ 	
 					// Get variables with user abos				
-					$checked = ( $userHasCat && (in_array( $id , $userHasCat)) ? ' checked="checked ': '');
-					$visible = ( in_array($id , $userHasPub) ? ' style="display:none;" ' : '');									
+					$checked = ( ($userHasCat && in_array( $id , $userHasCat)) ? ' checked="checked" ': '');
+					$visible = ( in_array($id , $userHasPub) ? '' : ' style="display:none;"');									
 					$general = (!empty($terms['general']) ? $terms['general'] :  $terms['name']);
-					
-					
+										
 					$html .= '<li data-id="'.$id.'">';// Start of li
 						
 						$html .= '<input id="choice_'.$i.'" name="selectCat[]" '.$checked.' value="'.$id.'" type="checkbox">';									
@@ -223,18 +222,21 @@ function createCheckedAbos($categories, $user_id , $abosUser, $general_id){
 */
 function implement_ajax() {
 
-	if( isset($_POST['catid']))
+	if( isset($_REQUEST['catid']))
 	{
+		$res = '';
+				
 		global $wpdb;
 		global $current_user;
 		
 		get_currentuserinfo();
 		$user_id = $current_user->ID;
 			
-		$categorie   = $_POST['catid'];
-		$ispub       = $_POST['ispub'];
+		$categorie   = $_REQUEST['catid'];
 		
-		$catKeywords = (!empty($_POST['keywords']) ? $_POST['keywords'] : '');
+		$catKeywords = (!empty($_REQUEST['keywords']) ? $_REQUEST['keywords'] : '');
+		$ispub       = (!empty($_REQUEST['ispub']) ? $_REQUEST['ispub'] : null);
+		
 		
 		array_filter($catKeywords);
 		
@@ -259,31 +261,25 @@ function implement_ajax() {
 			$wpdb->query(' INSERT INTO wp_user_abo SET refUser = "'.$user_id.'" , refCategorie = "'.$categorie.'" ');
 		}
 
-		/* Is publications */		
-		$isPubAlready = $wpdb->query(' SELECT * FROM wp_user_abo_pub WHERE refUser = "'.$user_id.'" AND  refCategorie = "'.$categorie.'" ');
+		/* Is publications */	
+		$isPubAlready = $wpdb->get_row(' SELECT * FROM wp_user_abo_pub WHERE refUser = "'.$user_id.'" AND  refCategorie = "'.$categorie.'" ');
 		
-		$res = '';
 		
-		if( $isPubAlready )
+		if( $isPubAlready && !$ispub)
 		{
-			if($ispub == 0)
-			{
-				$wpdb->query(' DELETE FROM wp_user_abo_pub WHERE refCategorie = "'.$categorie.'" AND refUser = "'.$user_id.'" ');
-				$res = 'deleted';
-			}
+			$wpdb->query(' DELETE FROM wp_user_abo_pub WHERE refCategorie = "'.$categorie.'" AND refUser = "'.$user_id.'" ');
+			$res = 'deleted';
 		}
-		else
+		
+		if( !$isPubAlready && $ispub)
 		{
-			if($ispub == 1)
-			{
-				$wpdb->query(' INSERT INTO wp_user_abo_pub SET refUser = "'.$user_id.'" , refCategorie = "'.$categorie.'", ispub = "'.$ispub.'" ');
-				$res = 'inserted';
-			}
+			$wpdb->query(' INSERT INTO wp_user_abo_pub SET refUser = "'.$user_id.'" , refCategorie = "'.$categorie.'", ispub = "'.$ispub.'" ');
+			$res = 'inserted';
 		}
 
 		/* END is publications */
 		
-		echo $ispub; 
+		echo $res.'-'.$user_id.'/'.$ispub; 
 		die();		
 		
 	} 
@@ -297,7 +293,7 @@ add_action('wp_ajax_nopriv_set_abos', 'implement_ajax');//for users that are not
 */
 function implement_ajax_delete() {
 
-	if( isset($_POST['catid']))
+	if( isset($_REQUEST['catid']))
 	{
 		global $wpdb;
 		global $current_user;
@@ -305,7 +301,7 @@ function implement_ajax_delete() {
 		get_currentuserinfo();
 		
 		$user_id   = $current_user->ID;			
-		$categorie = $_POST['catid'];
+		$categorie = $_REQUEST['catid'];
 
 		$wpdb->query(' DELETE FROM wp_user_abo WHERE refCategorie = "'.$categorie.'" AND refUser = "'.$user_id.'" ');
 			
@@ -322,7 +318,7 @@ add_action('wp_ajax_nopriv_delete_abos', 'implement_ajax_delete');//for users th
 */
 function implement_ajax_rythme() {
 
-	if( isset($_POST['rythme']))
+	if( isset($_REQUEST['rythme']))
 	{
 		global $wpdb;
 		global $current_user;
@@ -330,7 +326,7 @@ function implement_ajax_rythme() {
 		get_currentuserinfo();
 		$user_id = $current_user->ID;
 			
-		$rythme  = $_POST['rythme'];
+		$rythme  = $_REQUEST['rythme'];
 		
 		$already = $wpdb->query(' SELECT * FROM wp_usermeta WHERE user_id = "'.$user_id.'" AND  meta_key = "rythme_abo" ');
 		
