@@ -318,3 +318,166 @@ function newDecisionSearch($search){
 
 	return $query;  
 }
+
+
+/**
+ *  Search for Lois
+*/
+
+function getListLois(){
+
+	global $wpdb;
+	
+	$list = array();
+	$html = '';
+	
+	$queryLois = 'SELECT meta_id, meta_value FROM wp_postmeta 
+											 LEFT JOIN wp_posts ON (wp_posts.ID = wp_postmeta.post_id)
+											 WHERE wp_postmeta.meta_key = "termes_rechercher" AND wp_posts.post_status = "publish" ';
+
+	$lois = $wpdb->get_results($queryLois);	
+	
+	$page = get_ID_by_slug('lois');
+	
+	if(!empty($lois))
+	{
+		foreach($lois as $loi)
+		{				
+			$termes = explode(',',$loi->meta_value);
+			
+			$id = $loi->meta_id;
+			
+			if( !empty($termes) )
+			{
+				foreach($termes as $terme)
+				{
+					$alltermes[$id] = $terme; 
+				}
+			}
+		}
+		
+		foreach($alltermes as $id => $lloi)
+		{
+			$termes  = trim($lloi);
+			$termes  = explode(':',$termes); 
+			$allterm = $termes[1]; 
+			
+			$t = explode(',',$allterm);
+			
+			$laloi = trim($t[0]);
+			
+			if(!empty($laloi))
+			{
+				if( !in_array($laloi,$list) ){
+					//$list[] = $laloi.' ('.$id.')';
+					$list[] = $laloi;
+				}
+			}
+		}
+		
+		array_filter($list, 'strlen');
+		array_values($list);
+		
+		natcasesort($list);
+		
+		$html .= '<div id="sidebar-categories">';
+		
+		foreach($list as $loi)
+		{
+			$html .= '<h3><a href="'.get_permalink($page).'&amp;loi='.$loi.'">'.$loi.'</a></h3>';
+		}
+		
+		$html .= '</div>';
+	}
+	
+	return $html;
+
+}
+
+/**
+ * Get all article corresponding to loi requested
+*/
+function getLoiArticles($loi){
+	
+	global $wpdb;
+	
+	$list_ids  = array();
+	
+	$queryLois = 'SELECT post_id, meta_value 
+						 FROM wp_postmeta 
+						 LEFT JOIN wp_posts ON (wp_posts.ID = wp_postmeta.post_id)
+						 WHERE wp_postmeta.meta_key = "termes_rechercher" 
+						 AND ( wp_postmeta.meta_value LIKE "%:'.$loi.':%" OR wp_postmeta.meta_value LIKE "%:'.$loi.'" )
+						 AND wp_posts.post_status = "publish" 
+						 GROUP BY post_id ';
+	
+	$lois = $wpdb->get_results($queryLois);	
+	
+	if(!empty($lois))
+	{
+
+	  foreach($lois as $post)
+	  {					
+			$explode = explode(',', $post->meta_value);
+			
+			if(!empty($explode))
+			{
+				foreach($explode as $exp)
+				{
+					if (preg_match('/\b:'.$loi.'\b/i', $exp))
+					{
+						$first = explode(':', $exp);
+	
+						if(isset($first[2]) && is_numeric($first[2]) )
+						{								
+							$third = trim($first[2]);
+	
+							$arrange[$first[0]][$post->post_id]['rang']  = $third;	
+							$arrange[$first[0]][$post->post_id]['terme'] = $exp;	
+						}
+						else
+						{								
+					    	$arrange[$first[0]][$post->post_id]['rang']  = 0;
+					    	$arrange[$first[0]][$post->post_id]['terme'] = $exp;
+					    }
+					}
+				}
+			}						
+	   }
+		
+		ksort($arrange);
+		
+		$id_arrange = array();
+		
+		foreach($arrange as $rang => $each)
+		{
+			$sort = array();
+	
+			foreach($each as $id => $term)
+			{
+				$sort[$term['rang']][] = $id;
+			}
+			
+			ksort($sort);
+			
+			$id_arrange[$rang] = $sort;				
+		}
+		
+		$list_ids = array();
+		
+		foreach($id_arrange as $arr)
+		{
+			foreach($arr as $idall)
+			{
+				foreach($idall as $id)
+				{	
+					$list_ids[$id] = $id;
+				}
+			}
+		}	   
+	   
+	}
+	
+	return $list_ids;
+	
+}

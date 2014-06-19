@@ -70,6 +70,7 @@ function roots_display_sidebar() {
       'template-results.php',
       'template-resumes.php',
 	  'template-newsletter.php',
+	  'template-lois.php',
       'template-results-decisions.php'
     )
   );
