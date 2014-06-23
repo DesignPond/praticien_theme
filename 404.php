@@ -1,13 +1,6 @@
 <?php get_template_part('templates/page', 'header'); ?>
 
+<h1>Maintenance</h1>
 <div class="alert alert-warning">
-  <?php _e('Sorry, but the page you were trying to view does not exist.', 'roots'); ?>
+  Le site est en maintenance aujourd'hui pour vous apporter de nouvelles fonctionnalités.<br/> Veuillez-nous excuser pour ce désagrément.
 </div>
-
-<p><?php _e('It looks like this was the result of either:', 'roots'); ?></p>
-<ul>
-  <li><?php _e('a mistyped address', 'roots'); ?></li>
-  <li><?php _e('an out-of-date link', 'roots'); ?></li>
-</ul>
-
-<?php get_search_form(); ?>

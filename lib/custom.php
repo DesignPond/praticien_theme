@@ -391,7 +391,7 @@ function homepageBloc($nbr,$offset){
 				$html .= '<div class="bloc blocBorder tf_bloc">';
 					$html .= '<h3>'.$arret->nameCat.'</h3>';
 					$html .= '<h4>'.$arret->nameCat.'</h4>';	
-					$html .= '<p>'.$nameSub.'</p>';	
+					$html .= '<p>'.limit_words($nameSub, 8).'</p>';	
 					$html .= '<a class="btn btn-blue btn-sm" href="'.$url.'">Consulter</a>';	
 					$html .= '<p class="calendar">Décision du '.mysql2date('j M Y', $arret->dated_nouveaute ).'</p>';	
 				$html .= '</div>';	
