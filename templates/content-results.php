@@ -1,7 +1,7 @@
 <?php
 	
 	// Type of search
-	$typeSearch = $_POST['search'];
+	$typeSearch = $_REQUEST['search'];	
 	
 	$posts  = array();
 	
@@ -45,6 +45,7 @@
 		   	}
 		}	
 	} 
+
 
 ?>
 	
@@ -101,9 +102,3 @@
 
 </div>
 
-<?php
-
-echo "<!--\n";
-var_dump($wpdb->queries);
-echo "\n-->";
-?>

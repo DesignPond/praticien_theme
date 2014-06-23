@@ -1,5 +1,46 @@
 <?php
 
+/**
+ * Redirect from old theme to correct page with search query
+*/
+if(!empty($_REQUEST['search-type']))
+{
+	$type     = $_REQUEST['search-type'];
+
+	$resumes  = get_ID_by_slug('resultats-recherche'); 
+	$decision = get_ID_by_slug('resultats-recherche-decisions'); 
+	
+	if($type == 'keyarret')
+	{
+		$page = $decision;
+	}
+	
+	if($type == 'keyword')
+	{
+		$page = $resumes;
+	}
+		
+	$location = add_query_arg( array('term' => $_REQUEST['s'] , 'search' => 'simple') , get_permalink($page) );
+	wp_redirect( $location);
+	exit;
+}
+
+/**
+ * Redirect from old theme to correct page with category
+*/
+if(!empty($_REQUEST['cat']) && empty($_REQUEST['page_id']))
+{
+	$page     = get_ID_by_slug('categories'); 
+	$annee    = get_query_var( 'annee' );	
+	$location = add_query_arg( array('cat' => $_REQUEST['cat'] , 'annee' => $annee) , get_permalink($page) );
+	
+	wp_redirect( $location);
+	exit;
+}
+
+/**
+ * Set session for newsletter user
+*/
 if(!empty($_REQUEST['email_newsletter']))
 {
 	$email = $_REQUEST['email_newsletter'];

@@ -12,7 +12,7 @@
  */
 function roots_scripts() {
 
-  wp_enqueue_style('roots_main', get_template_directory_uri() . '/assets/css/main.min.css', false, '2888ce3634832b5d2398bf48fbda6943');
+  wp_enqueue_style('roots_main', get_template_directory_uri() . '/assets/css/main.min.css', false, '6ba92577a338bfa16c2d066b489d9cb4');
   wp_enqueue_style('datatable', '//cdn.datatables.net/1.10.0/css/jquery.dataTables.css', array(), null, false);
   wp_enqueue_style('jqueryui', get_template_directory_uri() . '/assets/css/smoothness/jquery-ui-1.10.4.custom.css', array(), null, false);
   // jQuery is loaded using the same method from HTML5 Boilerplate:

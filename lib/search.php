@@ -232,6 +232,7 @@ function formatSearch($search){
 
 	$search = htmlspecialchars_decode($search);
 	$search = stripcslashes($search);
+	$search = trim($search);
 	
 	/**
 	 *  Remove string in double quotes and put each in array

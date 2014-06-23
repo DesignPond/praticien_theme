@@ -7,8 +7,9 @@
     $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;	
     
     // Filter for years
-	$annee     = (!empty($_REQUEST['annee']) ? $_REQUEST['annee'] : null );
-	$tax_query = array();
+	$annee        = (!empty($_REQUEST['annee']) ? $_REQUEST['annee'] : null );
+	$anneCourante = $annee;
+	$tax_query    = array();
 								
 	if (!empty($annee))
 	{
@@ -111,7 +112,7 @@
 		 <h2 class="sectionTitle">Sections</h2>
     	 <!-- Filter list by years -->
          <ul id="listAnnee">
-         	 <li><a class="" href="<?php echo $url.'/?cat='.$category; ?>">Tout</a></li>
+         	 <li><a class="" href="<?php echo get_permalink().'&cat='.$category; ?>">Tout</a></li>
          	 <?php
 				         	 
 				$args = array(
@@ -130,7 +131,7 @@
 					$url = add_query_arg( array( 'cat' => $category, 'annee' => $anneeSlug) , get_permalink() );
 					
 					echo '<li><a ';					
-						if($annee == $anneeSlug) { echo 'class="active"';}
+						if($anneCourante == $anneeSlug) { echo 'class="active"';}
 					echo ' href="'.$url.'">'.$anneeName.'</a></li>';
 				}
 				
