@@ -23,6 +23,26 @@ function destroy_newsletter_session() {
 
 }
 
+
+
+function wpse29210_admin_bar_toogle()
+{
+    add_filter( 'show_admin_bar', '__return_false' );
+
+    $user = get_userdata( $GLOBALS['current_user'] )->data->ID;
+
+    if ( ! is_admin() && $user->show_admin_bar_front )
+        add_filter( 'show_admin_bar', '__return_true' );
+
+    if ( is_admin() && $user->show_admin_bar_admin )
+        add_filter( 'show_admin_bar', '__return_true' );
+
+    return;
+}
+add_action( 'init', 'wpse29210_admin_bar_toogle' );
+
+
+
 /**
  * Roots initial setup and constants
  */

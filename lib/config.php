@@ -57,7 +57,8 @@ function roots_display_sidebar() {
     array(
       'is_404',
       'is_front_page',
-      'is_search'
+      'is_search',
+      'is_single'
     ),
     /**
      * Page template checks (via is_page_template())
