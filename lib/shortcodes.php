@@ -34,7 +34,7 @@ function displayPubDroitPraticien( $atts = NULL ){
 			  <span class="icons icon-tf"></span>
 		  </div>
 		  <div class="col-md-11">
-		  		<p>Ce site permet par ailleurs de consulter la jurisprudence récente du Tribunal fédéral organisée par thèmes principaux.</p>
+		  		<p>Ce site permet par ailleurs de consulter la jurisprudence récente du Tribunal fédéral, organisée par thèmes principaux.</p>
 		  </div>
 		</div>
 
@@ -62,7 +62,7 @@ function displayPubDroitPraticien( $atts = NULL ){
 			  <span class="icons icon-tf"></span>
 		  </div>
 		  <div class="col-md-11">
-		  		<p>Recevez les nouveaux arrêts rendus par le TF correspondants aux rubriques choisies avec ou sans mots clés.</p>
+		  		<p>Recevez les nouveaux arrêts rendus par le TF correspondant aux rubriques choisies avec ou sans mots clés.</p>
 		  </div>
 		</div>
 
