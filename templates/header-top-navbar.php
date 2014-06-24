@@ -7,7 +7,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="<?php echo home_url(); ?>/"><strong>Droit</strong> pour le <b>Praticien</b></a>
+      <a class="navbar-brand" href="<?php echo home_url(); ?>/"><strong>Droit</strong> pour le <b>praticien</b></a>
     </div>
 
     <nav class="collapse navbar-collapse" role="navigation">

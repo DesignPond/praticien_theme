@@ -13,7 +13,7 @@ function is_element_empty($element) {
   return empty($element) ? false : true;
 }
 
-function limit_words($string, $word_limit){
+function limit_wordis($string, $word_limit){
 
 	$words = explode(" ",$string);
 	$new   = implode(" ",array_splice($words,0,$word_limit));	

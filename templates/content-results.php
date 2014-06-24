@@ -7,11 +7,13 @@
 	
 	if($typeSearch == 'simple')
 	{
-		$s      = $_REQUEST['term'];
+		$s      = $_REQUEST['term'];	
+		$paged  = (get_query_var('paged')) ? get_query_var('paged') : 1;	
 		
 		$args = array(
 			'post_type'      => 'post',
-			'posts_per_page' => -1,
+			'posts_per_page' => 5,
+			'paged'          =>  $paged,
 			'is_paged'       => true,
 			's'              =>  $s
 		);
@@ -95,7 +97,8 @@
 		   		}
 		   	}	   	
 		   	else{ echo '<article><br/><h4 class="text-danger"><span class="glyphicon glyphicon-search"></span> &nbsp;La recherche n\'a rien donnée.</h4></article>'; }
-
+		   	
+		   	if ($wp_query->max_num_pages > 1){ wpc_pagination(); }
 		?>
    </div>
 

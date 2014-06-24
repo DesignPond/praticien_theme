@@ -108,7 +108,7 @@ function isEmailSuscribed($id,$email){
 	$query  = 'SELECT email,wp_wysija_user.user_id,status 
 			   FROM wp_wysija_user 
 			   LEFT JOIN wp_wysija_user_list on wp_wysija_user_list.user_id = wp_wysija_user.user_id
-			   WHERE wp_wysija_user.email = "'.$email.'" AND wp_wysija_user.status = "1" AND wp_wysija_user_list.list_id = "'.$id.'" ';
+			   WHERE wp_wysija_user.email = "'.$email.'" AND (wp_wysija_user.status = "1" OR  wp_wysija_user.status = "-1") AND wp_wysija_user_list.list_id = "'.$id.'" ';
 			   
 			   
 	$result = $wpdb->get_row($query);
