@@ -122,13 +122,13 @@ a:hover,a:focus{
 }
 
 	.navbar-default .navbar-brand{
-		font-size: 34px;
+		font-size: 30px;
 		color: #FFFFFF;
 	    height: 60px;
 		line-height: 50px;
-	    padding: 15px;
+	    padding: 15px 0;
 	    font-family: 'Sofia-RegularRegular',Arial,sans serif;
-	    margin-right: 20px;
+	    margin-right: 0;
 	}
 
 	.navbar-default .navbar-brand:hover,.navbar-default .navbar-brand:focus{
@@ -150,11 +150,11 @@ a:hover,a:focus{
 		.navbar-default .navbar-nav > li > a {
 		    color: #ffffff;
 		    line-height: 50px;
-		    font-size: 20px;
+		    font-size: 15px;
 		}
 
 		.navbar-nav.logos > li > a {
-		    padding: 10px 10px;
+		    padding: 10px 5px;
 		}
 		
 		.navbar-nav.navbar-right:last-child {
@@ -173,6 +173,14 @@ a:hover,a:focus{
 			color: #ffffff;
 			background: @hover-blue;
 		}
+		
+		.navbar-default .navbar-toggle {
+		    border-color: @dark-blue;
+		}
+		
+		.navbar-default .navbar-toggle .icon-bar {
+		    background-color: @dark-blue;
+		}
 
 
 /* ==========================================================================
@@ -190,7 +198,7 @@ a:hover,a:focus{
 		padding-top: 20px;
 	}
 
-	#home-header div.buythebook h1{
+	#home-header div.buythebook h1 , #buyTheBook h1{
 		font-size:28px;
 		color: @dark-red;
 		line-height: 26px;
@@ -431,8 +439,8 @@ a:hover,a:focus{
 		    font-size: 14px;
 		    height: 28px;
 		    width: 94%;
-		    line-height: 1.42857;
-		    padding: 6px 12px;
+		    line-height: 22px;
+		    padding: 3px 12px;
 		    transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
 		}
 				
@@ -702,7 +710,7 @@ p.registerNameHeading, p.registerAboutYourselfHeader , p.registerContactInfoHead
 {
 	background: @dark-blue;
 	color:  #fff;
-	font-size: 14px;
+	font-size: 13px;
 	line-height: 16px;
 }
 
@@ -729,6 +737,7 @@ p.registerNameHeading, p.registerAboutYourselfHeader , p.registerContactInfoHead
 
 .bloc.tf_bloc {
 	position: relative;
+	background: #fff;
 }
 
 .bloc.tf_bloc .calendar{
@@ -1588,9 +1597,262 @@ small, .small {
 	font-weight: bold;
 }
 
+
 /* ==========================================================================
    Media Queries
    ========================================================================== */
+
+   
+@media screen and (min-width: 200px) and (max-width: 680px) {
+
+	/* Navigation */
+	.navbar-nav {
+	    margin: 0;
+	}
+
+	.navbar-default .navbar-brand{
+		font-size: 22px;
+	    height: 30px;
+		line-height: 40px;
+	    padding: 5px;
+	}
+	
+	.navbar-nav.main-nav:last-child {
+		margin-right: 0;
+	}
+	
+	/* Linke sbloc arrets */
+	.arrets-links-bloc {
+	    font-size: 13px;
+	    line-height: 18px;
+	    padding: 6px 0 0;
+	}
+
+		.arrets-links-bloc span {
+		    font-size: 11px;
+		}
+	
+	/* Buy the book homepage */
+	#home-header{
+		background: #82acc8; /* Old browsers */
+		/* IE9 SVG, needs conditional override of 'filter' to 'none' */
+		background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzgyYWNjOCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNkZmVjZjQiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+		background: -moz-linear-gradient(top, #82acc8 0%, #dfecf4 100%); /* FF3.6+ */
+		background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#82acc8), color-stop(100%,#dfecf4)); /* Chrome,Safari4+ */
+		background: -webkit-linear-gradient(top, #82acc8 0%,#dfecf4 100%); /* Chrome10+,Safari5.1+ */
+		background: -o-linear-gradient(top, #82acc8 0%,#dfecf4 100%); /* Opera 11.10+ */
+		background: -ms-linear-gradient(top, #82acc8 0%,#dfecf4 100%); /* IE10+ */
+		background: linear-gradient(to bottom, #82acc8 0%,#dfecf4 100%); /* W3C */
+		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#82acc8', endColorstr='#dfecf4',GradientType=0 ); /* IE6-8 */
+		height: auto;
+	}
+	
+	#buyTheBook{
+		text-align: center;
+	}
+			
+	#buyTheBook img{
+	    max-height: 220px;
+	}
+		
+		#home-header div p{
+			text-align: justify;
+		}
+	
+	/* Homepage forms */
+	#access{
+		border: none;
+	}
+	
+	#homepageAcces{
+		max-height: none;
+	}
+	
+	#homepageAcces #login{
+		padding-left: 15px;
+		padding-top: 20px;
+		border-top: 1px dashed #fff;
+	}
+	
+	/* Search inputs terms */
+	#searchDetail , #filterByDates{
+		border: none;
+		border-top: 1px solid #dddddd;
+		margin-top: 20px;padding-top: 20px;
+	}
+	
+	#searchDetail .search-term {
+	    margin-right: 15px;
+	    width: 100%;
+	    float: none;
+	}
+	
+	#filterByDates {
+	    margin-left: 0px;
+	    padding-left: 0px;
+	}
+	
+	#choixPeriode .checkbox {
+	   margin-left: 15px;
+	}
+	
+	#choixPeriode .checkbox label{
+	   line-height: 20px;
+	}
+	
+	/* shadow under search forms */
+	p.shadow{
+		margin-top: 20px;
+	}	
+	
+	th.hideOnSmall, td.hideOnSmall{
+		display: none;
+	}	
+	
+	/* Alertes */
+	.check-title {
+	    width: 100%;
+	}
+	
+	.check-choice{
+		margin-top: 5px;
+	}
+	
+	.check-choice, .checklist li input.key ,p.new_input  {
+	    width: 100%;
+	}
+	
+	.checklist li label {
+	    padding: 40px 0 15px;
+	    width: 100%;
+	}
+	
+	.checklist li p.successMsg {
+	    font-size: 11px;
+	    top: 14px;
+	}
+
+	/* Newsletter bloc */
+	.newsletterHome{
+		font-size: 12px;
+	}
+	
+}
+
+@media screen and (min-width: 680px) and (max-width: 960px) {
+   
+   	
+	#logos li > a > img {
+		max-width: 104px;
+		width: auto;
+	}
+	
+	/* Navigation */
+	.navbar-default .navbar-brand{
+		font-size: 28px;
+	}
+	
+	.navbar-default .navbar-nav > li > a {
+		font-size: 16px;
+	}
+	
+	.navbar-nav.main-nav:last-child {
+	    margin: 0;
+	}
+		
+	/* Newsletter bloc */
+	.newsletterHome{
+		font-size: 12px;
+	}
+	
+	.newsletterHome a {
+		padding: 3px 2px;
+	}
+	
+	#menu-navigation-primaire{
+		text-align: center;
+	}
+	
+	
+	/* Buy the book homepage */
+	#home-header{
+		background: #82acc8; /* Old browsers */
+		/* IE9 SVG, needs conditional override of 'filter' to 'none' */
+		background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzgyYWNjOCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNkZmVjZjQiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+		background: -moz-linear-gradient(top, #82acc8 0%, #dfecf4 100%); /* FF3.6+ */
+		background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#82acc8), color-stop(100%,#dfecf4)); /* Chrome,Safari4+ */
+		background: -webkit-linear-gradient(top, #82acc8 0%,#dfecf4 100%); /* Chrome10+,Safari5.1+ */
+		background: -o-linear-gradient(top, #82acc8 0%,#dfecf4 100%); /* Opera 11.10+ */
+		background: -ms-linear-gradient(top, #82acc8 0%,#dfecf4 100%); /* IE10+ */
+		background: linear-gradient(to bottom, #82acc8 0%,#dfecf4 100%); /* W3C */
+		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#82acc8', endColorstr='#dfecf4',GradientType=0 ); /* IE6-8 */
+		height: auto;
+	}
+	
+	#buyTheBook{
+		text-align: center;
+	}
+			
+	#buyTheBook img{
+	    max-height: 220px;
+	}
+		
+		#home-header div p{
+			text-align: justify;
+		}
+		
+	#choixPeriode .checkbox {
+	   margin-left: 0;
+	}
+	
+	#choixPeriode .checkbox label{
+	   line-height: 20px;
+	   font-size: 12px;
+	}			
+	
+}
+
+
+@media screen and (min-width: 960px) and (max-width: 1200px) {
+   
+	/* Navigation */
+	.navbar-default .navbar-brand{
+		font-size: 28px;
+	}
+	
+	.navbar-default .navbar-nav > li > a {
+		font-size: 16px;
+	}
+	
+	.navbar-nav.main-nav:last-child {
+	    margin: 0;
+	}
+		
+	/* Newsletter bloc */
+	.newsletterHome{
+		font-size: 12px;
+	}
+	
+	.newsletterHome a {
+		padding: 3px 2px;
+		font-size: 11px;
+	}
+	
+	#menu-navigation-primaire{
+		text-align: center;
+	}
+	
+		
+	#choixPeriode .checkbox {
+	   margin-left: 0;
+	}
+	
+	#choixPeriode .checkbox label{
+	   line-height: 20px;
+	   font-size: 12px;
+	}
+	
+}   
 
 @media (min-width: @screen-sm-min) { }
 

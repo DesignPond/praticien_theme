@@ -21,8 +21,8 @@
 					<th>Date déc.</th>
 					<th>Référence</th>
 					<th>Catégorie</th>
-					<th>Sous-catégorie</th>
-					<th>Langues</th>
+					<th class="hideOnSmall">Sous-catégorie</th>
+					<th class="hideOnSmall">Langues</th>
 				</tr>
 			</thead>
 			
@@ -45,8 +45,8 @@
 					<th>Date déc.</th>
 					<th>Référence</th>
 					<th>Catégorie</th>
-					<th>Sous-catégorie</th>
-					<th>Langues</th>
+					<th class="hideOnSmall">Sous-catégorie</th>
+					<th class="hideOnSmall">Langues</th>
 				</tr>
 			</tfoot>
 		</table>

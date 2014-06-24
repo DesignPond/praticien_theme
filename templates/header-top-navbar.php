@@ -11,8 +11,8 @@
     </div>
 
     <nav class="collapse navbar-collapse" role="navigation">
-      
-      <ul class="nav navbar-nav logos navbar-right">
+                  
+      <ul id="logos" class="nav navbar-nav logos navbar-right">
         <li>
         	<a target="_blank" href="http://www.unine.ch">
 				<img src="<?php echo get_bloginfo('template_directory');?>/assets/img/unine.png"  alt="unine logo">
@@ -24,7 +24,7 @@
 			</a>
 		</li>   	
       </ul>
-    
+          
       <?php
         if (has_nav_menu('primary_navigation')) :
           wp_nav_menu(array('theme_location' => 'primary_navigation', 'menu_class' => 'nav navbar-nav main-nav navbar-right'));

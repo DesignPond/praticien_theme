@@ -23,7 +23,7 @@ function lastDayUpdated(){
 
 function arretLinkArret($lien){
 	
-	$resumes  = array( 'categories' , 22532 , 22550);
+	$resumes  = array( 'categories' , 22532 , 22534 , 22550);
 	$nouveaux = array( 'liste-des-nouveaux-arrets', 1143 , 22552);
 	
 	$pagename = get_query_var('pagename');
@@ -308,8 +308,8 @@ function prepareListDecisions($query , $page , $retour = NULL , $term = NULL , $
 				
 				$html .= ''.$arret->numero_nouveaute.'</a></td>';
 				$html .= '<td>'.$arret->nameCat.'</td>';
-				$html .= '<td>'.$nameSub.'</td>';
-				$html .= '<td>'.$langue[$arret->langue_nouveaute].'</td>';
+				$html .= '<td class="hideOnSmall">'.$nameSub.'</td>';
+				$html .= '<td class="hideOnSmall">'.$langue[$arret->langue_nouveaute].'</td>';
 				
 			$html .= '</tr>';			
 		}
