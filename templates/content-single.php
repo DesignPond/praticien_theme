@@ -12,22 +12,25 @@
 		
 		// the content of post 
 		the_content(); 
-		
-		// Get top categorie for autor
-		$categories = wp_get_post_categories( $post->ID );
-		$category   = get_top_parent_category($categories[0]);
-		
-		// Get annee for autor
-		$annee = getAnne( $post->ID );
-		
-		// The autor of post
-		echo getAutor($post,$category,$annee); 
-		
-		// The comment if there is one
-		$commentPost = get_field( "commentaire_pour_arrêt" , $post->ID );				
-		$commentPost = ($commentPost ? '<h4>Commentaire</h4>'.$commentPost : '');
-		
-		echo $commentPost;
+
+		if(!isset($_REQUEST['wysija-page']))
+		{
+			// Get top categorie for autor
+			$categories = wp_get_post_categories( $post->ID );
+			$category   = get_top_parent_category($categories[0]);
+			
+			// Get annee for autor
+			$annee = getAnne( $post->ID );
+			
+			// The autor of post
+			echo getAutor($post,$category,$annee); 
+			
+			// The comment if there is one
+			$commentPost = get_field( "commentaire_pour_arrêt" , $post->ID );				
+			$commentPost = ($commentPost ? '<h4>Commentaire</h4>'.$commentPost : '');
+			
+			echo $commentPost;
+		}
 		
 	?>
 		

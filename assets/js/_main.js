@@ -90,7 +90,7 @@
 
 	// New arrets list
 	$('#arrets').dataTable({
-		"aaSorting": [[ 0, "desc" ]],"iDisplayLength": 25,"bAutoWidth": false , "aoColumns" : [{ "sWidth": "10%"},{ "sWidth": "10%"},{ "sWidth": "10%"},{ "sWidth": "25%"},{ "sWidth": "35%"},{ "sWidth": "10%"}],
+		"aaSorting": [[ 0, "desc" ]],"iDisplayLength": 25,"bAutoWidth": false , "aoColumns" : [{ "sWidth": "12%"},{ "sWidth": "12%"},{ "sWidth": "10%"},{ "sWidth": "25%"},{ "sWidth": "30%"},{ "sWidth": "10%"}],
 		"oLanguage": {
 		"sLengthMenu": "Montrer _MENU_ lignes par page",
 		"sZeroRecords": "Rien trouv&eacute;",

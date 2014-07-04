@@ -107,7 +107,7 @@ function soi_login_redirect( $redirect_to, $request, $user  ) {
 	{
 		if($year < $limite)
 		{
-			$url = $redirect;
+			$url = site_url();
 		}
 		else
 		{

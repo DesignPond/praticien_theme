@@ -9,12 +9,10 @@
 						<a href="http://www.publications-droit.ch/#/cat/publications/item/229" target="_blank">
 							<img src="<?php echo get_bloginfo('template_directory');?>/assets/img/book.png" alt="droit pour le praticien" />
 						</a>
-						
 					</div>	
 				</div>					
 			</div>						
-			<div class="col-sm-8 buythebook">
-								
+			<div class="col-sm-8 buythebook">					
 				<h1>Accès</h1>
 				<h2>Le droit pour le praticien</h2>
 				

@@ -23,7 +23,7 @@ function lastDayUpdated(){
 
 function arretLinkArret($lien){
 	
-	$resumes  = array( 'categories' , 22532 , 22534 , 22550);
+	$resumes  = array( 'categories' , 22532 , 22550);
 	$nouveaux = array( 'liste-des-nouveaux-arrets', 1143 , 22552);
 	
 	$pagename = get_query_var('pagename');
@@ -300,8 +300,11 @@ function prepareListDecisions($query , $page , $retour = NULL , $term = NULL , $
 			
 			$html .= '<tr>';
 			
-				$html .= '<td>'.$arret->datep_nouveaute.'</td>';
-				$html .= '<td>'.$arret->dated_nouveaute.'</td>';
+				$datep = formatDateArrets($arret->datep_nouveaute);
+				$dated = formatDateArrets($arret->dated_nouveaute);
+				
+				$html .= '<td>'.$datep.'</td>';
+				$html .= '<td>'.$dated.'</td>';
 				$html .= '<td><a href="'.$url.'&'.$term.'">';
 				
 				if($arret->publication_nouveaute == "1") { $html .= '*';}
@@ -319,6 +322,24 @@ function prepareListDecisions($query , $page , $retour = NULL , $term = NULL , $
 	
 	return $html;
 	
+}
+
+function formatDateArrets($date){
+	
+    if (setlocale(LC_TIME, 'fr_FR') == '') 
+    {
+    	setlocale(LC_TIME, 'FRA'); //correction problème pour windows
+		$format_jour = '%#d';
+    } 
+    else 
+    {
+    	$format_jour = '%e';
+    }
+    
+    $format = strftime("$format_jour %B %Y", strtotime($date));
+
+    return utf8_encode($format);
+    // affiche : ven. 18 avr. 2008 
 }
 
 /**
